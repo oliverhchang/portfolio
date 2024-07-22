@@ -1,17 +1,6 @@
-/* Import the Roboto font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    padding: 50px;
-    margin: 0;
-}
-
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: transparent; /* Remove gray background color */
+    border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 0;
     position: fixed;
     width: 100%;
@@ -20,12 +9,17 @@ header {
     z-index: 1000;
 }
 
+nav {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 0 20px; /* Add some horizontal padding */
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
 }
 
 nav ul li {
@@ -33,15 +27,12 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #000; /* Black text color for navigation links */
     text-decoration: none;
     font-size: 1.2em;
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
 }
 
 nav ul li a:hover {
     text-decoration: underline;
-}
-
-section {
-    padding: 60px 20px; /* Adjust padding to ensure content is not hidden behind the fixed header */
 }
