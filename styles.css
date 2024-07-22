@@ -1,3 +1,14 @@
+/* Import the Roboto font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 50px;
+    margin: 0;
+}
+
 header {
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
@@ -35,4 +46,8 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+
+section {
+    padding: 60px 20px; /* Adjust padding to ensure content is not hidden behind the fixed header */
 }
