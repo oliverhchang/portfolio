@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #fff;
     text-align: center;
     padding: 0; /* Remove default padding */
     margin: 0;
@@ -38,10 +38,11 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #000; /* Black text color for navigation links */
+    color: #aaa; /* Black text color for navigation links */
     text-decoration: none;
-    font-size: 1.2em;
-    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    font-size: 0.75em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 nav ul li a:hover {
