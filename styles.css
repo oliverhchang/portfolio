@@ -9,6 +9,12 @@ body {
 }
 
 h1 {
-    color: #000; /* Change header text color to black */
-    font-family: 'Roboto', sans-serif; /* Apply Roboto font to the header */
+    color: #000; //Black Color
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+}
+
+p  {
+    color: #000;
+    font-family: 'Roboto', sans-serif;
 }
