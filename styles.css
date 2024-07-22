@@ -1,8 +1,8 @@
 /* Imported Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); //Roboto
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     background-color: #f4f4f4;
     text-align: center;
     padding: 50px;
@@ -10,11 +10,13 @@ body {
 
 h1 {
     color: #000; //Black Color
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
+    text-align: center;
     font-size: 2em;
 }
 
 p  {
     color: #000;
-    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-family: 'Roboto';
 }
