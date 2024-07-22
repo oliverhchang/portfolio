@@ -4,7 +4,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fff; /* Set background color to white */
-    text-align: center;
+    text-align: left; /* Left-align the text */
     padding: 0; /* Remove default padding */
     margin: 0;
 }
@@ -12,9 +12,9 @@ body {
 header {
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
-    padding: 10px 0;
+    padding: 10px 20px; /* Add padding to header */
     position: fixed;
-    width: 100%;
+    width: calc(100% - 40px); /* Adjust width for margin */
     top: 0;
     left: 0;
     z-index: 1000;
@@ -24,7 +24,6 @@ nav {
     display: flex;
     justify-content: space-between; /* Space out the content to the left and right */
     align-items: center; /* Center items vertically */
-    padding: 0 20px; /* Add some horizontal padding */
 }
 
 nav ul {
@@ -41,9 +40,9 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 1em; /* Reduced font size */
+    font-size: 1.2em; /* Increase font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: bold; /* Make text bold */
+    font-weight: 400; /* Make text non-bold */
 }
 
 nav ul li a:hover {
@@ -54,12 +53,12 @@ nav ul li a:hover {
     display: flex;
 }
 
-.social-icons a {
+social-icons a {
     color: #333; /* Dark gray color for social media icons */
     font-size: 1.5em; /* Adjust size as needed */
     margin-left: 15px; /* Space between icons */
 }
 
 section {
-    padding: 80px 20px; /* Add padding to ensure content is not hidden behind the fixed header */
+    padding: 80px 40px; /* Add padding to ensure content is not hidden behind the fixed header and add margin on sides */
 }
