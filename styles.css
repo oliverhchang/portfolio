@@ -40,7 +40,7 @@ nav ul li {
 nav ul li a {
     color: #aaa; /* Black text color for navigation links */
     text-decoration: none;
-    font-size: 0.75em;
+    font-size: 0.8em;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
