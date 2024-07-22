@@ -1,22 +1,47 @@
-/* Imported Fonts */
+/* Import the Roboto font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     text-align: center;
     padding: 50px;
+    margin: 0;
 }
 
-h1 {
-    color: #000; //Black Color
-    font-family: 'Roboto';
-    text-align: center;
-    font-size: 2em;
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-p  {
-    color: #000;
-    text-align: center;
-    font-family: 'Roboto';
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+section {
+    padding: 60px 20px; /* Adjust padding to ensure content is not hidden behind the fixed header */
 }
