@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #fff;
+    background-color: #fff; /* Set background color to white */
     text-align: center;
     padding: 0; /* Remove default padding */
     margin: 0;
@@ -22,7 +22,8 @@ header {
 
 nav {
     display: flex;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: space-between; /* Space out the content to the left and right */
+    align-items: center; /* Center items vertically */
     padding: 0 20px; /* Add some horizontal padding */
 }
 
@@ -38,15 +39,25 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #aaa; /* Black text color for navigation links */
+    color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 0.8em;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
+    font-size: 1em; /* Reduced font size */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    font-weight: bold; /* Make text bold */
 }
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+
+.social-icons {
+    display: flex;
+}
+
+.social-icons a {
+    color: #333; /* Dark gray color for social media icons */
+    font-size: 1.5em; /* Adjust size as needed */
+    margin-left: 15px; /* Space between icons */
 }
 
 section {
