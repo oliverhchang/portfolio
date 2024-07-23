@@ -1,18 +1,17 @@
-/* Import the Roboto font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fff; /* Set background color to white */
     text-align: left; /* Left-align the text */
     padding: 0; /* Remove default padding */
+    margin: 0;
 }
 
 header {
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
-    padding: 10px 40px; /* Add more padding to header for larger margins */
+    padding: 10px 20px; /* Add padding to header */
     position: fixed;
+    width: calc(100% - 40px); /* Adjust width for margin */
     top: 0;
     left: 0;
     z-index: 1000;
