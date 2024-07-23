@@ -117,3 +117,9 @@ p {
     margin: 0;
     padding: 0;
 }
+
+/* Header and Body Container */
+section {
+    padding: 80px 0; /* Add padding to ensure content is not hidden behind the fixed header */
+    text-align: left; /* Ensure text is left-aligned */
+}
