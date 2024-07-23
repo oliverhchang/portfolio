@@ -56,8 +56,7 @@ nav ul li a:hover {
 .social-icons a {
     color: #333; /* Dark gray color for social media icons */
     font-size: 1.5em; /* Adjust size as needed */
-    margin-left: 15px; /* Space between icons */
-    text-decoration: none; /* Remove underline */
+    margin-left: 20px; /* Space between icons */
 }
 
 .social-icons a:hover {
