@@ -3,10 +3,9 @@ body {
     background-color: #fff; /* Set background color to white */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Define grid layout */
     height: 100vh; /* Full viewport height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
 }
 
 header {
