@@ -39,7 +39,7 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 0.85em; /* Increase font size */
+    font-size: 1em; /* Decrease font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     font-weight: 225; /* Make text non-bold */
 }
@@ -49,10 +49,9 @@ nav ul li a.active {
 }
 
 nav ul li a:hover {
-    color: #333
-    font-weight: bold
+    color: #333; /* Dark gray color on hover */
+    font-weight: bold; /* Make text bold on hover */
 }
-
 
 /* - - - - - Social Media Icons - - - - - - */
 .social-icons {
@@ -76,29 +75,29 @@ section {
 /* - - - - - Headers - - - - - - */
 /* Main Heading */
 h1 {
-    font-size: 2.5em; /* Example size for main heading */
+    font-size: 2em; /* Decrease size for main heading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
-    padding: 50px;
+    padding: 20px 0; /* Add vertical padding */
 }
 
 /* Secondary Header */
 h2 {
-    font-size: 1.5em; /* Size between main heading and body text */
+    font-size: 1.6em; /* Decrease size for secondary heading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
-    padding: 0;
+    padding: 15px 0; /* Add vertical padding */
 }
 
 /* Subheading */
 h3 {
-    font-size: 1.25em; /* Size between main heading and body text */
+    font-size: 1.4em; /* Decrease size for subheading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #333; /* Dark gray color */
     margin: 0;
-    padding: 0;
+    padding: 10px 0; /* Add vertical padding */
 }
 
 /* Body Text */
