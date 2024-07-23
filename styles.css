@@ -12,9 +12,9 @@ body {
 header {
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
-    padding: 10px 20px; /* Add padding to header */
+    padding: 10px 40px; /* Add more padding to header for larger margins */
     position: fixed;
-    width: calc(100% - 500px); /* Adjust width for margin */
+    width: calc(100% - 80px); /* Adjust width for larger margin */
     top: 0;
     left: 0;
     z-index: 1000;
@@ -54,7 +54,7 @@ nav ul li a:hover {
 }
 
 .social-icons a {
-    color: #333;
+    color: #333; /* Dark gray color for social media icons */
     font-size: 1.5em; /* Adjust size as needed */
     margin-left: 15px; /* Space between icons */
     text-decoration: none; /* Remove underline */
