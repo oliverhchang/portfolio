@@ -39,7 +39,7 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 1em; /* Decrease font size */
+    font-size: 0.8em; /* Decrease font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     font-weight: 225; /* Make text non-bold */
 }
