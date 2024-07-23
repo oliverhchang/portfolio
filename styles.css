@@ -6,7 +6,7 @@ body {
     background-color: #fff; /* Set background color to white */
     text-align: left; /* Left-align the text */
     padding: 0; /* Remove default padding */
-    margin: 50px 200px 50px 200px;
+    margin: 50px 500px 50px 500px;
 }
 
 header {
@@ -14,7 +14,7 @@ header {
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 40px; /* Add more padding to header for larger margins */
     position: fixed;
-    margin: 50px 200px 50px 200px;
+    margin: 50px 500px 50px 500px;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -40,13 +40,14 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 1.2em; /* Increase font size */
+    font-size: 0.7em; /* Increase font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 400; /* Make text non-bold */
+    font-weight: 200; /* Make text non-bold */
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #210
+    font-weight: 200
 }
 
 .social-icons {
