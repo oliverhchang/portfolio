@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    font-size: 0.9em;
+    font-size: 0.86em;
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
@@ -84,7 +84,7 @@ h1 {
 
 /* Secondary Header */
 h2 {
-    font-size: 1.2em; /* Decrease size for secondary heading */
+    font-size: 1.35em; /* Decrease size for secondary heading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
@@ -99,7 +99,7 @@ h3 {
     color: #99A;
     margin: 0;
     padding: 10px 0; /* Add vertical padding */
-    font-weight: 450;
+    font-weight: 400;
 }
 
 /* Body Text */
