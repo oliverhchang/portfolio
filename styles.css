@@ -65,7 +65,7 @@ nav ul li a:hover {
 }
 
 .social-icons a:hover {
-    color: #555; /* Change color on hover */
+    color: #32CD32 /* Change color on hover */
 }
 
 section {
@@ -73,6 +73,13 @@ section {
 }
 
 /* - - - - - Headers - - - - - - */
+/* Centered Container */
+.container {
+    width: 50%; /* Occupy the middle 50% of the screen */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding for better layout */
+}
+
 /* Main Heading */
 h1 {
     font-size: 2em; /* Decrease size for main heading */
@@ -94,12 +101,12 @@ h2 {
 
 /* Subheading */
 h3 {
-    font-size: 1.1em; /* Decrease size for subheading */
+    font-size: 1.2em; /* Decrease size for subheading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #545;
     margin: 0;
     padding: 10px 0; /* Add vertical padding */
-    font-weight: 325;
+    font-weight: 350;
 }
 
 /* Body Text */
