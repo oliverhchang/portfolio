@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    font-size: 2.5em;
+    font-size: 0.85em;
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
@@ -80,12 +80,12 @@ h1 {
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
-    padding: 0;
+    padding: 50px;
 }
 
 /* Secondary Header */
 h2 {
-    font-size: 2em; /* Size between main heading and body text */
+    font-size: 1.5em; /* Size between main heading and body text */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
@@ -94,7 +94,7 @@ h2 {
 
 /* Subheading */
 h3 {
-    font-size: 1.8em; /* Size between main heading and body text */
+    font-size: 1.25em; /* Size between main heading and body text */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #333; /* Dark gray color */
     margin: 0;
