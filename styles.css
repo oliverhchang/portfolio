@@ -14,7 +14,7 @@ header {
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 40px; /* Add more padding to header for larger margins */
     position: fixed;
-    margin: 50px 300px 50px 300px;
+    margin: 50px 200px 50px 200px;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -47,7 +47,7 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #210
-    font-weight: 200
+    font-weight: 400
 }
 
 .social-icons {
