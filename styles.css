@@ -14,7 +14,7 @@ header {
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
     position: fixed;
-    width: calc(100% - 40px); /* Adjust width for margin */
+    width: calc(100% - 300px); /* Adjust width for margin */
     top: 0;
     left: 0;
     z-index: 1000;
@@ -53,7 +53,7 @@ nav ul li a:hover {
     display: flex;
 }
 
-social-icons a {
+.social-icons a {
     color: #333; /* Dark gray color for social media icons */
     font-size: 1.5em; /* Adjust size as needed */
     margin-left: 15px; /* Space between icons */
