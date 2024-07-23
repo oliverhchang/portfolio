@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    font-size: 1em;
+    font-size: 0.9em;
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
@@ -39,9 +39,9 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 1.1em; /* Decrease font size */
+    font-size: 1em; /* Decrease font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 275; /* Make text non-bold */
+    font-weight: 350; /* Make text non-bold */
 }
 
 nav ul li a.active {
@@ -89,6 +89,7 @@ h2 {
     color: #000; /* Dark gray color */
     margin: 0;
     padding: 15px 0; /* Add vertical padding */
+    font-weight: 600;
 }
 
 /* Subheading */
@@ -98,6 +99,7 @@ h3 {
     color: #99A;
     margin: 0;
     padding: 10px 0; /* Add vertical padding */
+    font-weight: 450;
 }
 
 /* Body Text */
