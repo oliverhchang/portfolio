@@ -3,9 +3,10 @@ body {
     background-color: #fff; /* Set background color to white */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
+    height: 100vh; /* Full viewport height */
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure body takes up at least full viewport height */
+    justify-content: center; /* Center content vertically */
 }
 
 header {
