@@ -37,13 +37,13 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 0.7em; /* Increase font size */
+    font-size: 0.85em; /* Increase font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 100; /* Make text non-bold */
+    font-weight: 150; /* Make text non-bold */
 }
 
 nav ul li a:hover {
-    color: #210
+    color: #333
     font-weight: 400
 }
 
