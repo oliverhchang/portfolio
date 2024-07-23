@@ -41,7 +41,7 @@ nav ul li a {
     text-decoration: none;
     font-size: 1em; /* Decrease font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 350; /* Make text non-bold */
+    font-weight: 400; /* Use standard font weight */
 }
 
 nav ul li a.active {
@@ -65,7 +65,7 @@ nav ul li a:hover {
 }
 
 .social-icons a:hover {
-    color: #32CD32 /* Change color on hover */
+    color: #32CD32; /* Change color on hover */
 }
 
 section {
@@ -87,26 +87,27 @@ h1 {
     color: #000; /* Dark gray color */
     margin: 0;
     padding: 20px 0; /* Add vertical padding */
+    font-weight: 700; /* Ensure bold font weight */
 }
 
 /* Secondary Header */
 h2 {
-    font-size: 1.35em; /* Decrease size for secondary heading */
+    font-size: 1.6em; /* Adjust size for secondary heading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
     padding: 15px 0; /* Add vertical padding */
-    font-weight: 600;
+    font-weight: 600; /* Ensure bold font weight */
 }
 
 /* Subheading */
 h3 {
-    font-size: 1.2em; /* Decrease size for subheading */
+    font-size: 1.4em; /* Adjust size for subheading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    color: #545;
+    color: #545; /* Dark gray color */
     margin: 0;
     padding: 10px 0; /* Add vertical padding */
-    font-weight: 350;
+    font-weight: 400; /* Use standard font weight */
 }
 
 /* Body Text */
@@ -120,6 +121,5 @@ p {
 
 /* Header and Body Container */
 section {
-    padding: 80px 0; /* Add padding to ensure content is not hidden behind the fixed header */
     text-align: left; /* Ensure text is left-aligned */
 }
