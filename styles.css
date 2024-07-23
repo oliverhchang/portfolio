@@ -7,6 +7,7 @@ body {
 }
 
 header {
+    font-size: 2.5em;
     background-color: transparent; /* Remove gray background color */
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
@@ -17,6 +18,7 @@ header {
     z-index: 1000;
 }
 
+/* - - - - - Navigation Bar - - - - - - */
 nav {
     display: flex;
     justify-content: space-between; /* Space out the content to the left and right */
@@ -52,7 +54,7 @@ nav ul li a:hover {
 }
 
 
-/* Social Media Icons */
+/* - - - - - Social Media Icons - - - - - - */
 .social-icons {
     display: flex;
 }
@@ -69,4 +71,41 @@ nav ul li a:hover {
 
 section {
     padding: 80px 40px; /* Add padding to ensure content is not hidden behind the fixed header and add margin on sides */
+}
+
+/* - - - - - Headers - - - - - - */
+/* Main Heading */
+h1 {
+    font-size: 2.5em; /* Example size for main heading */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    color: #000; /* Dark gray color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Secondary Header */
+h2 {
+    font-size: 2em; /* Size between main heading and body text */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    color: #000; /* Dark gray color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Subheading */
+h3 {
+    font-size: 1.8em; /* Size between main heading and body text */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    color: #333; /* Dark gray color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Body Text */
+p {
+    font-size: 1em; /* Example size for body text */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    color: #333; /* Dark gray color */
+    margin: 0;
+    padding: 0;
 }
