@@ -1,9 +1,11 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fff; /* Set background color to white */
-    text-align: left; /* Left-align the text */
+    margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes up at least full viewport height */
 }
 
 header {
@@ -37,9 +39,9 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 0.9em; /* Increase font size */
+    font-size: 0.85em; /* Increase font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 150; /* Make text non-bold */
+    font-weight: 225; /* Make text non-bold */
 }
 
 nav ul li a.active {
