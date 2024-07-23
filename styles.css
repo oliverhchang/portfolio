@@ -96,10 +96,10 @@ h2 {
 h3 {
     font-size: 1.1em; /* Decrease size for subheading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    color: #99A;
+    color: #545;
     margin: 0;
     padding: 10px 0; /* Add vertical padding */
-    font-weight: 400;
+    font-weight: 325;
 }
 
 /* Body Text */
