@@ -3,8 +3,6 @@ body {
     background-color: #fff; /* Set background color to white */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
-    display: grid;
-    grid-template-rows: auto 1fr auto; /* Define grid layout */
     height: 100vh; /* Full viewport height */
 }
 
@@ -13,7 +11,7 @@ header {
     border-bottom: 1px solid #ccc; /* Add a divider line at the bottom */
     padding: 10px 20px; /* Add padding to header */
     position: fixed;
-    width: calc(100% - 40px); /* Adjust width for margin */
+    width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
