@@ -39,9 +39,9 @@ nav ul li {
 nav ul li a {
     color: #333; /* Dark gray text color for navigation links */
     text-decoration: none;
-    font-size: 0.8em; /* Decrease font size */
+    font-size: 0.9em; /* Decrease font size */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
-    font-weight: 225; /* Make text non-bold */
+    font-weight: 275; /* Make text non-bold */
 }
 
 nav ul li a.active {
@@ -84,7 +84,7 @@ h1 {
 
 /* Secondary Header */
 h2 {
-    font-size: 1.6em; /* Decrease size for secondary heading */
+    font-size: 1.3em; /* Decrease size for secondary heading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #000; /* Dark gray color */
     margin: 0;
@@ -93,7 +93,7 @@ h2 {
 
 /* Subheading */
 h3 {
-    font-size: 1.4em; /* Decrease size for subheading */
+    font-size: 1.25em; /* Decrease size for subheading */
     font-family: 'Roboto', sans-serif; /* Use Roboto font */
     color: #333; /* Dark gray color */
     margin: 0;
