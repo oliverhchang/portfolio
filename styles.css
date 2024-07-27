@@ -1,6 +1,6 @@
 /* - - - - - General Information - - - - - - */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #fff; /* Set background color to white */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
@@ -43,7 +43,6 @@ nav ul li a {
     text-decoration: none;
     font-size: .875rem;
     line-height: 1.25rem;
-    font-family: 'Roboto', sans-serif; /* Use Roboto font */
     font-weight: 400; /* Use standard font weight */
 }
 
@@ -85,16 +84,25 @@ section {
     width: 750px; /* Occupy the middle 50% of the screen */
     margin: 0 auto; /* Center the container horizontally */
     padding: 10px; /* Add some padding for better layout */
+    font-weight: 400;
 }
 
 /* Main Heading */
 h1 {
     font-size: 2.25em; /* Decrease size for main heading */
-    color: #1c1917; /* Dark gray color */
     font-weight: 800; /* Ensure bold font weight */
     line-height: 1.1111111;
     margin-top: 2em;
     margin-bottom: 0.5em;
+
+    text-align: left;
+    letter-spacing: -1.25px;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(140deg, #4BA4EC, #3474DF 28%, #e0757c 98%);
+    background-clip: text;
+    font-size: 42px;
+    display: inline-block;
+    position: relative;
 }
 
 /* Secondary Header */
@@ -117,17 +125,15 @@ h3 {
     font-size: 1.25em; /* Adjust size for subheading */
     color: #57534e; /* Dark gray color */
     line-height: 1.6;
-    font-weight: 400; /* Use standard font weight */
 }
 
 /* Body Text */
 p {
-    font-size: 1em; /* Example size for body text */
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 170%;
     line-height: 1.75rem;
-    color: #333; /* Dark gray color */
-    margin: 0;
-    padding: 0;
-
+    color: #5e5e63; /* Dark gray color */
 }
 
 /* Header and Body Container */
@@ -143,6 +149,7 @@ section {
 #about-me-introduction-photo {
     width: 200px;
     height: 200px;
-    border-radius: 50px;
+    border-radius: 30px;
     margin-left: 25px;
+    drop-shadow: 0px 0px 0px rgba(0,0,0,0.4);
 }
