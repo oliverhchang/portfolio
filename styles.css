@@ -7,6 +7,7 @@ body {
     height: 100vh; /* Full viewport height */
 }
 
+/* - - - - - Navigation Bar - - - - - - */
 header {
     font-size: 0.86em;
     background-color: transparent; /* Remove gray background color */
@@ -18,8 +19,6 @@ header {
     left: 0;
     z-index: 1000;
 }
-
-/* - - - - - Navigation Bar - - - - - - */
 nav {
     display: flex;
     justify-content: space-between; /* Space out the content to the left and right */
@@ -27,17 +26,15 @@ nav {
     background: transparent;
     backdrop-filter: blur(30px);
 }
-
 nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
 }
-
 nav ul li {
     margin: 5px 15px;
-}
 
+}
 nav ul li a {
     color: #6B6B6B; /* Dark gray text color for navigation links */
     text-decoration: none;
@@ -45,14 +42,12 @@ nav ul li a {
     line-height: 1.25rem;
     font-weight: 400; /* Use standard font weight */
 }
-
 nav ul li a.active {
     padding: 8px 15px;
     border-radius: 30px;
     background-image: linear-gradient(to bottom right, #4BA4EC, #3474DF);
     color: #ffffff
 }
-
 nav ul li a:hover {
     color: #333; /* Dark gray color on hover */
     font-weight: bold; /* Make text bold on hover */
@@ -63,48 +58,45 @@ nav ul li a:hover {
     display: flex;
     justify-content: end;
 }
-
 .social-icons a {
     color: #333; /* Dark gray color for social media icons */
     font-size: 1.75em; /* Adjust size as needed */
     margin-right: 30px;
 }
-
 .social-icons a:hover {
     color: #4BA4EC; /* Change color on hover */
-}
 
+}
 section {
     padding: 20px 40px; /* Add padding to ensure content is not hidden behind the fixed header and add margin on sides */
+
 }
 
 /* - - - - - Headers - - - - - - */
 /* Centered Container */
 .container {
-    width: 750px; /* Occupy the middle 50% of the screen */
+    max-width: 750px; /* Occupy the middle 50% of the screen */
     margin: 0 auto; /* Center the container horizontally */
     padding: 10px; /* Add some padding for better layout */
     font-weight: 400;
 }
-
 /* Main Heading */
 h1 {
     font-size: 2.25em; /* Decrease size for main heading */
-    font-weight: 800; /* Ensure bold font weight */
-    line-height: 1.1111111;
-    margin-top: 2em;
-    margin-bottom: 0.5em;
+        font-weight: 800; /* Ensure bold font weight */
+        line-height: 1.1111111;
+        margin-top: 2em;
+        margin-bottom: 0em;
 
-    text-align: left;
-    letter-spacing: -1.25px;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(140deg, #4BA4EC, #3474DF 28%, #e0757c 98%);
-    background-clip: text;
-    font-size: 42px;
-    display: inline-block;
-    position: relative;
+        text-align: left;
+        letter-spacing: -1.25px;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(140deg, #4BA4EC, #3474DF 28%, #e0757c 98%);
+        background-clip: text;
+        font-size: 42px;
+        display: inline-block;
+        position: relative;
 }
-
 /* Secondary Header */
 h2 {
     font-weight: 700;
@@ -119,14 +111,12 @@ h2 {
 
     border-bottom: 1px solid #ccc;
 }
-
 /* Subheading */
 h3 {
     font-size: 1.25em; /* Adjust size for subheading */
     color: #57534e; /* Dark gray color */
     line-height: 1.6;
 }
-
 /* Body Text */
 p {
     font-weight: 200;
@@ -135,7 +125,6 @@ p {
     line-height: 1.75rem;
     color: #5e5e63; /* Dark gray color */
 }
-
 /* Header and Body Container */
 section {
     text-align: left; /* Ensure text is left-aligned */
@@ -149,7 +138,47 @@ section {
 #about-me-introduction-photo {
     width: 200px;
     height: 200px;
-    border-radius: 30px;
+    border-radius: 20px;
     margin-left: 25px;
     drop-shadow: 0px 0px 0px rgba(0,0,0,0.4);
+}
+
+.background-info-photo {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-rows: repeat(3, 1fr); /* Three rows */
+    gap: 10px; /* Gap between photos */
+    margin-top: 50px; /* Ensure the grid is below the header */
+}
+.background-info-photo div {
+    border-radius: 15px; /* Add border radius to photos */
+    overflow: hidden; /* Ensure the radius is applied properly */
+}
+.background-info-photo1 {
+    grid-row: 1 / span 3; /* Vertical photo spans all three rows */
+    grid-column: 1; /* Vertical photo in the left column */
+}
+.background-info-photo2 {
+    grid-row: 1; /* Top horizontal photo in the top right */
+    grid-column: 2; /* Top horizontal photo in the right column */
+}
+.background-info-photo3 {
+    grid-row: 2 / span 2; /* Bottom horizontal photo spans two rows */
+    grid-column: 2; /* Bottom horizontal photo in the right column */
+}
+.background-info-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the photo covers the entire div */
+}
+.background-info-photo1 img {
+    object-position: 25% center; /* Shift the image slightly to the right */
+
+}
+
+.credits-hyperlink {
+    background: linear-gradient(#4BA4EC, #3474DF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
