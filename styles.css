@@ -231,6 +231,34 @@ section {
     height: 120%;
     border-radius: 1.5rem; /* Apply border radius to the image */
 }
+#serrano-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: -12%; /* Adjust this value to shift the image to the right */
+    top: -20%;
+    width: 112%; /* Increase width to maintain cover */
+    height: 120%;
+    border-radius: 1.5rem; /* Apply border radius to the image */
+}
+#workshop-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: -40%; /* Adjust this value to shift the image to the right */
+    top: -52%;
+    width: 140%; /* Increase width to maintain cover */
+    height: 152%;
+    border-radius: 1.5rem; /* Apply border radius to the image */
+}
+
+#equipment-shed-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: -44%; /* Adjust this value to shift the image to the right */
+    top: -48%;
+    width: 144%; /* Increase width to maintain cover */
+    height: 148%;
+    border-radius: 1.5rem; /* Apply border radius to the image */
+}
 
 .card-logo {
     display: block;
