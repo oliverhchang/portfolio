@@ -8,29 +8,47 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="index.html" class="active">Index</a></li>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="resume.html">Resume</a></li>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        </ul>
-        <div class="social-icons">
-            <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/oli-664" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-        </div>
-    </nav>
-</header>
 <div class="container">
     <section>
-        <h1>Oliver Chang</h1>
-        <p>Aspiring Mechanical Engineer</p>
+        <div class="index-body">
+            <h6>Oliver Chang</h6>
+            <p><i class="fas fa-map-marker-alt"></i> Berkeley, CA</p>
+
+            <div class="role-typing">
+                <span class="text role-first-text"> I'm a </span>
+                <span class="text role-sec-text"></span>
+            </div>
+
+            <script>
+                const text = document.querySelector(".role-sec-text");
+                const textLoad = () => {
+                    setTimeout(() => {
+                        text.textContent = "Mechanical Designer";
+                    }, 0);
+                    setTimeout(() => {
+                        text.textContent = "MechE Student";
+                    }, 4000);
+                    setTimeout(() => {
+                        text.textContent = "FRC Alumni";
+                    }, 8000);
+                    setTimeout(() => {
+                        text.textContent = "CAD Addict";
+                    }, 12000);
+                };
+
+                textLoad();
+                setInterval(textLoad, 16000);
+            </script>
+
+            <div class="index-buttons">
+                <a href="about.html"> <button>About Me</button> </a>
+                <a href="projects.html"> <button>Projects</button> </a>
+                <a href="resume.html"> <button>Resume</button> </a>
+            </div>
+        </div>
     </section>
 </div>
 </body>
