@@ -1,6 +1,9 @@
 :root {
     --primary-blue: #56baf1;
     --secondary-blue: #2b68e2;
+    --light-gray: #515151;
+    --dark-gray: #57534e;
+    --black: #000000;
 }
 /* - - - - - General Information - - - - - - */
 body {
@@ -40,7 +43,7 @@ nav ul li {
 
 }
 nav ul li a {
-    color: #6B6B6B; /* Dark gray text color for navigation links */
+    color: var(--light-gray); /* Dark gray text color for navigation links */
     text-decoration: none;
     font-size: .875rem;
     line-height: 1.25rem;
@@ -53,7 +56,7 @@ nav ul li a.active {
     color: #ffffff
 }
 nav ul li a:hover {
-    color: #333; /* Dark gray color on hover */
+    color: var(--dark-gray); /* Dark gray color on hover */
     font-weight: bold; /* Make text bold on hover */
 }
 
@@ -114,10 +117,11 @@ h2 {
 } /* Secondary Header */
 h3 {
     font-size: 1.25em; /* Adjust size for subheading */
-    color: #57534e; /* Dark gray color */
+    color: var(--dark-gray); /* Dark gray color */
     line-height: 1.6;
 } /* Subheading */
 h4 {
+    color: var(--black);
     background-image: linear-gradient(333deg, #323235 73%, #5e5e63);
     letter-spacing: -.01em;
     background-clip: text;
@@ -128,7 +132,7 @@ h4 {
     line-height: 140%;
 } /* Project Title */
 h5 {
-    color: #5e5e63;
+    color: var(--dark-gray);
     margin: 0px;
     letter-spacing: .1em;
     text-transform: uppercase;
@@ -146,6 +150,17 @@ h6 {
     background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
     background-clip: text;
 } /* Title */
+h7{
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(333deg, var(--black) 30%, var(--light-gray));
+    background-clip: text;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 140%;
+} /* Project Info Title */
 p {
     font-weight: 200;
     font-size: 18px;
@@ -180,7 +195,7 @@ section {
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
+    width: 200%;
     background-color: #ffffff;
     border-left: 2px solid var(--primary-blue);
     animation: animate-roles 4s steps(26) infinite;
@@ -370,6 +385,31 @@ section {
 
 }
 
+/* - - - - - Case Study Sections - - - - - - */
+.info-logo{
+    display: block;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin: 0.5em 0;
+}
+.info-at-a-glance{
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.info-glance-section {
+    flex: 1;
+    margin: 0 20px;
+}
+.text-mini {
+    font-size: 12px; /* Decrease the font size */
+}
 /* - - - - - Resume Section - - - - - - */
 
 .resume-container {
