@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>2023-FRC-Slanty</title>
+    <title>2023 | FRC Workshop Renovation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +34,11 @@
         <h7 class="info-title">FHS Workshop Renovations</h7>
         <h3>2023 | FIRST Robotics Competition</h3>
     </div>
-
     <div class="info-banner-image-container">
-        <img class="info-banner-image"src="Images/project-2023-workshop/workshop-banner.webp">
+        <img class="info-banner-image"src="Images/project-2023-workshop/workshop-main.webp">
     </div>
-
-    <p>During the 2023 offseason, the design subteam worked on a robot for the 2023 FIRST Robotics Competition: CHARGED UP. Slanty reaches all parts of the field with a two stage elevator, wrist, and roller intakes capable of picking up cones and cubes.</p>
+    <p>Last year, our team found that the disorganization and lack of workflow led to an unproductive use of our time. Over the 2023 summer, I led an initiative to overhaul our workshop, designing and constructing tables, CNC enclosures, part organizer carts, a battery cart, and a tool wall for our portables classrooms. </p>
+    <p>From CAD to carpentry, the clean and level tables to work on offer a better place to build robots for years to come!</p>
     <div class="info-at-a-glance">
         <div class="info-glance-section">
             <p class="text-mini">ROLE</p>
@@ -48,22 +47,148 @@
         <div class="info-glance-section">
             <p class="text-mini">TOOLS</p>
             <img class="info-tool-logo" src="Logos/onshape.webp">
+            <img class="info-tool-logo" src="Logos/fusion360.webp">
+        </div>
+        <div class="info-glance-section">
+            <p class="text-mini">TEAM</p>
+            <p class="text-mini">FRC 3501</p>
+            <p class="text-mini">FTC 16532</p>
+            <p class="text-mini">FTC 16533</p>
+        </div>
+    </div>
+    <div class="pdf-links-container">
+        <div class="image-wrapper">
+            <a href="https://cad.onshape.com/documents/ec1fdfde7474a9e95d63513a/w/c1bb4115b4c4bd416a394d81/e/f42a2c077845a8a0ab3c3a60" target="_blank">
+                <img src="Images/project-2023-workshop/workshop-onshape-assembly.webp">
+            </a>
+            <h3>CAD | Layout</h3>
+        </div>
+
+        <div class="image-wrapper">
+            <a href="https://cad.onshape.com/documents/a67028fe043e80b891750c14/w/399d7af047b0844edcd1369f/e/8d874c629fb041d1d7e6993d" target="_blank">
+                <img src="Images/project-2023-workshop/workshop-onshape-tables.webp">
+            </a>
+            <h3>CAD | Tables</h3>
         </div>
     </div>
 
-    <div class="pdf-links-container">
-        <div class="image-wrapper">
-            <a href="Files/Team 3501 Technical Binder 2024.pdf" target="_blank">
-                <img src="Images/project-2024-frc/Team 3501 Technical Binder 2023-24.webp">
-            </a>
-            <h3>Technical Binder</h3>
+    <div class="info-challenge-overview">
+        <div class="info-challenge-text">
+            <h2>Challenge Overview</h2>
+            <p>Our FIRST Robotics Competition team works out of 2 portable classrooms on campus. This renovation was a significant upgrade in terms of the organization, safety, robot testing, and build-season workflow. In addition to building robots, the renovations allow for additional utility to film educational videos, hold general meetings, and demo to prospective students.</p>
+            <p>Extensive research into other makerspaces and workshops, as well as inital planning can be found <a class="bold" href="https://docs.google.com/document/d/1RTJDVwKO2x1svty8fhZsj_NInodqikujzdDlq5ywcFk/edit?usp=sharing" >in this Google Document</a>.</p>
         </div>
-        <div class="image-wrapper">
-            <a href="https://cad.onshape.com/documents/e02aab968ebf91b14b13ddab/w/b152f746bded9b465a164f1d/e/eef88f7fda5b5da08d5d8370?renderMode=0&leftPanel=false&uiState=66abb2770ca3d416ff474286" target="_blank">
-                <img src="Images/project-2024-frc/serrano-v1-onshape.webp">
-            </a>
-            <h3>Onshape CAD</h3>
+    </div>
+
+    <div class="info-planning">
+        <div class="info-planning-text">
+            <h2>Planning</h2>
+            <p>Designing the layout was informed by which tools, tables, and machines will be used in each part of the manufacturing process. The goal of the design was to keep all the essentials within an arm's grasp away, while leaving ample storage space for hardware, in-progress assemblies, and less-used machines. </p>
+            <p>Each of the major components (tables, cnc enclosure, tool carts) are modeled in Onshape. This allows us to create precise bill of materials and give team members assembly instructions.</p>
         </div>
+        <div class="info-planning-photos">
+            <div class="plan-slider">
+                <img id="slide-1" src="Images/project-2023-workshop/workshop-cad1.webp">
+                <img id="slide-2" src="Images/project-2023-workshop/workshop-cad2.webp">
+
+            </div>
+            <div class="plan-slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const slider = document.querySelector('.plan-slider');
+                const navLinks = document.querySelectorAll('.plan-slider-nav a');
+                const images = document.querySelectorAll('.plan-slider img');
+
+                navLinks.forEach((link, index) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const imgWidth = slider.clientWidth;
+                        slider.scrollLeft = imgWidth * index;
+                    });
+                });
+
+                images.forEach((img, index) => {
+                    img.addEventListener('click', (event) => {
+                        const imgWidth = slider.clientWidth;
+                        const clickX = event.clientX - img.getBoundingClientRect().left;
+
+                        if (clickX < imgWidth / 2) {
+                            // Clicked on the left side
+                            if (index > 0) {
+                                slider.scrollLeft = imgWidth * (index - 1);
+                            }
+                        } else {
+                            // Clicked on the right side
+                            if (index < images.length - 1) {
+                                slider.scrollLeft = imgWidth * (index + 1);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+    <div class="info-highlight">
+        <h2>Highlights</h2>
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>P1 Tables</h3>
+                <p> Two durable work tables with polyurethane coating and storage space.</p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2023-workshop/workshop-painting.webp">
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-image-content">
+                <img src="Images/project-2023-workshop/workshop-p2.webp">
+            </div>
+            <div class="info-text-content">
+                <h3>P2 Tables</h3>
+                <p> Large meeting tables & 6 Wheeled tables make it easily to transform the room for robot testing, code sessions, lessons, and more.</p>
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>CNC Enclosures</h3>
+                <p>These two enclosures keep metal chips inside, store extra stock, and provide additional lighting.</p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2023-workshop/workshop-cnc.webp">
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-image-content">
+                <img src="Images/project-2023-workshop/workshop-tool-cart.webp">
+            </div>
+            <div class="info-text-content">
+                <h3>Battery & Tool Cart</h3>
+                <p>These carts can be easily transported to competition and hold smaller organizers full of small hardware pieces. </p>
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Tool Wall</h3>
+                <p>Just behind the main workspace, the tool wall has every commonly used tool at arm's reach. </p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2023-workshop/workshop-tool-wall2.webp">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-results">
+        <h2>Results</h2>
+        <p>After a full season of meetings, the tables held up amazingly. The flexibility of the wheeled tables and smooth workflow from the improved layout helped improve the overall efficiency, organization, and safety!</p>
     </div>
 </div>
 </body>

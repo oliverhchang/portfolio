@@ -171,7 +171,9 @@ p {
 } /* Body Text */
 .bold{
     font-weight:800;
-    color: var(--black);
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text;
     text-decoration:none;
 }
 section {
@@ -363,12 +365,12 @@ section {
 }
 #equipment-shed-banner-image {
     object-fit: cover;
-    position: absolute;
-    right: -44%; /* Adjust this value to shift the image to the right */
-    top: -48%;
-    width: 144%; /* Increase width to maintain cover */
-    height: 148%;
-    border-radius: 1.5rem; /* Apply border radius to the image */
+        position: absolute;
+        right: -10%; /* Adjust this value to shift the image to the right */
+        top: -10%;
+        width: 110%; /* Increase width to maintain cover */
+        height: 110%;
+        border-radius: 1.5rem; /* Apply border radius to the image */
 }
 
 .card-logo {
@@ -392,6 +394,7 @@ section {
 
 /* - - - - - Case Study Sections - - - - - - */
 .info-banner-image{
+    object-fit: cover;
     aspect-ratio: 16 / 9;
     margin-bottom: 1em;
     border-radius: 30px;
@@ -419,6 +422,7 @@ section {
 .info-tool-logo{
     border-radius: 16px;
     width: 180px;
+    max-height: 100px;
 }
 .pdf-links-container{
     display: flex;
@@ -516,7 +520,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px; /* Adjust the gap between text and image as needed */
+    gap: 28px; /* Adjust the gap between text and image as needed */
 }
 
 .info-text-content {
@@ -533,6 +537,8 @@ section {
     max-width: 100%;
     height: auto;
     object-fit: cover;
+    border-radius: 30px;
+    margin: 8px;
 }
 /* - - - - - Resume Section - - - - - - */
 .resume-container {
