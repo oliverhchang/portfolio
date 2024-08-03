@@ -1,4 +1,5 @@
 :root {
+    --primary-background: #fff; /* white */
     --primary-blue: #56baf1;
     --secondary-blue: #2b68e2;
     --light-gray: #515151;
@@ -8,7 +9,7 @@
 /* - - - - - General Information - - - - - - */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #fff; /* Set background color to white */
+    background-color: var(--primary-background); /* Set background color to white */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
     height: 100vh; /* Full viewport height */
@@ -53,7 +54,7 @@ nav ul li a.active {
     padding: 8px 15px;
     border-radius: 30px;
     background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
-    color: #ffffff
+    color: var(--primary-background);
 }
 nav ul li a:hover {
     color: var(--dark-gray); /* Dark gray color on hover */
@@ -66,7 +67,7 @@ nav ul li a:hover {
     justify-content: end;
 }
 .social-icons a {
-    color: #333; /* Dark gray color for social media icons */
+    color: var(--dark-gray); /* Dark gray color for social media icons */
     font-size: 1.75em; /* Adjust size as needed */
     margin-right: 30px;
 }
@@ -166,7 +167,7 @@ p {
     font-size: 18px;
     line-height: 170%;
     line-height: 1.75rem;
-    color: #5e5e63; /* Dark gray color */
+    color: var(--dark-gray); /* Dark gray color */
 } /* Body Text */
 .bold{
     font-weight:800;
@@ -191,7 +192,7 @@ section {
     font-weight: 600;
 }
 .role-typing .text.role-first-text{
-     color: #57534e;
+     color: var(--dark-gray);
 
 }
 .text.role-sec-text:before {
@@ -201,7 +202,7 @@ section {
     left: 0;
     height: 100%;
     width: 200%;
-    background-color: #ffffff;
+    background-color: var(--primary-background);
     border-left: 2px solid var(--primary-blue);
     animation: animate-roles 4s steps(26) infinite;
 }
@@ -236,7 +237,7 @@ section {
     margin-top: 24px;
 }
 .index-buttons a button:hover {
-    transform: scale(1.05); /* Scale the button */
+    transform: scale(1.08); /* Scale the button */
     animation: gradientShift 3s ease infinite; /* Animate the gradient */
 }
 @keyframes gradientShift {
@@ -408,7 +409,7 @@ section {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--primary-background);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .info-glance-section {
@@ -421,7 +422,7 @@ section {
 }
 .pdf-links-container{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     gap: 20px; /* Adjust the gap as needed */
     padding: 20px;
@@ -450,6 +451,9 @@ section {
 .image-wrapper h3 {
     margin-top: 10px; /* Adjust the space between the image and subtitle as needed */
     text-align: center;
+}
+.image-wrapper:hover{
+    transform: scale(1.08);
 }
 
 .info-challenge-text {
@@ -506,6 +510,29 @@ section {
 
 .plan-slider-nav a:hover {
     opacity: 1;
+}
+
+.info-mechanism {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Adjust the gap between text and image as needed */
+}
+
+.info-text-content {
+    flex: 1;
+}
+
+.info-image-content {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info-image-content img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 /* - - - - - Resume Section - - - - - - */
 .resume-container {

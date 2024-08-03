@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2023-FRC-Slanty</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav>
+        <div>
+            <ul><li><a href="index.html">Oliver Chang </a></li></ul>
+        </div>
+        <ul>
+            <li><a href="about.html" >About Me</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        </ul>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/oli-664" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="info-summery">
+        <h7 class="info-title">Equipment Shed</h7>
+        <h3>2021 | Scouts BSA</h3>
+    </div>
+
+    <div class="info-banner-image-container">
+        <img class="info-banner-image"src="Images/project-2023-workshop/workshop-banner.webp">
+    </div>
+
+    <p>For my Eagle Scout Project, I undertook the design, finance, and construction of a large equipment shed for Sunnyvale Little League. With the help of over 20 volunteers from my troop, we spent 136 hours over 3 weekends (with lots of hours in prior planning and preperation) through a global pandemic.</p>
+    <div class="info-at-a-glance">
+        <div class="info-glance-section">
+            <p class="text-mini">SKILLS (TECH)</p>
+            <p class="text-mini">Drafting</p>
+            <p class="text-mini">Carpentry</p>
+            <p class="text-mini">Roofing</p>
+        </div>
+        <div class="info-glance-section">
+            <p class="text-mini">SKILLS (NONTECH)</p>
+            <p class="text-mini">Finance</p>
+            <p class="text-mini">Budgeting</p>
+            <p class="text-mini">Grant-Writing</p>
+        </div>
+        <div class="info-glance-section">
+            <p class="text-mini">TROOPS</p>
+            <p class="text-mini">Troop 404</p>
+            <p class="text-mini">Troop 406</p>
+        </div>
+    </div>
+
+    <div class="info-planning">
+        <div class="info-planning-text">
+            <h2>Planning</h2>
+            <p>Th</p>
+            <p>Planning for this project started with sketches of pencil on paper. I learned about drafting through Youtube tutorials, with review from my Scoutmaster and the SVLL board. The dimensions helped inform the bill of materials, including quantities for hardware that were needed.</p>
+        </div>
+        <div class="info-planning-photos">
+            <div class="plan-slider">
+                <img id="slide-1" src="Images/project-2024-frc/2d-serrano-v1.webp">
+                <img id="slide-2" src="Images/project-2024-frc/2d-serrano-v2.webp">
+                <img id="slide-3" src="Images/project-2024-frc/2d-serrano-v3.webp">
+                <img id="slide-4" src="Images/project-2024-frc/2d-serrano-v5.webp">
+                <img id="slide-5" src="Images/project-2024-frc/2d-serrano-v6.webp">
+            </div>
+            <div class="plan-slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+                <a href="#slide-3"></a>
+                <a href="#slide-4"></a>
+                <a href="#slide-5"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const slider = document.querySelector('.plan-slider');
+                const navLinks = document.querySelectorAll('.plan-slider-nav a');
+                const images = document.querySelectorAll('.plan-slider img');
+
+                navLinks.forEach((link, index) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const imgWidth = slider.clientWidth;
+                        slider.scrollLeft = imgWidth * index;
+                    });
+                });
+
+                images.forEach((img, index) => {
+                    img.addEventListener('click', (event) => {
+                        const imgWidth = slider.clientWidth;
+                        const clickX = event.clientX - img.getBoundingClientRect().left;
+
+                        if (clickX < imgWidth / 2) {
+                            // Clicked on the left side
+                            if (index > 0) {
+                                slider.scrollLeft = imgWidth * (index - 1);
+                            }
+                        } else {
+                            // Clicked on the right side
+                            if (index < images.length - 1) {
+                                slider.scrollLeft = imgWidth * (index + 1);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+</div>
+</body>
+</html>
