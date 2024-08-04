@@ -1,5 +1,5 @@
 :root {
-    --primary-background: #fff; /* white */
+    --primary-background: #fff;
     --primary-blue: #56baf1;
     --secondary-blue: #2b68e2;
     --light-gray: #515151;
@@ -9,18 +9,18 @@
 /* - - - - - General Information - - - - - - */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--primary-background); /* Set background color to white */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    height: 100vh; /* Full viewport height */
+    background-color: var(--primary-background);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
 /* - - - - - Navigation Bar - - - - - - */
 header {
     font-size: 0.86em;
-    background-color: transparent; /* Remove gray background color */
-    border-bottom: 2px solid #ccc; /* Add a divider line at the bottom */
-    padding: 0px 20px; /* Add padding to header */
+    background-color: transparent;
+    border-bottom: 2px solid #ccc;
+    padding: 0px 20px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -29,8 +29,8 @@ header {
 }
 nav {
     display: flex;
-    justify-content: space-between; /* Space out the content to the left and right */
-    align-items: center; /* Center items vertically */
+    justify-content: space-between;
+    align-items: center;
     background: transparent;
     backdrop-filter: blur(30px);
 }
@@ -44,11 +44,11 @@ nav ul li {
 
 }
 nav ul li a {
-    color: var(--light-gray); /* Dark gray text color for navigation links */
+    color: var(--light-gray);
     text-decoration: none;
     font-size: .875rem;
     line-height: 1.25rem;
-    font-weight: 400; /* Use standard font weight */
+    font-weight: 400;
 }
 nav ul li a.active {
     padding: 8px 15px;
@@ -57,8 +57,8 @@ nav ul li a.active {
     color: var(--primary-background);
 }
 nav ul li a:hover {
-    color: var(--dark-gray); /* Dark gray color on hover */
-    font-weight: bold; /* Make text bold on hover */
+    color: var(--dark-gray);
+    font-weight: bold;
 }
 
 /* - - - - - Social Media Icons - - - - - - */
@@ -67,24 +67,24 @@ nav ul li a:hover {
     justify-content: end;
 }
 .social-icons a {
-    color: var(--dark-gray); /* Dark gray color for social media icons */
-    font-size: 1.75em; /* Adjust size as needed */
+    color: var(--dark-gray);
+    font-size: 1.75em;
     margin-right: 30px;
 }
 .social-icons a:hover {
-    color: var(--secondary-blue); /* Change color on hover */
+    color: var(--secondary-blue);
 
 }
 section {
-    padding: 20px 40px; /* Add padding to ensure content is not hidden behind the fixed header and add margin on sides */
+    padding: 20px 40px;
 
 }
 
 /* - - - - - Headers - - - - - - */
 .container {
-    max-width: 750px; /* Occupy the middle 50% of the screen */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 10px; /* Add some padding for better layout */
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 10px;
     font-weight: 400;
 }
 h1 {
@@ -117,8 +117,8 @@ h2 {
     border-bottom: 1px solid #ccc;
 } /* Secondary Header */
 h3 {
-    font-size: 1.25em; /* Adjust size for subheading */
-    color: var(--dark-gray); /* Dark gray color */
+    font-size: 1.25em;
+    color: var(--dark-gray);
     line-height: 1.6;
 } /* Subheading */
 h4 {
@@ -167,7 +167,7 @@ p {
     font-size: 18px;
     line-height: 170%;
     line-height: 1.75rem;
-    color: var(--dark-gray); /* Dark gray color */
+    color: var(--dark-gray);
 } /* Body Text */
 .bold{
     font-weight:800;
@@ -177,7 +177,7 @@ p {
     text-decoration:none;
 }
 section {
-    text-align: left; /* Ensure text is left-aligned */
+    text-align: left;
 }
 
 /* - - - - - Welcome Page Section - - - - - - */
@@ -219,11 +219,11 @@ section {
 
 .index-buttons {
     display: flex;
-    gap: 20px; /* Add space between buttons */
+    gap: 20px;
 }
 .index-buttons a {
-    text-decoration: none; /* Remove underline from links */
-    display: inline-block; /* Ensure the buttons are treated as blocks */
+    text-decoration: none;
+    display: inline-block;
 }
 .index-buttons a button {
     padding: 8px 15px;
@@ -231,16 +231,16 @@ section {
     font-size: 16px;
     cursor: pointer;
     background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
-    border: none; /* Removes the default border */
-    color: white; /* Ensures the button text is readable */
-    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
-    background-size: 200% 200%; /* Ensures the background can move */
+    border: none;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+    background-size: 200% 200%;
     background-position: 0% 50%;
     margin-top: 24px;
 }
 .index-buttons a button:hover {
-    transform: scale(1.08); /* Scale the button */
-    animation: gradientShift 3s ease infinite; /* Animate the gradient */
+    transform: scale(1.08);
+    animation: gradientShift 3s ease infinite;
 }
 @keyframes gradientShift {
     0% {
@@ -269,34 +269,34 @@ section {
 
 .background-info-photo {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns */
-    grid-template-rows: repeat(3, 1fr); /* Three rows */
-    gap: 10px; /* Gap between photos */
-    margin-top: 50px; /* Ensure the grid is below the header */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 50px;
 }
 .background-info-photo div {
-    border-radius: 15px; /* Add border radius to photos */
-    overflow: hidden; /* Ensure the radius is applied properly */
+    border-radius: 15px;
+    overflow: hidden;
 }
 .background-info-photo1 {
-    grid-row: 1 / span 3; /* Vertical photo spans all three rows */
-    grid-column: 1; /* Vertical photo in the left column */
+    grid-row: 1 / span 3;
+    grid-column: 1;
 }
 .background-info-photo2 {
-    grid-row: 1; /* Top horizontal photo in the top right */
-    grid-column: 2; /* Top horizontal photo in the right column */
+    grid-row: 1;
+    grid-column: 2;
 }
 .background-info-photo3 {
-    grid-row: 2 / span 2; /* Bottom horizontal photo spans two rows */
-    grid-column: 2; /* Bottom horizontal photo in the right column */
+    grid-row: 2 / span 2;
+    grid-column: 2;
 }
 .background-info-photo img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the photo covers the entire div */
+    object-fit: cover;
 }
 .background-info-photo1 img {
-    object-position: 25% center; /* Shift the image slightly to the right */
+    object-position: 25% center;
 
 }
 
@@ -310,8 +310,8 @@ section {
 /* - - - - - Projects Section - - - - - - */
 .project-display {
     display: grid;
-    row-gap: 2rem; /* Vertical spacing between project-display elements */
-    column-gap: 2rem; /* Horizontal spacing between columns, if any */
+    row-gap: 2rem;
+    column-gap: 2rem;
 }
 .project-display-article {
     position: relative;
@@ -322,55 +322,55 @@ section {
     aspect-ratio: 21 / 9;
     width: 100%;
     border-radius: 1.5rem;
-    overflow: hidden; /* Ensure border-radius is applied */
-    position: relative; /* Allow absolute positioning of the image */
+    overflow: hidden;
+    position: relative;
 }
 .project-banner-image {
     object-fit: cover;
     position: absolute;
-    right: 0%; /* Adjust this value to shift the image to the right */
+    right: 0%;
     top: 0%;
-    width: 100%; /* Increase width to maintain cover */
+    width: 100%;
     height: 100%;
-    border-radius: 1.5rem; /* Apply border radius to the image */
+    border-radius: 1.5rem;
     background-color: #d3d3d3;
 }
 #serrano-banner-image {
     object-fit: cover;
     position: absolute;
-    right: -12%; /* Adjust this value to shift the image to the right */
+    right: -12%;
     top: -20%;
-    width: 112%; /* Increase width to maintain cover */
+    width: 112%;
     height: 120%;
-    border-radius: 1.5rem; /* Apply border radius to the image */
+    border-radius: 1.5rem;
 }
 #slanty-banner-image {
     object-fit: cover;
     position: absolute;
-    right: 0%; /* Adjust this value to shift the image to the right */
+    right: 0%;
     top: 5%;
-    width: 100%; /* Increase width to maintain cover */
+    width: 100%;
     height: 105%;
-    border-radius: 1.5rem; /* Apply border radius to the image */
+    border-radius: 1.5rem;
     background-color: #d3d3d3;
 }
 #workshop-banner-image {
     object-fit: cover;
     position: absolute;
-    right: -40%; /* Adjust this value to shift the image to the right */
+    right: -40%;
     top: -52%;
-    width: 140%; /* Increase width to maintain cover */
+    width: 140%;
     height: 152%;
-    border-radius: 1.5rem; /* Apply border radius to the image */
+    border-radius: 1.5rem;
 }
 #equipment-shed-banner-image {
     object-fit: cover;
         position: absolute;
-        right: -10%; /* Adjust this value to shift the image to the right */
+        right: -10%;
         top: -10%;
-        width: 110%; /* Increase width to maintain cover */
+        width: 110%;
         height: 110%;
-        border-radius: 1.5rem; /* Apply border radius to the image */
+        border-radius: 1.5rem;
 }
 
 .card-logo {
@@ -428,7 +428,7 @@ section {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 20px; /* Adjust the gap as needed */
+    gap: 20px;
     padding: 20px;
 }
 
@@ -436,13 +436,13 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(33.333% - 13.333px); /* Adjust width based on the number of images and gap */
+    width: calc(33.333% - 13.333px);
 }
 
 .image-wrapper a {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1.3; /* A4 aspect ratio (1:1.414) */
+    aspect-ratio: 1 / 1.3;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -450,11 +450,11 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border: 1px solid #ddd; /* Optional: Adds a border around the images */
+    border: 1px solid #ddd;
 }
 
 .image-wrapper h3 {
-    margin-top: 10px; /* Adjust the space between the image and subtitle as needed */
+    margin-top: 10px;
     text-align: center;
 }
 .image-wrapper:hover{
@@ -470,7 +470,7 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .text-mini {
-    font-size: 16px; /* Decrease the font size */
+    font-size: 16px;
 }
 .info-planning {
     position: relative;
@@ -521,7 +521,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 28px; /* Adjust the gap between text and image as needed */
+    gap: 28px;
 }
 
 .info-text-content {
