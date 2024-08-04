@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>2023-FRC-Slanty</title>
+    <title>2023 | FRC Slanty</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
     </div>
 
     <div class="info-banner-image-container">
-        <img class="info-banner-image"src="Images/project-2018-frc/grippy-banner.webp">
+        <img class="info-banner-image"src="Images/project-2023-frc/slanty-field.webp">
     </div>
 
     <p>During the 2023 offseason, the design subteam worked on a robot for the 2023 FIRST Robotics Competition: CHARGED UP. Slanty reaches all parts of the field with a two stage elevator, wrist, and roller intakes capable of picking up cones and cubes.</p>
@@ -53,17 +53,81 @@
 
     <div class="pdf-links-container">
         <div class="image-wrapper">
-            <a href="Files/Team 3501 Technical Binder 2024.pdf" target="_blank">
-                <img src="Images/project-2024-frc/Team 3501 Technical Binder 2023-24.webp">
-            </a>
-            <h3>Technical Binder</h3>
-        </div>
-        <div class="image-wrapper">
-            <a href="https://cad.onshape.com/documents/e02aab968ebf91b14b13ddab/w/b152f746bded9b465a164f1d/e/eef88f7fda5b5da08d5d8370?renderMode=0&leftPanel=false&uiState=66abb2770ca3d416ff474286" target="_blank">
-                <img src="Images/project-2024-frc/serrano-v1-onshape.webp">
+            <a href="https://cad.onshape.com/documents/8f2b3e6a695700480493c77d/w/e72554fc92df17127a5712a2/e/9acbc07403c516d089011de5?renderMode=0&uiState=66aec60b0ca3d416ff4aad81" target="_blank">
+                <img src="Images/project-2023-frc/slanty-cad.webp">
             </a>
             <h3>Onshape CAD</h3>
         </div>
+    </div>
+
+    <div class="info-challenge-overview">
+        <div class="info-challenge-text">
+            <h2>Project Overview</h2>
+            <p>I designed Slanty as a practice robot for my team to go from 2D robot architectures into 3D parts. The 2023 FIRST Robotics Competition requires robots to pick up cones and cubes from various pickup spots throughout the fields to place on nodes of various levels. At the end of the match, robots gain additional points for docking and balancing on the charge station.</p>
+            <div class="info-challenge-video">
+                <iframe width="750" height="422" src="https://www.youtube.com/embed/0zpflsYc4PA?si=U8fGkHYrmDHVB3jd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-planning">
+        <div class="info-planning-text">
+            <h2>Planning</h2>
+            <p>After sketching out the field elements, there are gridlines that serve as the boundary for the design as according to the game manual. Next, a layer of lines represented each degree of freedom and got preliminary lengths. </p>
+            <p>Because the purpose of this project was for CAD practice, we prioritized the overarching structure and pieces. To improve the design more, mounting for electronics, more careful measurements for COM, and a more compact wrist gearbox would help make the robot successful on the field.</p>
+        </div>
+        <div class="info-planning-photos">
+            <div class="plan-slider">
+                <img id="slide-1" src="Images/project-2023-frc/slanty-2d-cone.webp">
+                <img id="slide-2" src="Images/project-2023-frc/slanty-2d-cube.webp">
+                <img id="slide-3" src="Images/project-2023-frc/slanty-2d-pickup.webp">
+            </div>
+            <div class="plan-slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+                <a href="#slide-3"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const slider = document.querySelector('.plan-slider');
+                const navLinks = document.querySelectorAll('.plan-slider-nav a');
+                const images = document.querySelectorAll('.plan-slider img');
+
+                navLinks.forEach((link, index) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const imgWidth = slider.clientWidth;
+                        slider.scrollLeft = imgWidth * index;
+                    });
+                });
+
+                images.forEach((img, index) => {
+                    img.addEventListener('click', (event) => {
+                        const imgWidth = slider.clientWidth;
+                        const clickX = event.clientX - img.getBoundingClientRect().left;
+
+                        if (clickX < imgWidth / 2) {
+                            // Clicked on the left side
+                            if (index > 0) {
+                                slider.scrollLeft = imgWidth * (index - 1);
+                            }
+                        } else {
+                            // Clicked on the right side
+                            if (index < images.length - 1) {
+                                slider.scrollLeft = imgWidth * (index + 1);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+    <div class="info-results">
+        <h2>Results</h2>
+        <p>One of the most difficult parts when designing a robot in a team is integrating distinct mechanisms cohesively. Although the robot was never built in real life, our team learned a lot about linear and rotational mechanisms, roller intakes, and gearboxes. Learning how to design these mechanisms is very important and translated into design decisions during the 2024 CRESCENDO build season.</p>
     </div>
 </div>
 </body>

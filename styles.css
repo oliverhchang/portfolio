@@ -443,6 +443,7 @@ section {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1.3; /* A4 aspect ratio (1:1.414) */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .image-wrapper img {
