@@ -8,18 +8,78 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 5px 0;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+    .accordion-header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between; /* Places text and icon on opposite ends */
+      align-items: center;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      text-decoration: none;
+      transition: font-size 0.3s ease; /* Smooth font-size transition */
+    }
+    .accordion-header:hover {
+      font-size: 1.02em; /* Slightly larger font size on hover */
+      font-weight: bold; /* Optional: Makes it bolder on hover */
+    }
+    .icon {
+      transition: transform 0.3s ease;
+    }
+    .icon.rotate {
+      transform: rotate(90deg);
+    }
+    .accordion-content {
+      display: none;
+      margin-left: 20px;
+      font-family: inherit; /* Inherit font family */
+      font-size: inherit;   /* Inherit font size */
+      font-weight: inherit; /* Inherit font weight */
+      color: inherit;       /* Inherit color */
+    }
+    .accordion-content a {
+      text-decoration: none;
+      color: #007bff;
+      background-clip: text; /* Ensures the gradient is applied to the text */
+      -webkit-background-clip: text; /* Safari-specific prefix */
+      transition: font-size 0.3s ease; /* Smooth font-size transition */
+    }
+
+    .accordion-content a:hover {
+      font-size: 1.1em; /* Slightly larger font size on hover */
+      font-weight: bold; /* Optional: Makes it bolder on hover */
+    }
+    .resume-embed {
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 <body>
 <header>
   <nav>
     <div>
-      <ul><li><a href="index.html">Oliver Chang </a></li></ul>
+      <ul><li><a href="index.html">Oliver Chang</a></li></ul>
     </div>
     <ul>
-      <li><a href="about.html" >About Me</a></li>
+      <li><a href="about.html">About Me</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="resume.html" class="active">Resume</a></li>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </ul>
     <div class="social-icons">
       <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -32,15 +92,83 @@
 
 <div class="container">
   <section>
-    <div class="resume-header">
-      <h1>Download Resume</h1>
-      <a href="Files/oliverhchang-resume.pdf" target="_blank" class="download-button" download>
-        <i class="fas fa-download"></i>
-      </a>
+    <h1>Resume</h1>
+    <div class="resume-embed">
+      <iframe src="Files/oliverhchang-resume.pdf" width="100%" height="500px" style="border: none;">
+        Your browser does not support iframes. <a href="Files/oliverhchang-resume.pdf" target="_blank">Click here to view the PDF</a>.
+      </iframe>
     </div>
-
     <p>Last Updated: December 2024</p>
+
+    <h1>Education</h1>
+    <div class="education-section">
+      <div class="left-column">
+        <h2>UC Berkeley</h2>
+        <p>Berkeley, CA</p>
+        <p>2024 - Present</p>
+        <img src="Logos/berkeley.webp" alt="UC Berkeley Logo">
+      </div>
+      <div class="right-column">
+        <h3>Mechanical Engineering</h3>
+        <h4>Freshman Year</h4>
+        <ul>
+          <li>ENGIN 7: Introduction to Computer Programming for Scientists and Engineers</li>
+          <li>
+            <div class="accordion-header" onclick="toggleAccordion()" aria-expanded="false">
+              ENGIN 26: Three-Dimensional Modeling for Design <span class="icon" id="engin26-icon">▶</span>
+            </div>
+            <div class="accordion-content" id="engin26-content">
+              <a href="https://drive.google.com/drive/folders/1ldhSgcU-ri-gfOL4zjLGJIKYkvs9Hrkz?usp=sharing" target="_blank">Labs (Solidworks)</a>
+            </div>
+          </li>
+          <li>MATH 53: Multivariable Calculus</li>
+          <li>HISTART R1B: Reading and Writing about Visual Experience</li>
+          <li>&nbsp;</li>
+          <li>CHEM 1A: General Chemistry</li>
+          <li>ENGIN 29: Manufacturing and Design Communication</li>
+          <li>MATH 54: Linear Algebra</li>
+          <li>ESPM C22AC: Fire: Past, Present and Future Interactions with the People and Ecosystems of California</li>
+        </ul>
+      </div>
+    </div>
+    <div class="education-section">
+      <!-- Left Column -->
+      <div class="left-column">
+        <h2>Fremont High School</h2>
+        <p>Sunnyvale, CA</p>
+        <p>2020 - 2024</p>
+        <img src="Logos/fremonthighschool.webp" alt="FHS Logo">
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <h3>High School Degree</h3>
+        <h4>Valedictorian, Firebird Award</h4>
+
+        <h4>Relevant Coursework</h4>
+        <ul>
+          <li>AP Computer Science</li>
+          <li>AP Physics C Mechanics</li>
+          <li>AP Calculus BC</li>
+          <li>Computer Programming Java</li>
+          <li>Principles of Engineering</li>
+        </ul>
+      </div>
+    </div>
   </section>
 </div>
+
+
+<script>
+  function toggleAccordion() {
+    const content = document.getElementById('engin26-content');
+    const icon = document.getElementById('engin26-icon');
+    const isExpanded = content.style.display === 'block';
+
+    content.style.display = isExpanded ? 'none' : 'block';
+    icon.classList.toggle('rotate', !isExpanded);
+    icon.closest('.accordion-header').setAttribute('aria-expanded', !isExpanded);
+  }
+</script>
 </body>
 </html>
