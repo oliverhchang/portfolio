@@ -32,12 +32,13 @@
 <div class="container">
     <div class="info-summery">
         <h7 class="info-title">BART</h7>
-        <h3>2023 | Collegiate Rocketry</h3>
+        <h3>2024 | Level-2 Rocket</h3>
     </div>
 
     <div class="info-banner-image-container">
-        <img class="info-banner-image"src="Images/project-2024-star-bart/bart-ork.webp">
+        <img class="info-banner-image" src="Images/project-2024-star-bart/bart-side-cad.webp" alt="BART CAD Image">
     </div>
+
 
     <p>BART is a K-class onboarding project for Berkeley's Space Technologies and Rocketry (STAR) team. Within small groups of 8, we learned the fundamentals of making rockets: from design to fabrication to launch! </p>
     <div class="info-at-a-glance">
@@ -49,7 +50,6 @@
             <p class="text-mini">TOOLS</p>
             <img class="info-tool-logo" src="Logos/onshape.webp">
             <img class="info-tool-logo" src="Logos/arduino.webp">
-            <img class="info-tool-logo" src="Logos/ansys.webp">
         </div>
         <div class="info-glance-section">
             <p class="text-mini">TEAM</p>
@@ -66,17 +66,172 @@
 
     <div class="pdf-links-container">
         <div class="image-wrapper">
+            <a href="Files/2024-BART-Project-Report.pdf" target="_blank">
+                <img src="Images/project-2024-star-bart/bart-report-page.webp">
+            </a>
+            <h3>Project Report</h3>
+        </div>
+        <div class="image-wrapper">
             <a href="https://starberkeley.onshape.com/documents/dbf4d35d8e9fe37819466f72/w/1df1c851058d46a5e5f08114/e/a194351ef67344579daff54b?renderMode=0&leftPanel=false&uiState=6770fba3ea7b610eb7dc5734" target="_blank">
                 <img src="Images/project-2024-star-bart/bart-onshape.webp">
             </a>
-            <h3>Onshape CAD</h3>
+            <h3>Rocket Onshape CAD</h3>
+        </div>
+
+        <div class="image-wrapper">
+            <a href="Files/2024-BART-Open-Rocket.ork" target="_blank">
+                <img src="Images/project-2024-star-bart/bart-ork-page.webp">
+            </a>
+            <h3>ORK Layout</h3>
         </div>
     </div>
 
     <div class="info-challenge-overview">
         <div class="info-challenge-text">
-            <p>Info Coming Soon!</p>
+            <h2>Project Overview</h2>
+            <p>This rocket is designed and built as one of the Universal Intro Projects (UIP) for <a class = "bold" href = "https://stars.studentorg.berkeley.edu/" target="_blank">Berkeley’s Space
+                Technologies and Rocketry (STAR)</a> team. This semester-long onboarding project introduced new
+                members to all elements of rocket design and fabrication through launch through building a <a class = "bold" href = https://en.wikipedia.org/wiki/Model_rocket_motor_classification" target="_blank"> K-class</a>
+                high-powered rocket. Workshops led by experienced STAR members introduced concepts on
+                airframe design & CAD, avionics PCB design, recovery, payload, and more allowing us to apply
+                those skills towards our rocket.</p>
+
+            <p>For all eight members of Berkeley Aerial Rocket Transport (BART) team, this is the first rocket
+                we’ve ever built. The primary objective of this project is to construct a Level-2 rocket capable of
+                achieving an apogee of approximately 5000 feet within a single semester. This rocket carries a
+                custom-designed payload: an arduino-powered ice cream maker roughly the size of a 2U CubeSat.
+            <p>The rocket is slated to launch in February of 2025 at the <a class="bold" href="https://friendsofamateurrocketry.org/" target="_blank">Friends of Amateur Rocketry (FAR)’s</a>
+            Mojave Test Area.</p>
         </div>
+    </div>
+
+    <h2>Mission Concept of Operations</h2>
+    <p></p>
+    <img class="info-banner-image"
+         src="Images/project-2024-star-bart/bart-mission-obj.webp"
+         alt="BART Mission Objectives"
+         style="width: 100%; height: auto; object-fit: contain;">
+
+    <div class="info-planning">
+        <div class="info-planning-text">
+            <h2>System Architecture</h2>
+            <p>Following the design process of the rocket, the overarching architecture starts with a 2D Open
+                Rocket layout, which sets the specs for propulsion, airframe, and recovery. Development for the
+                avionics and electronics happened concurrently alongside the fabrication process for the rocket, as
+                well as payload development and iteration.</p>
+            <p>OpenRocket is a rocketry simulation tool that enables us to design and simulate the rocket's
+                behavior at various stages of its launch. Many of the parts were dimensioned based on the stock
+                materials available and propulsion motor. Starting with the base layout, each rocket component—
+                such as body tubes, nose cones, fins, bulkheads, and recovery systems like parachutes and shock
+                cords—were added to fit the overall design goals.</p>
+        </div>
+        <div class="info-planning-photos">
+            <div class="plan-slider">
+                <img id="slide-1" src="Images/project-2024-star-bart/bart-ork-main.webp">
+                <img id="slide-2" src="Images/project-2024-star-bart/bart-ork-vertical-motion.webp">
+                <img id="slide-3" src="Images/project-2024-star-bart/bart-ork-stability.webp">
+                <img id="slide-4" src="Images/project-2024-star-bart/bart-ork-flight-profile.webp">
+            </div>
+            <div class="plan-slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+                <a href="#slide-3"></a>
+                <a href="#slide-4"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slider = document.querySelector('.plan-slider');
+            const navLinks = document.querySelectorAll('.plan-slider-nav a');
+            const images = document.querySelectorAll('.plan-slider img');
+
+            navLinks.forEach((link, index) => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const imgWidth = slider.clientWidth;
+                    slider.scrollLeft = imgWidth * index;
+                });
+            });
+
+            images.forEach((img, index) => {
+                img.addEventListener('click', (event) => {
+                    const imgWidth = slider.clientWidth;
+                    const clickX = event.clientX - img.getBoundingClientRect().left;
+
+                    if (clickX < imgWidth / 2) {
+                        // Clicked on the left side
+                        if (index > 0) {
+                            slider.scrollLeft = imgWidth * (index - 1);
+                        }
+                    } else {
+                        // Clicked on the right side
+                        if (index < images.length - 1) {
+                            slider.scrollLeft = imgWidth * (index + 1);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <div class="info-highlight">
+        <h2>Highlights</h2>
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Propulsion</h3>
+                <p>Aerotech 54mm HP SU DMS Motor - K400C-14A capable of 1361 Ns of impulse with average thrust of 400N.</p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2024-star-bart/bart-highlight-propulsion.webp">
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-image-content">
+                <img src="Images/project-2024-star-bart/bart-highlight-airframe.webp">
+            </div>
+            <div class="info-text-content">
+                <h3>Airframe</h3>
+                <p>5:1 Von Kármán nose cone, fiberglass body tubes, bulkheads, and tapered swept fin all bonded together with lots of JB Weld Epoxy finished a BART-inspired paint job!</p>
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Avionics</h3>
+                <p>Custom designed PCBs equipped with in-flight barometer and IMU data saved to flash drive. </p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2024-star-bart/bart-highlight-avionics.webp">
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-image-content">
+                <img src="Images/project-2024-star-bart/bart-highlight-recovery.webp">
+            </div>
+            <div class="info-text-content">
+                <h3>Recovery</h3>
+                <p>Calculations derived a 24" drogue and 58" main parachute to ensure safe landing KE, attached with braided kevlar to the quarks and ejection charges.</p>
+            </div>
+        </div>
+
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Payload</h3>
+                <p>Arduino-powered ice cream maker designed with rapid-prototyping, attached to rocket with 5mm heat set inserts.</p>
+            </div>
+            <div class="info-image-content">
+                <img src="Images/project-2024-star-bart/bart-highlight-payload.webp">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-results">
+        <h2>Results</h2>
+        <p>The rocket is slated to launch in February of 2025 at the <a class="bold" href="https://friendsofamateurrocketry.org/" target="_blank">Friends of Amateur Rocketry (FAR)’s</a>
+            Mojave Test Area.</p>
     </div>
 </div>
 </body>
