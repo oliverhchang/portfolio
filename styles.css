@@ -351,7 +351,7 @@ section {
 #BART-banner-image{
     object-fit: cover;
     position: absolute;
-    top: -5%;
+    top: -20%;
     width: 100%;
     height: auto;
     border-radius: 1.5rem;
