@@ -395,6 +395,16 @@ section {
         height: 110%;
         border-radius: 1.5rem;
 }
+#cadathon-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: 3%;
+    top: -15%;
+    width: 110%;
+    height: 110%;
+    border-radius: 1.5rem;
+    background-color: #d3d3d3;
+}
 #lawnmower-banner-image {
     object-fit: cover;
     position: absolute;
@@ -404,7 +414,6 @@ section {
     height: 110%;
     border-radius: 1.5rem;
 }
-
 
 .card-logo {
     display: block;
