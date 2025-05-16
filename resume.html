@@ -98,7 +98,7 @@
         Your browser does not support iframes. <a href="Files/Oliver%20Chang%20-%20Resume.pdf.pdf" target="_blank">Click here to view the PDF</a>.
       </iframe>
     </div>
-    <p>Last Updated: January 2025</p>
+    <p>Last Updated: May 2025</p>
 
     <h1>Education</h1>
     <div class="education-section">
@@ -114,7 +114,7 @@
         <ul>
           <li>ENGIN 7: Introduction to Computer Programming for Scientists and Engineers</li>
           <li>
-            <div class="accordion-header" onclick="toggleAccordion()" aria-expanded="false">
+            <div class="accordion-header" onclick="toggleAccordion('engin26-content', 'engin26-icon')" aria-expanded="false">
               ENGIN 26: Three-Dimensional Modeling for Design <span class="icon" id="engin26-icon">▶</span>
             </div>
             <div class="accordion-content" id="engin26-content">
@@ -122,13 +122,25 @@
               <div><a href="Files/E26 Project Report 2024.pdf" target="_blank">Wind Turbine Project Report</a></div>
             </div>
           </li>
+
           <li>MATH 53: Multivariable Calculus</li>
           <li>HISTART R1B: Reading and Writing about Visual Experience</li>
           <li>&nbsp;</li>
           <li>CHEM 1A: General Chemistry</li>
-          <li>ENGIN 29: Manufacturing and Design Communication</li>
+          <li>
+            <div class="accordion-header" onclick="toggleAccordion('engin29-content', 'engin29-icon')" aria-expanded="false">
+              ENGIN 29: Manufacturing and Design Communication <span class="icon" id="engin29-icon">▶</span>
+            </div>
+            <div class="accordion-content" id="engin29-content">
+              <div><a href="https://drive.google.com/drive/folders/10bv20ZkEQCoUVZSSi8GZHCEuU0PCaYE-?usp=drive_link" target="_blank">Final Project Deliverables</a></div>
+            </div>
+          </li>
+
           <li>MATH 54: Linear Algebra</li>
           <li>ESPM C22AC: Fire: Past, Present and Future Interactions with the People and Ecosystems of California</li>
+
+          <li>&nbsp;</li>
+          <li>Physics 7B: Electricity & Magnetism</li>
         </ul>
       </div>
     </div>
@@ -158,9 +170,9 @@
 </div>
 
 <script>
-  function toggleAccordion() {
-    const content = document.getElementById('engin26-content');
-    const icon = document.getElementById('engin26-icon');
+  function toggleAccordion(contentId, iconId) {
+    const content = document.getElementById(contentId);
+    const icon = document.getElementById(iconId);
     const isExpanded = content.style.display === 'block';
 
     content.style.display = isExpanded ? 'none' : 'block';
@@ -168,5 +180,6 @@
     icon.closest('.accordion-header').setAttribute('aria-expanded', !isExpanded);
   }
 </script>
+
 </body>
 </html>

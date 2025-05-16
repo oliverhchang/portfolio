@@ -357,6 +357,16 @@ section {
     height: auto;
     border-radius: 1.5rem;
 }
+#hauteclere-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    width: 100%;
+    height: 105%;
+    border-radius: 1.5rem;
+    background-color: #d3d3d3;
+}
 #serrano-banner-image {
     object-fit: cover;
     position: absolute;
@@ -377,6 +387,7 @@ section {
     border-radius: 1.5rem;
     background-color: #d3d3d3;
 }
+
 #workshop-banner-image {
     object-fit: cover;
     position: absolute;
