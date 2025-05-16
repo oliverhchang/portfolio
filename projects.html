@@ -33,11 +33,22 @@
     </nav>
   </header>
 
+  <aside class="project-outline">
+    <ul>
+      <li><a href="#feb" class="outline-link" data-target="feb">FEB</a></li>
+      <li><a href="#star" class="outline-link" data-target="star">STAR</a></li>
+      <li><a href="#combat" class="outline-link" data-target="combat">Combat</a></li>
+      <li><a href="#frc" class="outline-link" data-target="frc">FRC</a></li>
+      <li><a href="#carpentry" class="outline-link" data-target="carpentry">Carpentry</a></li>
+      <li><a href="#cad" class="outline-link" data-target="cad">CAD</a></li>
+    </ul>
+  </aside>
+
   <div class="container">
     <section>
       <h1>Projects</h1>
       <h3>Click on each image to learn more! More in progress...</h3>
-      <h2>Formula Electric @ Berkeley (FEB)</h2>
+      <h2 id="feb" class="project-section">Formula Electric @ Berkeley (FEB)</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2025-feb-simulation-and-validation.html">
@@ -53,8 +64,7 @@
         </article>
       </div>
 
-      <h2>Berkeley Space Technologies & Rocketry (STAR)</h2>
-
+      <h2 id="star" class="project-section">Berkeley Space Technologies & Rocketry (STAR)</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2025-star-LE3.html">
@@ -82,7 +92,7 @@
         </article>
       </div>
 
-      <h2>Combat Robotics</h2>
+      <h2 id="combat" class="project-section">Combat Robotics</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2025-combat-hauteclere.html">
@@ -98,7 +108,7 @@
         </article>
       </div>
 
-      <h2>FIRST Robotics Competition</h2>
+      <h2 id="frc" class="project-section">FIRST Robotics Competition</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2024-frc-serrano.html">
@@ -140,7 +150,7 @@
         </article>
       </div>
 
-      <h2>Carpentry</h2>
+      <h2 id="carpentry" class="project-section">Carpentry</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2023-fhs-workshop.html">
@@ -169,7 +179,7 @@
         </article>
       </div>
 
-      <h2>CAD</h2>
+      <h2 id="cad" class="project-section">CAD</h2>
       <div class="project-display">
         <article class="project-display-article">
           <a href="2025-asme-cadathon.html">
@@ -199,6 +209,29 @@
       </div>
     </section>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll(".project-section");
+      const links = document.querySelectorAll(".outline-link");
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+          const link = document.querySelector(`.outline-link[data-target="${id}"]`);
+          if (entry.isIntersecting) {
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        });
+      }, {
+        threshold: 0.6
+      });
+
+      sections.forEach(section => observer.observe(section));
+    });
+  </script>
+</body>
+
 <style>
   /* Overall container styles */
   .container {
@@ -260,6 +293,8 @@
     color: #555;
     line-height: 1;
   }
+
+
 </style>
 </html>
 

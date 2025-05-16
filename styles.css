@@ -674,3 +674,48 @@ section {
 .right-column li {
     font-size: 1rem;
 }
+
+/* - - - - - Project Slider - - - - - - */
+.project-outline {
+    position: fixed;
+    top: 120px;
+    right: 20px; /* Moved closer to center */
+    z-index: 999;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: right;
+}
+
+.project-outline ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-outline li {
+    margin: 10px 0;
+}
+
+.outline-link {
+    color: var(--light-gray);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.outline-link.active {
+    font-weight: 800;          /* Bolder */
+    color: var(--black);
+    font-size: 1.25em;          /* Slightly larger */
+}
+
+@media screen and (max-width: 768px) {
+    .project-outline {
+        display: none;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
