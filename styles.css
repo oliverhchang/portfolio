@@ -409,7 +409,7 @@ section {
 #cadathon-banner-image {
     object-fit: cover;
     position: absolute;
-    right: 3%;
+    right: 0%;
     top: -15%;
     width: 110%;
     height: 110%;
