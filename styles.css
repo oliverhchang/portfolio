@@ -340,6 +340,15 @@ section {
     border-radius: 1.5rem;
     background-color: #d3d3d3;
 }
+#taflab-banner-image{
+    object-fit: cover;
+    position: absolute;
+    top: -50%;
+    right: 0%;
+    width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+}
 #SN4-banner-image{
     object-fit: cover;
     position: absolute;
