@@ -358,6 +358,14 @@ section {
     height: auto;
     border-radius: 1.5rem;
 }
+#SN5-banner-image{
+    object-fit: cover;
+    position: absolute;
+    width: 90%;
+    left: 17%;
+    height: auto;
+    border-radius: 1.5rem;
+}
 #BART-banner-image{
     object-fit: cover;
     position: absolute;
