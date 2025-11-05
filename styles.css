@@ -414,6 +414,15 @@ section {
     height: 152%;
     border-radius: 1.5rem;
 }
+#RFS-workshop-banner-image {
+    object-fit: cover;
+    position: absolute;
+    right: -40%;
+    top: -25%;
+    width: 170%;
+    height: 152%;
+    border-radius: 1.5rem;
+}
 #equipment-shed-banner-image {
     object-fit: cover;
         position: absolute;
