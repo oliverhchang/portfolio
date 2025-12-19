@@ -4,191 +4,235 @@
   <title>Resume</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="styles.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin: 5px 0;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-    }
-    .accordion-header {
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between; /* Places text and icon on opposite ends */
-      align-items: center;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      color: inherit;
-      text-decoration: none;
-      transition: font-size 0.3s ease; /* Smooth font-size transition */
-    }
-    .accordion-header:hover {
-      font-size: 1.02em; /* Slightly larger font size on hover */
-      font-weight: bold; /* Optional: Makes it bolder on hover */
-    }
-    .icon {
-      transition: transform 0.3s ease;
-    }
-    .icon.rotate {
-      transform: rotate(90deg);
-    }
-    .accordion-content {
-      display: none;
-      margin-left: 20px;
-      font-family: inherit; /* Inherit font family */
-      font-size: inherit;   /* Inherit font size */
-      font-weight: inherit; /* Inherit font weight */
-      color: inherit;       /* Inherit color */
-    }
-    .accordion-content a {
-      text-decoration: none;
-      color: #007bff;
-      background-clip: text; /* Ensures the gradient is applied to the text */
-      -webkit-background-clip: text; /* Safari-specific prefix */
-      transition: font-size 0.3s ease; /* Smooth font-size transition */
-    }
-
-    .accordion-content a:hover {
-      font-size: 1.1em; /* Slightly larger font size on hover */
-      font-weight: bold; /* Optional: Makes it bolder on hover */
-    }
+    /* - - - - - Resume Embed Styles - - - - - */
     .resume-embed {
       margin: 20px 0;
       border: 1px solid #ccc;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* - - - - - Inline Project Card Styles - - - - - */
+    .course-item {
+      margin-bottom: 25px; /* Adds breathing room between courses */
+    }
+
+    .project-card {
+      display: flex;
+      margin-top: 10px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px; /* Smooth rounded corners */
+      overflow: hidden;
+      max-width: 95%; /* Fits nicely within the column */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-color: var(--secondary-blue, #2b68e2);
+    }
+
+    .project-thumb {
+      width: 130px; /* Fixed width for consistency */
+      min-height: 100px; /* Ensure it has height even if image is missing */
+      object-fit: cover;
+      background-color: #f0f0f0; /* Grey background if image fails to load */
+    }
+
+    .project-details {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .project-title {
+      font-weight: 700;
+      font-size: 0.95em;
+      color: #333;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-description {
+      font-size: 0.85em;
+      color: #666;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85em;
+    }
+
+    .project-links a {
+      text-decoration: none;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .project-links a:hover {
+      color: var(--secondary-blue, #2b68e2);
+    }
+
+    /* Mobile Responsiveness for Cards */
+    @media (max-width: 600px) {
+      .project-card {
+        flex-direction: column;
+      }
+      .project-thumb {
+        width: 100%;
+        height: 140px;
+      }
     }
   </style>
 </head>
-<body>
-<header>
-  <nav>
-    <div>
-      <ul><li><a href="index.html">Oliver Chang</a></li></ul>
-    </div>
-    <ul>
-      <li><a href="about.html">About Me</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="resume.html" class="active">Resume</a></li>
-    </ul>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/oliverhchang" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-    </div>
-  </nav>
-</header>
 
+<body>
 <div class="container">
   <section>
     <h1>Resume</h1>
+
     <div class="resume-embed">
-      <iframe src="Files/oliverhchang-resume.pdf" width="100%" height="500px" style="border: none;">
-        Your browser does not support iframes. <a href="Files/Ol" target="_blank">Click here to view the PDF</a>.
+      <iframe src="Files/oliverhchang-resume.pdf" width="100%" height="600px" style="border: none;">
+        <p>Your browser does not support iframes.
+          <a href="Files/oliverhchang-resume.pdf" target="_blank">Click here to view the PDF</a>.
+        </p>
       </iframe>
     </div>
-    <p>Last Updated: August 2025</p>
+    <p style="font-size: 0.9em; color: #666; margin-top: -10px;">Last Updated: December 2025</p>
 
     <h1>Education</h1>
+
     <div class="education-section">
       <div class="left-column">
         <h2>UC Berkeley</h2>
         <p>Berkeley, CA</p>
         <p>2024 - Present</p>
-        <img src="Logos/berkeley.webp" alt="UC Berkeley Logo">
+        <img src="Logos/berkeley.webp" alt="UC Berkeley Logo" style="max-width: 100px;">
       </div>
       <div class="right-column">
         <h3>Mechanical Engineering</h3>
+
         <h4>Freshman Year</h4>
         <ul>
-          <li>ENGIN 7: Introduction to Computer Programming for Scientists and Engineers</li>
-          <li>
-            <div class="accordion-header" onclick="toggleAccordion('engin26-content', 'engin26-icon')" aria-expanded="false">
-              ENGIN 26: Three-Dimensional Modeling for Design <span class="icon" id="engin26-icon">▶</span>
-            </div>
-            <div class="accordion-content" id="engin26-content">
-              <div><a href="https://drive.google.com/drive/folders/1ldhSgcU-ri-gfOL4zjLGJIKYkvs9Hrkz?usp=sharing" target="_blank">Labs (Solidworks)</a></div>
-              <div><a href="Files/E26 Project Report 2024.pdf" target="_blank">Wind Turbine Project Report</a></div>
-            </div>
-          </li>
-
-          <li>MATH 53: Multivariable Calculus</li>
-          <li>HISTART R1B: Reading and Writing about Visual Experience</li>
-          <li>&nbsp;</li>
-          <li>CHEM 1A: General Chemistry</li>
-          <li>
-            <div class="accordion-header" onclick="toggleAccordion('engin29-content', 'engin29-icon')" aria-expanded="false">
-              ENGIN 29: Manufacturing and Design Communication <span class="icon" id="engin29-icon">▶</span>
-            </div>
-            <div class="accordion-content" id="engin29-content">
-              <div><a href="https://drive.google.com/drive/folders/10bv20ZkEQCoUVZSSi8GZHCEuU0PCaYE-?usp=sharing" target="_blank">Bike Trailer Project Deliverables</a></div>
-              <div>Awarded Best Design & Integration</a></div>
+          <li class="course-item">
+            <strong>ENGIN 26: 3D Modeling for Design</strong>
+            <div class="project-card">
+              <img src="Images/project-course/E26-Turbine.webp" alt="Wind Turbine CAD" class="project-thumb">
+              <div class="project-details">
+                <div class="project-title">Wind Turbine Project</div>
+                <div class="project-links">
+                  <a href="Files/E26%20Project%20Report.pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Project Report
+                  </a>
+                  <a href="https://drive.google.com/drive/folders/1ldhSgcU-ri-gfOL4zjLGJIKYkvs9Hrkz?usp=sharing" target="_blank">
+                    <i class="fas fa-folder-open"></i> Solidworks Labs
+                  </a>
+                </div>
+              </div>
             </div>
           </li>
-
-          <li>MATH 54: Linear Algebra</li>
-          <li>ESPM C22AC: Fire: Past, Present and Future Interactions with the People and Ecosystems of California</li>
-
-          <li>&nbsp;</li>
-          <li>PHYSICS 7B: Electricity & Magnetism</li>
+          <li class="course-item">
+            <strong>ENGIN 29: Manufacturing & Design</strong>
+            <div class="project-card">
+              <img src="Images/project-course/E29-BikeTrailer.webp" alt="Bike Trailer" class="project-thumb">
+              <div class="project-details">
+                <div class="project-title">Bike Trailer</div>
+                <div class="project-description">Awarded Best Design & Integration</div>
+                <div class="project-links">
+                  <a href="https://drive.google.com/drive/folders/10bv20ZkEQCoUVZSSi8GZHCEuU0PCaYE-?usp=sharing" target="_blank">
+                    <i class="fas fa-images"></i> Deliverables
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="course-item">ENGIN 7: Introduction to Computer Programming for Scientists and Engineers</li>
+          <li class="course-item">MATH 53: Multivariable Calculus</li>
+          <li class="course-item">MATH 54: Linear Algebra</li>
+          <li class="course-item">CHEM 1A: General Chemistry</li>
+          <li class="course-item">PHYSICS 7B: Electricity & Magnetism</li>
+          <li class="course-item">HISTART R1B: Reading and Writing about Visual Experience</li>
+          <li class="course-item">ESPM C22AC: Fire: Past, Present and Future Interactions</li>
         </ul>
+
         <h4>Sophomore Year</h4>
         <ul>
-          <li>CYPLAN 110: Introduction to City Planning</li>
-          <li>MECENG C85: Introduction to Solid Mechanics</li>
-          <li>MECENG 40: Thermodynamics</li>
-          <li>MECENG 100: Electronics for IOT</li>
-          <li>EECS 16B: Introduction to Circuits & Devices</li>
+          <li class="course-item">
+            <strong>MECENG 100: Electronics for IOT</strong>
+            <div class="project-card">
+              <img src="Images/project-course/ME100-RiceCooker.webp" alt="IOT Electronics" class="project-thumb">
+              <div class="project-details">
+                <div class="project-title">AUTOMATED RICE COOKER</div>
+                <div class="project-links">
+                  <a href="Files/ME100 Project Report.pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Report
+                  </a>
+                  <a href="https://docs.google.com/presentation/d/1H4peqFkKtgU_ZcLLDiIdpKTlRQ9P9tLvqbBPX2V0dTo/edit?usp=sharing" target="_blank">
+                    <i class="fas fa-desktop"></i> Slides
+                  </a>
+                  <a href="https://drive.google.com/file/d/1g8lgLBZdwPX3FSzhvKyzo4PXyv_OGMyL/view?usp=sharing" target="_blank">
+                    <i class="fas fa-video"></i> Video
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="course-item">CYPLAN 110: Introduction to City Planning</li>
+          <li class="course-item">MECENG 40: Thermodynamics</li>
+          <li class="course-item">MECENG C85: Introduction to Solid Mechanics</li>
+          <li class="course-item">EECS 16B: Introduction to Circuits & Devices</li>
         </ul>
       </div>
     </div>
+
     <div class="education-section">
-      <!-- Left Column -->
       <div class="left-column">
         <h2>Fremont High School</h2>
         <p>Sunnyvale, CA</p>
         <p>2020 - 2024</p>
-        <img src="Logos/fremonthighschool.webp" alt="FHS Logo">
+        <img src="Logos/fremonthighschool.webp" alt="FHS Logo" style="max-width: 100px;">
       </div>
 
-      <!-- Right Column -->
       <div class="right-column">
         <h3>High School Degree</h3>
         <h4>Relevant Coursework</h4>
         <ul>
-          <li>AP Computer Science</li>
-          <li>AP Physics C Mechanics</li>
-          <li>AP Calculus BC</li>
-          <li>Computer Programming Java</li>
-          <li>Principles of Engineering</li>
+          <li class="course-item">AP Computer Science</li>
+          <li class="course-item">AP Physics C Mechanics</li>
+          <li class="course-item">AP Calculus BC</li>
+          <li class="course-item">Computer Programming Java</li>
+          <li class="course-item">Principles of Engineering</li>
         </ul>
       </div>
     </div>
   </section>
 </div>
 
-<script>
-  function toggleAccordion(contentId, iconId) {
-    const content = document.getElementById(contentId);
-    const icon = document.getElementById(iconId);
-    const isExpanded = content.style.display === 'block';
-
-    content.style.display = isExpanded ? 'none' : 'block';
-    icon.classList.toggle('rotate', !isExpanded);
-    icon.closest('.accordion-header').setAttribute('aria-expanded', !isExpanded);
-  }
-</script>
-
+<script src="navbar.js"></script>
 </body>
 </html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2025 | Skofnung</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <nav>
+    <div>
+      <ul><li><a href="../index.html">Oliver Chang </a></li></ul>
+    </div>
+    <ul>
+      <li><a href="../about.html" >About Me</a></li>
+      <li><a href="../projects.html" class="active">Projects</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </ul>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/oli-664" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+    </div>
+  </nav>
+</header>
+<div class="container">
+  <div class="info-summery">
+    <h7 class="info-title">Skofnung</h7>
+    <h3>2025 | 1lb Plastic Antweight</h3>
+  </div>
+
+  <div class="info-banner-image-container">
+    <img class="info-banner-image"src="../Images/project-2025-skofnung/Skofnung-Banner.webp">
+  </div>
+
+  <p>Why re-engineer the wheel? For the added weight bonus of course! Non-traditional drive bases may not be common, but provide an engineering challenge in design, reliability, and packaging. While less common in tye antweight category compared to heavier weight classes, this shuffle drive was designed specifically for the limitations of the plastic antweight class. </p>
+  <div class="info-at-a-glance">
+    <div class="info-glance-section">
+      <p class="text-mini">RECORD</p>
+      <p class="text-mini">0 - 0</p>
+    </div>
+    <div class="info-glance-section">
+      <p class="text-mini">TOOLS</p>
+      <img class="info-tool-logo" src="../Logos/onshape.webp">
+      <img class="info-tool-logo" src="../Logos/etch.webp">
+      <img class="info-tool-logo" src="../Logos/bambu.webp">
+    </div>
+  </div>
+
+  <div class="pdf-links-container">
+    <div class="image-wrapper">
+      <a href="https://cad.onshape.com/documents/2ca3be5173d1422736be0241/w/baa99d9fa514a7a3658d0b9f/e/689243edefe9221d822b2f1b?renderMode=0&uiState=68d4ea54956e5090a7f23ea2" target="_blank">
+        <img src="../Images/project-2025-skofnung/Skofnung-Onshape.webp">
+      </a>
+      <h3>Onshape CAD</h3>
+    </div>
+  </div>
+
+  <div class="info-challenge-overview">
+    <div class="info-challenge-text">
+      <h2>Project Overview</h2>
+      <p>I was inspired by the likes of <a class="credits-hyperlink" href="https://wiki.nhrl.io/wiki/index.php/Silent_X" target="blank" >Silent X</a> and <a class="credits-hyperlink" href="https://wiki.nhrl.io/wiki/index.php/Monkfish" target="blank" >Monkfish</a>, who used various configurations of shuffler mechanisms in exchange for increased weapon mass without significantly sacrificing mobility. These two robots took various design approaches to shuffler, with Monkfish prefering large modules that rotate less frequently but with a greater step distance, whereas Silent X's modules shuffle smaller increments at much faster rates.</p>
+      <p>The overarching mechanism for shuffler drives are very similar to how crankshafts work combustion engines. A continuous input is broken down into separate offset inputs that are spaced evenly apart. (Source: <a class="credits-hyperlink" href="https://en.wikipedia.org/wiki/Crankshaft" target="blank" >Wikipedia</a>)</p>
+      <div class="info-banner-image-container">
+        <img class="info-banner-image"src="../Images/project-2025-skofnung/Skofnung-CrankshaftWiki.gif">
+      </div>
+    </div>
+  </div>
+
+  <div class="info-planning">
+    <div class="info-planning-text">
+      <h2>Shuffler Geometry</h2>
+      <p>The core of the shuffle mechanism is a four-bar linkage system driven by a crank. The path of the foot is a coupler curve determined by the lengths of the rotating crank (r), the connecting rod (l1), and the leg link (l2). The goal is to create a path that is flat and long on the bottom (for ground contact) and high and fast on the top (for the return stroke). By modeling the kinematic equations, it's possible to optimize the link lengths to achieve the desired motion. </p>
+      <div class="info-section">
+        <h2>Modeling</h2>
+        <p>The core of the shuffle mechanism is a four-bar linkage system driven by a crank. The path of the foot is a coupler curve determined by the lengths of the rotating crank (r), the connecting rod (l1), and the leg link (l2). The goal is to create a path that is flat and long on the bottom (for ground contact) and high and fast on the top (for the return stroke). By modeling the kinematic equations, it's possible to optimize the link lengths to achieve the desired motion. The graphs below illustrate how changing the linkage geometry impacts the foot's travel path, allowing for optimization of step height and stride length for maximum speed and stability.</p>
+        <p>The Python script implements these equations in the calculate_coupler_curve function. This function acts as a digital simulation of the physical leg. For any given angle of the motor's crank (theta), it uses the lengths of the linkage arms (r, l_top, l_bottom) to calculate the precise horizontal (x) and vertical (y) coordinates of the foot. By running this calculation for a full 360-degree rotation, we can trace the complete walking path, known as a <a class="credits-hyperlink" href="https://ocw.metu.edu.tr/pluginfile.php/6885/mod_resource/content/1/ch7/7-4.htm" target="blank" >coupler curve</a>. This simulation allows for rapid digital prototyping to find the optimal geometry for stride length and step height, as shown in the analysis graphs below.</p>
+
+        <div class="info-planning-photos" style="display: flex; flex-direction: column; align-items: center; gap: 2rem; margin-top: 1.5rem;">
+          <div class="image-wrapper" style="text-align: center; max-width: 500px; width: 100%;">
+            <img src="../Images/project-2025-skofnung/Skofnung-ShufflerGeometry.webp" style="width: 100%; border-radius: 8px;" alt="Graph showing Skofnung movement paths">
+            <p style="margin-top: 0.5rem;"><em>Movement Path Analysis</em></p>
+          </div>
+          <div class="image-wrapper" style="text-align: center; max-width: 500px; width: 100%;">
+            <img src="../Images/project-2025-skofnung/Skofnung-ShufflerGeometryOptimization.webp" style="width: 100%; border-radius: 8px;" alt="Graph showing Skofnung geometry optimization">
+            <p style="margin-top: 0.5rem;"><em>Geometry Optimization</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+      <p>The graphs illustrate how changing the linkage geometry impacts the foot's travel path. Using this, we sought to maximize the step distance while keeping the overall package as small as possible, since the total height needed would already be quite among plastic antweight robots. </p>
+    </div>
+
+    <div class="info-section">
+      <h2>Planning</h2>
+      <div class="info-planning-photos">
+        <div class="plan-slider">
+          <img id="slide-1" src="../Images/project-2025-skofnung/Skofnung-MasterSide.webp">
+          <img id="slide-2" src="../Images/project-2025-skofnung/Skofnung-MasterTop.webp">
+          <img id="slide-3" src="../Images/project-2025-skofnung/Skofnung-ModuleSide.webp">
+        </div>
+        <div class="plan-slider-nav">
+          <a href="#slide-1"></a>
+          <a href="#slide-2"></a>
+          <a href="#slide-3"></a>
+        </div>
+      </div>
+      <p>The cad process was slightly different for this project. Individual drive segments were developed seperately from the rest of the robot, and later integrated together. This meant that the master top and side view sketches give a spaceclaim requirement that the modules have to fit inside.</p>
+      <p>From there, the rest of the side/top view sketches defines the critical dimensions and locations of all major components, including the motors, weapon assembly, and linkage pivot points. Every other part in the assembly is parametrically linked back to this master sketch. </p>
+    </div>
+
+    <div class="info-section">
+      <h2>Fabrication</h2>
+      <p>A key challenge for any shufflebot is achieving sufficient grip, as standard 3D printing filaments like PLA are too hard and slippery. To overcome this, the robot's feet were printed on a Formlabs stereolithography (SLA) printer using their 40A flexible resin. </p>
+      <div class="info-banner-image-container">
+        <img class="info-banner-image"src="../Images/project-2025-skofnung/Skofnung-Segment.webp">
+      </div>
+      <p>This material has a Shore hardness of 40A, similar to that of a pencil eraser, providing exceptional grip on the arena floor. This allows the robot to transfer the full power of its drive system into forward motion without slipping, which is critical for pushing opponents and maintaining control during a match.</p>
+    </div>
+
+  <div class="info-section">
+    <h2>Testing</h2>
+    <p>In progress! Check back soon for updates.</p>
+  </div>
+  </div>
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const slider = document.querySelector('.plan-slider');
+      const navLinks = document.querySelectorAll('.plan-slider-nav a');
+      const images = document.querySelectorAll('.plan-slider img');
+
+      navLinks.forEach((link, index) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const imgWidth = slider.clientWidth;
+          slider.scrollLeft = imgWidth * index;
+        });
+      });
+
+      images.forEach((img, index) => {
+        img.addEventListener('click', (event) => {
+          const imgWidth = slider.clientWidth;
+          const clickX = event.clientX - img.getBoundingClientRect().left;
+
+          if (clickX < imgWidth / 2) {
+            // Clicked on the left side
+            if (index > 0) {
+              slider.scrollLeft = imgWidth * (index - 1);
+            }
+          } else {
+            // Clicked on the right side
+            if (index < images.length - 1) {
+              slider.scrollLeft = imgWidth * (index + 1);
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+</div>
+</body>
+</html>

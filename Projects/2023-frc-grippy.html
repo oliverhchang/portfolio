@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2023-FRC-Grippy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav>
+        <div>
+            <ul><li><a href="../index.html">Oliver Chang </a></li></ul>
+        </div>
+        <ul>
+            <li><a href="../about.html" >About Me</a></li>
+            <li><a href="../projects.html" class="active">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        </ul>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/oli-664" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="info-summery">
+        <h7 class="info-title">Grippy</h7>
+        <h3>2023 | FIRST Robotics Competition</h3>
+    </div>
+
+    <div class="info-banner-image-container">
+        <img class="info-banner-image"src="../Images/project-2018-frc/grippy-field.webp">
+    </div>
+
+    <p>Grippy is training robot I made for my team to cover the fundamentals of CAD for FRC. Based on many common archatypes from the 2018 FIRST Robotics Competition: POWER UP, Grippy features an arm with roller grippers powered by dual motors and actuated by pneumatics. </p>
+    <div class="info-at-a-glance">
+        <div class="info-glance-section">
+            <p class="text-mini">ROLE</p>
+            <p class="text-mini">VP of Mechanical Design</p>
+        </div>
+        <div class="info-glance-section">
+            <p class="text-mini">TOOLS</p>
+            <img class="info-tool-logo" src="../Logos/onshape.webp">
+        </div>
+    </div>
+
+    <div class="pdf-links-container">
+        <div class="image-wrapper">
+            <a href="https://cad.onshape.com/documents/a8089035962c0abf14af11ec/w/2ea15bbad7c0c93f0e37dcba/e/2d87d1dd6b5d9f96368862d2?renderMode=0&leftPanel=false&uiState=66af5d906fb0873bc4f40bc0" target="_blank">
+                <img src="../Images/project-2018-frc/grippy-onshape.webp">
+            </a>
+            <h3>Onshape CAD</h3>
+        </div>
+    </div>
+
+    <div class="info-challenge-overview">
+        <div class="info-challenge-text">
+            <h2>Project Overview</h2>
+            <p>Previously working on FIRST Tech Challenge (FTC) robots, there was a lot of new procedures and skills that I needed to learn for FRC. The most significant change was setting and following geometric parameters throughout the design process. In addition, this design project introduced me to what was available off-the-shelf from suppliers, where to find those CAD renders, and how to use them effectively.</p>
+            <p>The challenge that Grippy is designed for is the 2018 FIRST Robotics Competition Season: POWER UP. Grippy is able to grip large milk crates, called power cells, and deliver them to their respective drop-off areas to score points.</p>
+            <div class="info-challenge-video">
+                <iframe width="750" height="422" src="https://www.youtube.com/embed/HZbdwYiCY74?si=OZ5_lTyyoimsag_T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
+    </div>
+
+    <div class="info-planning">
+        <div class="info-planning-text">
+            <h2>Planning</h2>
+            <p>To reduce degrees of freedom, the robot architecture of Grippy is extremely simple. The intake is directly connected to the arm, which pivots from the center of the robot. It was important that the geometry allow for ground pickup and enough freedom to raise the power cells to various heights. </p>
+            <p>The intake mechanism was more complex, combining a mix of roller compliant wheels with a pneumatic actuated claw that applies additional compression on the power cells. </p>
+        </div>
+        <div class="info-planning-photos">
+            <div class="plan-slider">
+                <img id="slide-1" src="../Images/project-2018-frc/grippy-2d.webp">
+            </div>
+            <div class="plan-slider-nav">
+                <a href="#slide-1"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const slider = document.querySelector('.plan-slider');
+                const navLinks = document.querySelectorAll('.plan-slider-nav a');
+                const images = document.querySelectorAll('.plan-slider img');
+
+                navLinks.forEach((link, index) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const imgWidth = slider.clientWidth;
+                        slider.scrollLeft = imgWidth * index;
+                    });
+                });
+
+                images.forEach((img, index) => {
+                    img.addEventListener('click', (event) => {
+                        const imgWidth = slider.clientWidth;
+                        const clickX = event.clientX - img.getBoundingClientRect().left;
+
+                        if (clickX < imgWidth / 2) {
+                            // Clicked on the left side
+                            if (index > 0) {
+                                slider.scrollLeft = imgWidth * (index - 1);
+                            }
+                        } else {
+                            // Clicked on the right side
+                            if (index < images.length - 1) {
+                                slider.scrollLeft = imgWidth * (index + 1);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+    <div class="info-results">
+        <h2>Results</h2>
+        <p>Looking back at the 2018 FRC in retrospect, Grippy would have filled a much needed support role. In addition, there are many areas of improvement that are possible, such as substituting the arm for a linear elevator could allow Grippy to reach higher scoring points. </p>
+    </div>
+</div>
+</body>
+</html>

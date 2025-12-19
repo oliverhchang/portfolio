@@ -15,6 +15,9 @@ body {
     padding: 0;
     height: 100vh;
 }
+html {
+    scroll-behavior: smooth;
+}
 
 /* - - - - - Navigation Bar - - - - - - */
 header {
@@ -74,11 +77,9 @@ nav ul li a:hover {
 }
 .social-icons a:hover {
     color: var(--secondary-blue);
-
 }
 section {
     padding: 20px 40px;
-
 }
 
 /* - - - - - Headers - - - - - - */
@@ -195,28 +196,28 @@ section {
     font-weight: 600;
 }
 .role-typing .text.role-first-text{
-     color: var(--dark-gray);
+    color: var(--dark-gray);
+}
 
+/* --- Typewriter Cursor Animation (Fixed) --- */
+.role-sec-text {
+    position: relative;
+    color: var(--primary-blue);
 }
-.text.role-sec-text:before {
-    content: "";
+
+.role-sec-text::after {
+    content: "|";
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 200%;
-    background-color: var(--primary-background);
-    border-left: 2px solid var(--primary-blue);
-    animation: animate-roles 4s steps(26) infinite;
+    right: -8px;
+    animation: blink 0.75s step-end infinite;
+    color: var(--dark-gray);
 }
-@keyframes animate-roles{
-    40%, 60% {
-        left: 100%;
-    }
-    100% {
-        left: 0%;
-    }
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
 }
+/* ------------------------------------------ */
 
 .index-buttons {
     display: flex;
@@ -258,7 +259,6 @@ section {
 /* - - - - - About Me Section - - - - - - */
 #about-me-introduction {
     display: flex;
-
 }
 #about-me-introduction-photo {
     width: 100%;
@@ -300,7 +300,6 @@ section {
 }
 .background-info-photo1 img {
     object-position: 25% center;
-
 }
 
 .credits-hyperlink {
@@ -318,7 +317,8 @@ section {
 }
 .project-display-article {
     position: relative;
-
+    /* This allows child elements to size themselves based on this container's width */
+    container-type: inline-size;
 }
 .project-banner-container {
     aspect-ratio: 21 / 9;
@@ -343,8 +343,7 @@ section {
 #taflab-banner-image{
     object-fit: cover;
     position: absolute;
-    top: -50%;
-    right: 0%;
+    top: -30%;
     width: 100%;
     height: auto;
     border-radius: 1.5rem;
@@ -388,7 +387,7 @@ section {
     object-fit: cover;
     position: absolute;
     right: -12%;
-    top: -20%;
+    top: -10%;
     width: 112%;
     height: 120%;
     border-radius: 1.5rem;
@@ -397,7 +396,6 @@ section {
 #slanty-banner-image {
     object-fit: cover;
     position: absolute;
-    right: 0%;
     top: 5%;
     width: 100%;
     height: 105%;
@@ -425,18 +423,18 @@ section {
 }
 #equipment-shed-banner-image {
     object-fit: cover;
-        position: absolute;
-        right: -10%;
-        top: -10%;
-        width: 110%;
-        height: 110%;
-        border-radius: 1.5rem;
+    position: absolute;
+    right: -10%;
+    top: -10%;
+    width: 110%;
+    height: 110%;
+    border-radius: 1.5rem;
 }
 #cadathon-banner-image {
     object-fit: cover;
     position: absolute;
     right: 0%;
-    top: -15%;
+    top: -10%;
     width: 110%;
     height: 110%;
     border-radius: 1.5rem;
@@ -446,31 +444,159 @@ section {
     object-fit: cover;
     position: absolute;
     right: -2%;
-    top: -8%;
+    top: -1%;
     width: 110%;
     height: 110%;
     border-radius: 1.5rem;
 }
 
-.card-logo {
-    display: block;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
+/* === FLUID BLUE CARD STYLES === */
 .project-display-data {
-    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
-    padding: 1rem 1rem;
-    box-shadow: 0px 8px 24px hsla(0, 0%, 0%, 0.15);
-    border-radius: 1rem;
+    /* Fluid Position & Size */
     position: absolute;
-    bottom: -0.5rem;
-    margin-left: 0.5rem;
-}
-.project-display-article:hover {
-    transform: scale(1.03);
+    bottom: 5%;
+    left: 3%;
+    width: 45%;
+
+    /* Fluid Styling */
+    padding: 3cqi;
+    border-radius: 2cqi;
+
+    /* Visuals */
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    box-shadow: 0px 8px 24px hsla(0, 0%, 0%, 0.15);
+    margin-left: 0;
+
+    /* Layout - CHANGED TO GRID */
+    display: grid;
+    grid-template-columns: min-content 1fr; /* Col 1: Logo size, Col 2: Remaining space */
+    grid-template-rows: auto auto;          /* Row 1: Title, Row 2: Subtitle */
+    column-gap: 3cqi;                       /* Fluid gap between Logo and Text */
+    align-items: center;                    /* Vertically center content */
 }
 
+.card-logo {
+    display: block;
+    width: 10cqi;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 0; /* Removed bottom margin */
+
+    /* Grid Position: Span both rows of text */
+    grid-row: 1 / span 2;
+    align-self: center;
+}
+
+.card-description {
+    font-size: 3cqi;
+    margin: 0;
+    line-height: 1;    /* Tighter line height for better alignment */
+    color: var(--black);
+    text-align: left;
+
+    /* Grid Position */
+    grid-column: 2;
+    align-self: end;   /* Align text to bottom of the title row */
+}
+
+
+/* - - - - - Projects Section Updates - - - - - */
+
+/* 1. Turn the container into a Grid */
+.project-display {
+    display: grid;
+    /* Creates 2 columns that collapse to 1 on mobile automatically */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem; /* Add space between sections */
+}
+
+/* 2. Update the Article to fit the grid */
+.project-display-article {
+    position: relative;
+    container-type: inline-size;
+    width: 100%;
+    /* Add a slight hover lift for polish */
+    transition: transform 0.3s ease;
+}
+
+.project-display-article:hover {
+    transform: translateY(-5px);
+}
+
+/* 3. Adjust Banner Aspect Ratio for Grid */
+/* 4:3 or 3:2 works better for grids than ultra-wide 21:9 */
+.project-banner-container {
+    aspect-ratio: 17 / 9;
+    width: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* === FLUID BLUE CARD STYLES === */
+.project-display-data {
+    /* 1. Positioning: Bottom Left Overlay */
+    position: absolute;
+    bottom: 20px;       /* Spacing from bottom edge */
+    left: 20px;         /* Spacing from left edge */
+    transform: none;    /* Remove previous centering */
+
+    /* 2. Sizing: 1/3 Width */
+    width: 35%;         /* Approx 1/3 of the card width */
+    min-width: 220px;   /* Prevents it from getting unreadable on mobile */
+
+    /* 3. Visuals */
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    /* 4. Internal Layout (Grid) */
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 15px;
+}
+
+/* Update text colors back to original Black/Gray */
+.card-description {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+
+    /* REVERTED COLOR */
+    color: var(--black);
+
+    /* Layout */
+    grid-column: 2;
+    align-self: end;
+}
+
+.card-title {
+    font-size: 0.8rem;
+    margin-top: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    /* REVERTED COLOR */
+    color: var(--dark-gray);
+    opacity: 0.8; /* Slight transparency for the subtitle */
+
+    /* Layout */
+    grid-column: 2;
+    align-self: start;
+}
+
+.card-logo {
+    display: block;
+    width: 45px;       /* Fixed size logo for the compact box */
+    height: auto;
+    border-radius: 50%;
+    grid-row: 1 / span 2;
+}
 /* - - - - - Case Study Sections - - - - - - */
 .info-banner-image{
     object-fit: cover;
@@ -623,7 +749,6 @@ section {
 /* - - - - - Resume Section - - - - - - */
 .resume-container {
     display: flex;
-
 }
 .download-button {
     background-color: #4BA4EC;
@@ -741,10 +866,6 @@ section {
     }
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 .slides-container {
     position: relative;
     width: 100%;
@@ -760,4 +881,141 @@ html {
     width: 100%;
     height: 100%;
     border: none;
+}
+
+/* - - - - - Resume Project Card Styles - - - - - */
+/* Added these here so you don't need inline CSS in resume.html */
+
+.course-item {
+    margin-bottom: 25px;
+}
+
+.project-card {
+    display: flex;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 95%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: var(--secondary-blue);
+}
+
+.project-thumb {
+    width: 130px;
+    min-height: 100px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+}
+
+.project-details {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.project-title {
+    font-weight: 700;
+    font-size: 0.95em;
+    color: #333;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-description {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85em;
+}
+
+.project-links a {
+    text-decoration: none;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.project-links a:hover {
+    color: var(--secondary-blue);
+}
+
+@media (max-width: 600px) {
+    .project-card {
+        flex-direction: column;
+    }
+    .project-thumb {
+        width: 100%;
+        height: 140px;
+    }
+}
+/* - - - - - Background Grid System - - - - - */
+.grid-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Puts it behind all your content */
+    pointer-events: none; /* Allows you to click things 'through' the grid */
+    background-color: #ffffff; /* Your page background color */
+    overflow: hidden;
+}
+
+/* Shared Grid Pattern */
+.grid-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Creates the grid lines */
+    background-size: 30px 30px; /* Adjust square size here */
+    background-image:
+            linear-gradient(to right, #e5e5e5 1px, transparent 1px),
+            linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+}
+
+/* Layer 1: Base Grid (Dim, static fade) */
+.grid-base {
+    opacity: 0.6; /* How dim the resting grid is */
+    /* Fades out towards the edges */
+    mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+}
+
+/* Layer 2: Highlight Grid (Bold, follows mouse) */
+.grid-highlight {
+    opacity: 1; /* Full visibility for the "bold" effect */
+    /* Initially hidden until mouse moves */
+    mask-image: radial-gradient(
+            200px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            black 0%,
+            transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+            300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            black 0%,
+            transparent 100%
+    );
 }
