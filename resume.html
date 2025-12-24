@@ -12,13 +12,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script>
-    // Check preference immediately to prevent white flash
-    const theme = localStorage.getItem('engineering-theme');
-    if (theme === 'dark') {
+<body>
+
+<body>
+
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('engineering-theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
       document.documentElement.classList.add('dark-mode');
-      document.body.classList.add('dark-mode'); // Fallback
+      document.body.classList.add('dark-mode');
     }
+  })();
+</script>
   </script>
   <style>
     /* - - - - - Resume Embed Styles - - - - - */

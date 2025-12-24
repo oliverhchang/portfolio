@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>2025 | Combustion Chamber</title>
     <script>
-        // Check preference immediately to prevent white flash
-        const theme = localStorage.getItem('engineering-theme');
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark-mode');
-            document.body.classList.add('dark-mode'); // Fallback
-        }
+        (function() {
+            const savedTheme = localStorage.getItem('engineering-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+                document.body.classList.add('dark-mode');
+            }
+        })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles.css">
