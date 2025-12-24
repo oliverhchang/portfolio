@@ -450,56 +450,75 @@ section {
     border-radius: 1.5rem;
 }
 
-/* === FLUID BLUE CARD STYLES === */
+/* === FLUID BLUE CARD STYLES (Consolidated Fix) === */
 .project-display-data {
-    /* Fluid Position & Size */
+    /* 1. Fluid Positioning */
     position: absolute;
-    bottom: 5%;
-    left: 3%;
-    width: 45%;
+    bottom: 4%;
+    left: 4%;
+    transform: none;
 
-    /* Fluid Styling */
-    padding: 3cqi;
-    border-radius: 2cqi;
+    /* 2. Fluid Sizing (NO FIXED PIXELS) */
+    /* Reduced width from 38% to 30% to make it smaller relative to the image */
+    width: 30%;
+    min-width: 0;       /* IMPORTANT: Allows box to shrink infinitely */
+    max-width: none;
 
-    /* Visuals */
+    /* 3. Fluid Spacing & Visuals */
+    /* Reduced padding from 3cqi to 2cqi for a more compact look */
+    padding: 2cqi;
+    border-radius: 2cqi; /* Corners shrink proportionally */
+    column-gap: 2cqi;    /* Reduced gap from 3cqi to 2cqi */
+
+    /* 4. Background & Shadow */
     background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
-    box-shadow: 0px 8px 24px hsla(0, 0%, 0%, 0.15);
-    margin-left: 0;
+    box-shadow: 0 1cqi 3cqi rgba(0, 0, 0, 0.2);
 
-    /* Layout - CHANGED TO GRID */
+    /* 5. Layout */
     display: grid;
-    grid-template-columns: min-content 1fr; /* Col 1: Logo size, Col 2: Remaining space */
-    grid-template-rows: auto auto;          /* Row 1: Title, Row 2: Subtitle */
-    column-gap: 3cqi;                       /* Fluid gap between Logo and Text */
-    align-items: center;                    /* Vertically center content */
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto auto;
+    align-items: center;
 }
 
+/* Main Project Name (Using !important to ensure it scales) */
+.card-description {
+    /* Reduced font size from 6cqi to 5cqi */
+    font-size: 3.5cqi !important;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--black); /* Respects Dark Mode */
+
+    grid-column: 2;
+    align-self: end;
+    margin: 0;
+}
+
+/* Subtitle (Year | Role) */
+.card-title {
+    /* Reduced font size from 3cqi to 2.5cqi */
+    font-size: 2cqi !important;
+    margin: 0;
+    margin-top: 0.5cqi;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--dark-gray); /* Respects Dark Mode */
+    opacity: 0.8;
+
+    grid-column: 2;
+    align-self: start;
+}
+
+/* Logo Image */
 .card-logo {
     display: block;
-    width: 10cqi;
+    /* Reduced logo width from 9cqi to 8cqi */
+    width: 8cqi;
     height: auto;
     border-radius: 50%;
-    margin-bottom: 0; /* Removed bottom margin */
-
-    /* Grid Position: Span both rows of text */
     grid-row: 1 / span 2;
-    align-self: center;
-}
-
-.card-description {
-    font-size: 3cqi;
     margin: 0;
-    line-height: 1;    /* Tighter line height for better alignment */
-    color: var(--black);
-    text-align: left;
-
-    /* Grid Position */
-    grid-column: 2;
-    align-self: end;   /* Align text to bottom of the title row */
 }
-
-
 /* - - - - - Projects Section Updates - - - - - */
 
 /* 1. Turn the container into a Grid */

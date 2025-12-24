@@ -23,91 +23,7 @@
       overflow: hidden;
     }
 
-    /* - - - - - Inline Project Card Styles - - - - - */
-    .course-item {
-      margin-bottom: 25px; /* Adds breathing room between courses */
-    }
-
-    .project-card {
-      display: flex;
-      margin-top: 10px;
-      background: #ffffff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px; /* Smooth rounded corners */
-      overflow: hidden;
-      max-width: 95%; /* Fits nicely within the column */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      border-color: var(--secondary-blue, #2b68e2);
-    }
-
-    .project-thumb {
-      width: 130px; /* Fixed width for consistency */
-      min-height: 100px; /* Ensure it has height even if image is missing */
-      object-fit: cover;
-      background-color: #f0f0f0; /* Grey background if image fails to load */
-    }
-
-    .project-details {
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-    }
-
-    .project-title {
-      font-weight: 700;
-      font-size: 0.95em;
-      color: #333;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .project-description {
-      font-size: 0.85em;
-      color: #666;
-      margin-bottom: 8px;
-      font-style: italic;
-    }
-
-    .project-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.85em;
-    }
-
-    .project-links a {
-      text-decoration: none;
-      color: #555;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .project-links a:hover {
-      color: var(--secondary-blue, #2b68e2);
-    }
-
-    /* Mobile Responsiveness for Cards */
-    @media (max-width: 600px) {
-      .project-card {
-        flex-direction: column;
-      }
-      .project-thumb {
-        width: 100%;
-        height: 140px;
-      }
-    }
+    /* Styles are primarily handled in styles.css now for dark mode support */
   </style>
 </head>
 
@@ -136,6 +52,33 @@
       </div>
       <div class="right-column">
         <h3>Mechanical Engineering</h3>
+        <h4>Sophomore Year</h4>
+        <ul>
+          <li class="course-item">
+            <strong>MECENG 100: Electronics for IOT</strong>
+            <div class="project-card">
+              <img src="Images/project-course/ME100-RiceCooker.webp" alt="IOT Electronics" class="project-thumb">
+              <div class="project-details">
+                <div class="project-title">AUTOMATED RICE COOKER</div>
+                <div class="project-links">
+                  <a href="Files/ME100 Project Report.pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Report
+                  </a>
+                  <a href="https://docs.google.com/presentation/d/1H4peqFkKtgU_ZcLLDiIdpKTlRQ9P9tLvqbBPX2V0dTo/edit?usp=sharing" target="_blank">
+                    <i class="fas fa-desktop"></i> Slides
+                  </a>
+                  <a href="https://drive.google.com/file/d/1g8lgLBZdwPX3FSzhvKyzo4PXyv_OGMyL/view?usp=sharing" target="_blank">
+                    <i class="fas fa-video"></i> Video
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="course-item">CYPLAN 110: Introduction to City Planning</li>
+          <li class="course-item">MECENG 40: Thermodynamics</li>
+          <li class="course-item">MECENG C85: Introduction to Solid Mechanics</li>
+          <li class="course-item">EECS 16B: Introduction to Circuits & Devices</li>
+        </ul>
 
         <h4>Freshman Year</h4>
         <ul>
@@ -178,34 +121,6 @@
           <li class="course-item">PHYSICS 7B: Electricity & Magnetism</li>
           <li class="course-item">HISTART R1B: Reading and Writing about Visual Experience</li>
           <li class="course-item">ESPM C22AC: Fire: Past, Present and Future Interactions</li>
-        </ul>
-
-        <h4>Sophomore Year</h4>
-        <ul>
-          <li class="course-item">
-            <strong>MECENG 100: Electronics for IOT</strong>
-            <div class="project-card">
-              <img src="Images/project-course/ME100-RiceCooker.webp" alt="IOT Electronics" class="project-thumb">
-              <div class="project-details">
-                <div class="project-title">AUTOMATED RICE COOKER</div>
-                <div class="project-links">
-                  <a href="Files/ME100 Project Report.pdf" target="_blank">
-                    <i class="fas fa-file-pdf"></i> Report
-                  </a>
-                  <a href="https://docs.google.com/presentation/d/1H4peqFkKtgU_ZcLLDiIdpKTlRQ9P9tLvqbBPX2V0dTo/edit?usp=sharing" target="_blank">
-                    <i class="fas fa-desktop"></i> Slides
-                  </a>
-                  <a href="https://drive.google.com/file/d/1g8lgLBZdwPX3FSzhvKyzo4PXyv_OGMyL/view?usp=sharing" target="_blank">
-                    <i class="fas fa-video"></i> Video
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="course-item">CYPLAN 110: Introduction to City Planning</li>
-          <li class="course-item">MECENG 40: Thermodynamics</li>
-          <li class="course-item">MECENG C85: Introduction to Solid Mechanics</li>
-          <li class="course-item">EECS 16B: Introduction to Circuits & Devices</li>
         </ul>
       </div>
     </div>
