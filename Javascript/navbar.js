@@ -1,15 +1,22 @@
 // navbar.js
 
-// 1. SMART PATH LOGIC
+// 1. IDENTIFY PAGE & PATH
+const currentFile = window.location.pathname.split("/").pop();
 const inProjectsFolder = window.location.pathname.includes("/Projects/");
 const p = inProjectsFolder ? "../" : "";
 
-// 2. Define the Navbar HTML (Added Progress Bar Container at the top)
-const navHTML = `
+// Check if we are on the Welcome Screen (Home)
+const isHomePage = (currentFile === 'index.html' || currentFile === '');
+
+// 2. DEFINE HTML
+// Only create the Progress Bar HTML if we are NOT on the home page
+const progressBarHTML = isHomePage ? '' : `
   <div class="progress-container">
     <div class="progress-bar" id="myBar"></div>
   </div>
+`;
 
+const navHTML = progressBarHTML + `
   <header>
     <nav>
       <div>
@@ -35,37 +42,39 @@ const navHTML = `
   </div>
 `;
 
-// 3. Inject Navbar
+// 3. INJECT HTML
 document.body.insertAdjacentHTML('afterbegin', navHTML);
 
 // 4. HIGHLIGHT ACTIVE PAGE
-const currentFile = window.location.pathname.split("/").pop();
 const navLinks = document.querySelectorAll('nav ul li a');
-
 navLinks.forEach(link => {
     const cleanHref = link.getAttribute('href').replace("../", "");
     if (
         cleanHref === currentFile ||
-        (currentFile === '' && cleanHref === 'index.html') ||
+        (isHomePage && cleanHref === 'index.html') ||
         (inProjectsFolder && cleanHref === 'projects.html')
     ) {
         link.classList.add('active');
     }
 });
 
-// 5. PROGRESS BAR LOGIC (New)
-window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+// 5. PROGRESS BAR LOGIC (Only run if NOT home page)
+if (!isHomePage) {
+    window.addEventListener('scroll', () => {
+        const bar = document.getElementById("myBar");
+        if (!bar) return; // Safety check
 
-    // Avoid dividing by zero if page is short
-    let scrolled = 0;
-    if (height > 0) {
-        scrolled = (winScroll / height) * 100;
-    }
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
-    document.getElementById("myBar").style.width = scrolled + "%";
-});
+        let scrolled = 0;
+        if (height > 0) {
+            scrolled = (winScroll / height) * 100;
+        }
+
+        bar.style.width = scrolled + "%";
+    });
+}
 
 // 6. DARK MODE LOGIC
 const toggleBtn = document.getElementById('theme-toggle-btn');
@@ -87,7 +96,7 @@ function setTheme(isDark) {
     }
 }
 
-// Initialization Logic
+// Initialization
 const savedTheme = localStorage.getItem('engineering-theme');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
