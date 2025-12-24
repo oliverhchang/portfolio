@@ -1,10 +1,27 @@
 :root {
-    --primary-background: #fff;
+    /* Color Palette */
+    --primary-background: #ffffff;
     --primary-blue: #56baf1;
     --secondary-blue: #2b68e2;
     --light-gray: #515151;
     --dark-gray: #303131;
     --black: #000000;
+    --grid-line: #e5e5e5;
+    --card-bg: #ffffff; /* NEW: Card background for Light Mode */
+}
+/* Update the selector to include 'html.dark-mode' */
+body.dark-mode, html.dark-mode {
+    --primary-background: #121212; /* Deep charcoal */
+    --light-gray: #cccccc;         /* Light grey for descriptions */
+    --dark-gray: #e0e0e0;          /* Almost white for main text */
+    --black: #ffffff;              /* White for titles */
+    --grid-line: #333333;          /* Dim grid lines */
+    --card-bg: #1e1e1e;            /* Dark grey for cards (lighter than bg) */
+}
+
+/* Smooth Transition for all color changes */
+body, header, nav, .project-card, a, h1, h2, h3, p, i, strong, div {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* - - - - - General Information - - - - - - */
@@ -110,14 +127,12 @@ h2 {
     font-size: 1.5em;
     margin-top: 1.5em;
     margin-bottom: 1em;
-    line-height: 1.3333333;
-
-    scroll-margin: 5rem;
     padding-bottom: .5rem;
     letter-spacing: -.025em;
-
     border-bottom: 1px solid #ccc;
-} /* Secondary Header */
+    scroll-margin: 5rem;
+    color: var(--black);
+}/* Secondary Header */
 h3 {
     font-size: 1.25em;
     color: var(--dark-gray);
@@ -317,7 +332,6 @@ section {
 }
 .project-display-article {
     position: relative;
-    /* This allows child elements to size themselves based on this container's width */
     container-type: inline-size;
 }
 .project-banner-container {
@@ -450,100 +464,73 @@ section {
     border-radius: 1.5rem;
 }
 
-/* === FLUID BLUE CARD STYLES (Consolidated Fix) === */
+/* === FLUID BLUE CARD STYLES === */
 .project-display-data {
-    /* 1. Fluid Positioning */
     position: absolute;
     bottom: 4%;
     left: 4%;
     transform: none;
-
-    /* 2. Fluid Sizing (NO FIXED PIXELS) */
-    /* Reduced width from 38% to 30% to make it smaller relative to the image */
     width: 30%;
-    min-width: 0;       /* IMPORTANT: Allows box to shrink infinitely */
+    min-width: 0;
     max-width: none;
-
-    /* 3. Fluid Spacing & Visuals */
-    /* Reduced padding from 3cqi to 2cqi for a more compact look */
     padding: 2cqi;
-    border-radius: 2cqi; /* Corners shrink proportionally */
-    column-gap: 2cqi;    /* Reduced gap from 3cqi to 2cqi */
-
-    /* 4. Background & Shadow */
+    border-radius: 2cqi;
+    column-gap: 2cqi;
     background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
     box-shadow: 0 1cqi 3cqi rgba(0, 0, 0, 0.2);
-
-    /* 5. Layout */
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: auto auto;
     align-items: center;
 }
 
-/* Main Project Name (Using !important to ensure it scales) */
 .card-description {
-    /* Reduced font size from 6cqi to 5cqi */
-    font-size: 3.5cqi !important;
+    font-size: 4cqi !important;
     font-weight: 700;
     line-height: 1;
-    color: var(--black); /* Respects Dark Mode */
-
+    color: var(--black);
     grid-column: 2;
     align-self: end;
     margin: 0;
 }
 
-/* Subtitle (Year | Role) */
 .card-title {
-    /* Reduced font size from 3cqi to 2.5cqi */
-    font-size: 2cqi !important;
+    font-size: 1.7cqi !important;
     margin: 0;
     margin-top: 0.5cqi;
     font-weight: 600;
     text-transform: uppercase;
-    color: var(--dark-gray); /* Respects Dark Mode */
+    color: var(--dark-gray);
     opacity: 0.8;
-
     grid-column: 2;
     align-self: start;
 }
-/* Logo Image */
+
 .card-logo {
     display: block;
-    /* Reduced logo width from 9cqi to 8cqi */
     width: 8cqi;
     height: auto;
     border-radius: 50%;
     grid-row: 1 / span 2;
     margin: 0;
 }
-/* - - - - - Projects Section Updates - - - - - */
 
-/* 1. Turn the container into a Grid */
+/* - - - - - Projects Section Updates - - - - - */
 .project-display {
     display: grid;
-    /* Creates 2 columns that collapse to 1 on mobile automatically */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
-    margin-bottom: 3rem; /* Add space between sections */
+    margin-bottom: 3rem;
 }
-
-/* 2. Update the Article to fit the grid */
 .project-display-article {
     position: relative;
     container-type: inline-size;
     width: 100%;
-    /* Add a slight hover lift for polish */
     transition: transform 0.3s ease;
 }
-
 .project-display-article:hover {
     transform: translateY(-5px);
 }
-
-/* 3. Adjust Banner Aspect Ratio for Grid */
-/* 4:3 or 3:2 works better for grids than ultra-wide 21:9 */
 .project-banner-container {
     aspect-ratio: 17 / 9;
     width: 100%;
@@ -553,68 +540,6 @@ section {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* === FLUID BLUE CARD STYLES === */
-.project-display-data {
-    /* 1. Positioning: Bottom Left Overlay */
-    position: absolute;
-    bottom: 20px;       /* Spacing from bottom edge */
-    left: 20px;         /* Spacing from left edge */
-    transform: none;    /* Remove previous centering */
-
-    /* 2. Sizing: 1/3 Width */
-    width: 35%;         /* Approx 1/3 of the card width */
-    min-width: 220px;   /* Prevents it from getting unreadable on mobile */
-
-    /* 3. Visuals */
-    padding: 1.5rem;
-    border-radius: 1.25rem;
-    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-
-    /* 4. Internal Layout (Grid) */
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: 15px;
-}
-
-/* Update text colors back to original Black/Gray */
-.card-description {
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1;
-
-    /* REVERTED COLOR */
-    color: var(--black);
-
-    /* Layout */
-    grid-column: 2;
-    align-self: end;
-}
-
-.card-title {
-    font-size: 0.8rem;
-    margin-top: 4px;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    /* REVERTED COLOR */
-    color: var(--dark-gray);
-    opacity: 0.8; /* Slight transparency for the subtitle */
-
-    /* Layout */
-    grid-column: 2;
-    align-self: start;
-}
-
-.card-logo {
-    display: block;
-    width: 45px;       /* Fixed size logo for the compact box */
-    height: auto;
-    border-radius: 50%;
-    grid-row: 1 / span 2;
-}
 /* - - - - - Case Study Sections - - - - - - */
 .info-banner-image{
     object-fit: cover;
@@ -623,30 +548,30 @@ section {
     border-radius: 30px;
     width: 100%
 }
-.info-summery {
-    margin-top: 5em;
-    margin-bottom: 0em;
-}
+.info-summery { margin-top: 5em; margin-bottom: 0em; }
 
-.info-at-a-glance{
+.info-at-a-glance {
     border-radius: 30px;
     display: flex;
     justify-content: space-between;
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: var(--primary-background);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    /* CHANGED: Use Card Background so it's lighter than the page in Dark Mode */
+    background-color: var(--card-bg);
+
+    /* ADDED: Subtle border to define edges when shadows are invisible */
+    border: 1px solid var(--grid-line);
+
+    /* Updated shadow for better lift */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* Ensure smooth color transition */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.info-glance-section {
-    flex: 1;
-    margin: 0 20px;
-}
-.info-tool-logo{
-    border-radius: 16px;
-    width: 180px;
-    max-height: 100px;
-}
+.info-glance-section { flex: 1; margin: 0 20px; }
+.info-tool-logo{ border-radius: 16px; width: 180px; max-height: 100px; }
 .pdf-links-container{
     display: flex;
     justify-content: space-evenly;
@@ -654,52 +579,35 @@ section {
     gap: 20px;
     padding: 20px;
 }
-
 .image-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: calc(33.333% - 13.333px);
 }
-
 .image-wrapper a {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1.3;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border: 1px solid #ddd;
 }
+.image-wrapper h3 { margin-top: 10px; text-align: center; }
+.image-wrapper:hover{ transform: scale(1.08); }
 
-.image-wrapper h3 {
-    margin-top: 10px;
-    text-align: center;
-}
-.image-wrapper:hover{
-    transform: scale(1.08);
-}
-
-.info-challenge-text {
-    text-decoration: none;
-}
+.info-challenge-text { text-decoration: none; }
 .info-challenge-video {
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.text-mini {
-    font-size: 16px;
-}
-.info-planning {
-    position: relative;
-    max-width: 750px;
-    margin: 0 auto;
-}
+.text-mini { font-size: 16px; }
+.info-planning { position: relative; max-width: 750px; margin: 0 auto; }
 
 .plan-slider {
     display: flex;
@@ -710,13 +618,11 @@ section {
     box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
     border-radius: 0.5rem;
 }
-
 .plan-slider img {
     flex: 1 0 100%;
     scroll-snap-align: start;
     object-fit: cover;
 }
-
 .plan-slider-nav {
     display: flex;
     column-gap: 1rem;
@@ -726,7 +632,6 @@ section {
     transform: translateX(-50%);
     z-index: 1;
 }
-
 .plan-slider-nav a {
     width: 0.5rem;
     height: 0.5rem;
@@ -735,10 +640,7 @@ section {
     opacity: 0.5;
     transition: opacity ease 250ms;
 }
-
-.plan-slider-nav a:hover {
-    opacity: 1;
-}
+.plan-slider-nav a:hover { opacity: 1; }
 
 .info-mechanism {
     display: flex;
@@ -746,17 +648,12 @@ section {
     align-items: center;
     gap: 28px;
 }
-
-.info-text-content {
-    flex: 1;
-}
-
+.info-text-content { flex: 1; }
 .info-image-content {
     flex: 1;
     display: flex;
     justify-content: flex-end;
 }
-
 .info-image-content img {
     max-width: 100%;
     height: auto;
@@ -764,10 +661,9 @@ section {
     border-radius: 30px;
     margin: 8px;
 }
+
 /* - - - - - Resume Section - - - - - - */
-.resume-container {
-    display: flex;
-}
+.resume-container { display: flex; }
 .download-button {
     background-color: #4BA4EC;
     color: white;
@@ -789,109 +685,79 @@ section {
     background-color: #3474DF;
     transform: scale(1.08);
 }
-
 .education-section {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Left column: 1/3, Right column: 2/3 */
-    gap: 20px; /* Space between columns */
-    align-items: start; /* Align content to the top */
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    align-items: start;
     padding: 10px;
-    position: relative; /* Enables positioning inside the grid */
+    position: relative;
 }
-
-.left-column {
-    text-align: left;
-}
-
+.left-column { text-align: left; }
 .left-column h2 {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 5px;
 }
-
-.left-column p {
-    font-size: 1rem;
-    margin: 5px 0;
-}
-
+.left-column p { font-size: 1rem; margin: 5px 0; }
 .left-column img {
-    max-width: 70%; /* Resize the logo */
+    max-width: 70%;
     height: auto;
     margin: 15px 0;
-    padding: 10px; /* Add padding around the logo */
+    padding: 10px;
 }
-
 .right-column h3 {
-    margin-top: 60px; /* Adjust to align exactly under the UC Berkeley text */
+    margin-top: 60px;
     font-size: 1.2rem;
-    color: #007bff; /* Highlight text color */
+    color: #007bff;
     font-weight: bold;
 }
-
 .right-column h4 {
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 10px;
 }
-
 .right-column ul {
     list-style: none;
     padding-left: 0;
-    line-height: 1.8; /* Increase spacing between list items */
+    line-height: 1.8;
 }
-
-.right-column li {
-    font-size: 1rem;
-}
+.right-column li { font-size: 1rem; }
 
 /* - - - - - Project Slider - - - - - - */
 .project-outline {
     position: fixed;
     top: 120px;
-    right: 20px; /* Moved closer to center */
+    right: 20px;
     z-index: 999;
     font-size: 14px;
     font-weight: 400;
     text-align: right;
 }
-
-.project-outline ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.project-outline li {
-    margin: 10px 0;
-}
-
+.project-outline ul { list-style: none; padding: 0; margin: 0; }
+.project-outline li { margin: 10px 0; }
 .outline-link {
     color: var(--light-gray);
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.95em;
 }
-
 .outline-link.active {
-    font-weight: 800;          /* Bolder */
+    font-weight: 800;
     color: var(--black);
-    font-size: 1.25em;          /* Slightly larger */
+    font-size: 1.25em;
 }
-
 @media screen and (max-width: 768px) {
-    .project-outline {
-        display: none;
-    }
+    .project-outline { display: none; }
 }
 
 .slides-container {
     position: relative;
     width: 100%;
-    max-width: 1000px;   /* match your banner images */
+    max-width: 1000px;
     margin: 2rem auto;
-    padding-top: 56.25%; /* maintain 16:9 ratio */
+    padding-top: 56.25%;
 }
-
 .slides-container iframe {
     position: absolute;
     top: 0;
@@ -902,37 +768,38 @@ section {
 }
 
 /* - - - - - Resume Project Card Styles - - - - - */
-/* Added these here so you don't need inline CSS in resume.html */
-
-.course-item {
-    margin-bottom: 25px;
+/* Forces bold text in lists (Course Names) to switch color in dark mode */
+.course-item strong, .course-item b {
+    color: var(--black);
+    transition: color 0.3s ease;
 }
-
+/* Ensures the list bullet points also switch color */
+.education-section ul li {
+    color: var(--dark-gray);
+}
 .project-card {
     display: flex;
     margin-top: 10px;
-    background: #ffffff;
+    /* CHANGED: Use var(--card-bg) instead of white */
+    background: var(--card-bg);
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
     max-width: 95%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
 }
-
 .project-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     border-color: var(--secondary-blue);
 }
-
 .project-thumb {
     width: 130px;
     min-height: 100px;
     object-fit: cover;
     background-color: #f0f0f0;
 }
-
 .project-details {
     padding: 12px 16px;
     display: flex;
@@ -940,53 +807,45 @@ section {
     justify-content: center;
     flex: 1;
 }
-
 .project-title {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.95em;
-    color: #333;
+    color: var(--black);
     margin-bottom: 6px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
-
 .project-description {
     font-size: 0.85em;
-    color: #666;
+    /* CHANGED: Use variable instead of #666 */
+    color: var(--light-gray);
     margin-bottom: 8px;
     font-style: italic;
 }
-
 .project-links {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     font-size: 0.85em;
 }
-
 .project-links a {
     text-decoration: none;
-    color: #555;
+    /* CHANGED: Use variable instead of #555 */
+    color: var(--light-gray);
     display: flex;
     align-items: center;
     gap: 6px;
     font-weight: 500;
     transition: color 0.2s ease;
 }
-
 .project-links a:hover {
     color: var(--secondary-blue);
 }
-
 @media (max-width: 600px) {
-    .project-card {
-        flex-direction: column;
-    }
-    .project-thumb {
-        width: 100%;
-        height: 140px;
-    }
+    .project-card { flex-direction: column; }
+    .project-thumb { width: 100%; height: 140px; }
 }
+
 /* - - - - - Background Grid System - - - - - */
 .grid-background-container {
     position: fixed;
@@ -994,38 +853,29 @@ section {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1; /* Puts it behind all your content */
-    pointer-events: none; /* Allows you to click things 'through' the grid */
-    background-color: #ffffff; /* Your page background color */
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--primary-background); /* Uses variable! */
     overflow: hidden;
 }
-
-/* Shared Grid Pattern */
 .grid-pattern {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Creates the grid lines */
-    background-size: 30px 30px; /* Adjust square size here */
+    background-size: 30px 30px;
     background-image:
-            linear-gradient(to right, #e5e5e5 1px, transparent 1px),
-            linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+            linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
 }
-
-/* Layer 1: Base Grid (Dim, static fade) */
 .grid-base {
-    opacity: 0.6; /* How dim the resting grid is */
-    /* Fades out towards the edges */
+    opacity: 0.5;
     mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
     -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
 }
-
-/* Layer 2: Highlight Grid (Bold, follows mouse) */
 .grid-highlight {
-    opacity: 1; /* Full visibility for the "bold" effect */
-    /* Initially hidden until mouse moves */
+    opacity: 1;
     mask-image: radial-gradient(
             200px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             black 0%,
@@ -1036,4 +886,32 @@ section {
             black 0%,
             transparent 100%
     );
+}
+
+/* - - - - - Floating Theme Toggle (Bottom Left) - - - - - */
+.theme-toggle-fab {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background-image: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+.theme-toggle-fab:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+.theme-toggle-fab i {
+    color: #ffffff;
+    font-size: 1.6rem;
+    pointer-events: none;
 }
