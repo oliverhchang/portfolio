@@ -374,8 +374,8 @@ section {
 #SN5-banner-image{
     object-fit: cover;
     position: absolute;
-    width: 90%;
-    left: 17%;
+    width: 100%;
+    left: 00%;
     height: auto;
     border-radius: 1.5rem;
 }
