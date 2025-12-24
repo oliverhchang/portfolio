@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>2026-feb-SN5</title>
+  <script>
+    // Check preference immediately to prevent white flash
+    const theme = localStorage.getItem('engineering-theme');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark-mode');
+      document.body.classList.add('dark-mode'); // Fallback
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +31,9 @@
     <img class="info-banner-image"src="../Images/project-2026-feb-SN5/SN5-DR2-CAD.webp">
   </div>
 
-  <p>As the design engineer for this year's spaceframe, I wanted to incorporate all of the simulation workflows that were developed from last season towards quantifyable optimization for this year's spaceframe. </p>
+  <p>SN5 is our latest car for the 2026 competition. Taking the simulation workflows I started over the previous design cycle, I integrated them with cross-subteam collaboration to design the steel spaceframe.
+  In addition, a big part of this year has been getting exposure to validation and testing using equipment including Creaform Scanners, Instron Universal Testers, and composites manufacturing for a composite AIP slated for SN6.
+  </p>
   <div class="info-at-a-glance">
     <div class="info-glance-section">
       <p class="text-mini">ROLE</p>
@@ -33,64 +43,199 @@
       <p class="text-mini">TOOLS</p>
       <img class="info-tool-logo" src="../Logos/solidworks.webp">
       <img class="info-tool-logo" src="../Logos/ansys.webp">
+      <img class="info-tool-logo" src="../Logos/etch.webp">
     </div>
   </div>
 
   <div class="info-highlight">
     <h2>Summary</h2>
     <p>The design process for SN5 starts from <a class="credits-hyperlink" href="https://docs.google.com/presentation/d/1DDEWCBBvttC7DF-a8VkjltCglh5SfzUQgc51ZyQ0VSU/edit?usp=sharing" target="blank" >judge feedback</a> at competition. </p>
-    <p>From our competition in Michigan, the main areas of feedback was a better understanding of the relationship between dynamics, streamlining simulation as part of the design process, and better validation across all parts of the</p>
+    <p>Goals are set top down, spanning L1 to L3. L1 targets are set by the sims team, which projects laptime and complience specs using VD software. L2 are broader project goals and L3 are the specific engineering goals in order to achieve the broader ones.
+    All design decisions are made with an emphasis on these.</p>
     <div class="info-highlight">
-      <h2>Vision Study</h2>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/1pNdHn3AT2HBFCwAmQftR_BNg60sRacY7cYlwy1c5cXc/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
+      <h2>Vision & Ergo Study</h2>
+      <p>In order to understand the needs of the driver, especially in relation to Front Hoop sizing and wheel visibility, we conducted a vision study to quantify the amount of sightline change for various geometries. Working with our drivers, I was able to understand the important factors from chassis that impact driver performance as well as gathering quantifyable numbers to know what to stay within.</p>
+      <div class="info-planning-photos">
+        <div class="plan-slider">
+          <img id="slide-1" src="../Images/project-2026-feb-SN5/SN5-Vision1.webp">
+          <img id="slide-2" src="../Images/project-2026-feb-SN5/SN5-Vision2.webp">
+          <img id="slide-3" src="../Images/project-2026-feb-SN5/SN5-Vision3.webp">
+        </div>
+        <div class="plan-slider-nav">
+          <a href="#slide-1"></a>
+          <a href="#slide-2"></a>
+          <a href="#slide-3"></a>
+        </div>
       </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const slider = document.querySelector('.plan-slider');
+        const navLinks = document.querySelectorAll('.plan-slider-nav a');
+        const images = document.querySelectorAll('.plan-slider img');
+
+        navLinks.forEach((link, index) => {
+          link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const imgWidth = slider.clientWidth;
+            slider.scrollLeft = imgWidth * index;
+          });
+        });
+
+        images.forEach((img, index) => {
+          img.addEventListener('click', (event) => {
+            const imgWidth = slider.clientWidth;
+            const clickX = event.clientX - img.getBoundingClientRect().left;
+
+            if (clickX < imgWidth / 2) {
+              // Clicked on the left side
+              if (index > 0) {
+                slider.scrollLeft = imgWidth * (index - 1);
+              }
+            } else {
+              // Clicked on the right side
+              if (index < images.length - 1) {
+                slider.scrollLeft = imgWidth * (index + 1);
+              }
+            }
+          });
+        });
+      });
+    </script>
+    <div class="slides-container">
+      <iframe
+              src="https://docs.google.com/presentation/d/1pNdHn3AT2HBFCwAmQftR_BNg60sRacY7cYlwy1c5cXc/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true">
+      </iframe>
+    </div>
+    <p>For all dimensions related to driver comfort and placement for brakes, steering, seating, firewall, headrest, and elbow room, an ergo jig was constructed using 8020 hardware and lasercut wood pieces. Per rules, the car has to accomodate both sizes ranging from 5th percentile female as well as 95th percentile male.
+      In order to achieve this, data was collected across a variety of members of the team. For this study, I assisted in manufacturing, assembly, and data collection alongside our amazing brakes/ergo subteam.</p>
+    <img class="info-banner-image"src="../Images/project-2026-feb-SN5/SN5-Ergo.webp">
+  </div>
+
+  <div class="info-highlight">
+    <h2>Tube Sizing & Calculations</h2>
+    <p>The Rules specify minimum inertias and thicknesses for some sizes of tubes, with many left unregulated if not particularily structurally important. Using first principlese justifications, we applied statics to create a sizing calculation spreadsheet for easy comparison as well as use Method of Deflections for a preliminary hand-calc to understand stress distribution for SN4. </p>
+    <p>Using this <a class="bold" href="https://docs.google.com/spreadsheets/d/1msSWi8gsbL6fJpWygYyySvXI_8-PVcF_5Y8Z3boiA78/edit?usp=sharing" target="_blank">spreadsheet</a>, we're able to identify the changes from SN4 to SN5 for changes in area, weight, inertia, and stiffness. A key improvement for this year was going for thinner tubes down to 0.028" for non-structural applications given welder experience and training. Justification for those application areas can be found below.</p>
+    <img src="../Images/project-2026-feb-SN5/SN5-TubeSize.webp" alt="Description" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
+    <p>The tube calculation was actually an extension of a class project from the Mechanics of Materials course. using the Direct Stiffness Method to calculate chassis tube deflections. This involved deriving local element stiffness matrices based on material properties (E, G) and cross-sectional geometry (A, I, J), applying coordinate transformations for 3D space, and assembling a global stiffness matrix to solve for nodal displacements under load. </p>
+    <div class="slides-container">
+      <iframe
+              src="https://docs.google.com/presentation/d/189H5ZUlvLkLP9UfOFlQd6gnIw7LgVfu5ydp6MPklgTU/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true">
+      </iframe>
+    </div>
+    <p>I'm excited for future more advanced classes to take this simplified model (pin-pins, node specific, etc) to a more realistic one that could validate our FEA findings. However, it was still a great experience transforming a course project to FSAE application.</p>
+  </div>
+
+  <div class="info-highlight">
+    <h2>Master Sketch</h2>
+    <p>Now that we're ready to start CAD and design, the chassis subteam sets the master 2D sketches that will dictate spaceclaim and key dimensions. Working as the mediators between all other subteams, the master sketch ensures rule compatibility as well as the overarching blueprint for other engineers to derive their cad off.</p>
+    <div class="slides-container">
+      <iframe
+              src="https://docs.google.com/presentation/d/1RYstvZ81JZQuR6anpCdlzxmI6Odcu95RFAUJ-UUGrEY/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="info-highlight">
+    <h2>Design</h2>
+    <p>Using an iterative process, I played around with many unique geometries with a goal of increasing stiffness-to-weight and improving packaging for other subteams. This included:</p>
+    <ul style="padding-left: 20px; color: var(--dark-gray); line-height: 1.6;">
+      <li><strong>Subteam Request:</strong> Ensuring everyone gets what they need for their respective components</li>
+      <li><strong>Rear Packaging:</strong> Tapered & roll hoop designs</li>
+      <li><strong>Steering Tubes:</strong> Angled, single, and braced designs.</li>
+      <li><strong>Cockpit Area:</strong> Rounded and triangulated sides versus triangle downwards.</li>
+      <li><strong>Unregulated Tubing:</strong> Stiffness-specific tubes between wheelbase.</li>
+    </ul>
+    <div class="slides-container">
+      <iframe
+              src="https://docs.google.com/presentation/d/18IRskeCT6-XiIu2FjbrXUmveqb6FLuXM-VfiXI_k5Bg/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="info-highlight">
+    <h2>Simulation</h2>
+    <h3>Complex 3-2-1 Rigid Body Method</h3>
+    <p>This setup simulates the entire vehicle assembly to capture realistic suspension interactions.</p>
+    <ul style="padding-left: 20px; color: var(--dark-gray); line-height: 1.6;">
+      <li><strong>Constraints:</strong>
+        <ul style="margin-top: 5px; margin-bottom: 10px;">
+          <li>Back Right: Fixed all translation.</li>
+          <li>Back Left: Fixed X and Z translation.</li>
+          <li>Front Right: Fixed Y translation.</li>
+        </ul>
+      </li>
+      <li><strong>Forces:</strong> Upward force applied to the left tire contact patch.</li>
+    </ul>
+
+    <h3 style="margin-top: 30px;">Simplified Method</h3>
+    <p>This method isolates the chassis to speed up iteration time while maintaining accuracy.</p>
+    <ul style="padding-left: 20px; color: var(--dark-gray); line-height: 1.6;">
+      <li><strong>Constraints:</strong> Rear wheels orthogonally anchored, allowing free twist about the longitudinal axis.
+        <ul style="margin-top: 5px; margin-bottom: 10px;">
+          <li>Left Rear: Fixed Y and Z translation, fixed Y rotation.</li>
+          <li>Right Rear: Fixed X and Z translation, fixed X rotation.</li>
+        </ul>
+      </li>
+      <li><strong>Forces:</strong> Downward force on left damper attachment; Upward force on right damper attachment.</li>
+    </ul>
+    <div class="info-at-a-glance" style="margin-top: 40px; padding: 25px; background-color: var(--card-bg); border: 1px solid var(--grid-line); display: block;">
+      <h3 style="margin-top: 0; margin-bottom: 20px; text-align: center;">Evolution: SN4 vs. SN5</h3>
+
+      <div style="display: flex; justify-content: space-around; text-align: center; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 150px; opacity: 0.7;">
+          <h4 style="font-size: 1.2rem; color: var(--dark-gray); margin-bottom: 5px;">SN4 (Previous)</h4>
+          <p style="font-size: 0.9rem; margin: 0;">Ratio: ~41 Nm/deg/kg</p>
+          <div style="background: #ccc; height: 8px; border-radius: 4px; margin-top: 10px; width: 70%; margin-left: auto; margin-right: auto;"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-arrow-right" style="font-size: 1.5rem; color: var(--light-gray);"></i>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="font-size: 1.2rem; color: var(--secondary-blue); margin-bottom: 5px;">SN5 (Current)</h4>
+          <p style="font-size: 0.9rem; margin: 0;">Ratio: <strong>53.6 Nm/deg/kg</strong></p>
+          <div style="background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue)); height: 8px; border-radius: 4px; margin-top: 10px; width: 100%;"></div>
+          <p style="color: var(--secondary-blue); font-weight: bold; font-size: 0.85rem; margin-top: 8px;">+30% Stiffness-Weight Ratio Increase</p>
+        </div>
+      </div>
+    </div>
+    <img src="../Images/project-2026-feb-SN5/SN5-TorsionSim.webp" alt="Description" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
+    <img src="../Images/project-2026-feb-SN5/SN5-TorsionTrack.webp" alt="Description" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
+    <p>Ultimately, torsional stiffness goes back to complience, which using the equations and calculations I set up during SN4's development, we're able to quantify how much factors such as tunability, understeer gradient, and LLTD-RSD tradeoffs stem from the chassis's flexibility. </p>
+    <div class="slides-container">
+      <iframe
+              src="https://docs.google.com/presentation/d/1JcQCsqdOwCj2UszCbEZLxdzrxDWXblVrdBqveP-XpZs/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true">
+      </iframe>
     </div>
 
-    <div class="info-highlight">
-      <h2>Design</h2>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/1RYstvZ81JZQuR6anpCdlzxmI6Odcu95RFAUJ-UUGrEY/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
-      </div>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/18IRskeCT6-XiIu2FjbrXUmveqb6FLuXM-VfiXI_k5Bg/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
-      </div>
-    </div>
+  </div>
 
-    <div class="info-highlight">
-      <h2>Simulation</h2>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/189H5ZUlvLkLP9UfOFlQd6gnIw7LgVfu5ydp6MPklgTU/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
-      </div>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/1JcQCsqdOwCj2UszCbEZLxdzrxDWXblVrdBqveP-XpZs/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
-      </div>
-    </div>
+  <div class="info-highlight">
+    <h2>SES Submission</h2>
+    <p>A critical milestone in the design cycle is the submission of the Structural Equivalency Spreadsheet (SES), which serves as the official proof that the chassis meets all FSAE safety regulations. </p>
+    <img src="../Images/project-2026-feb-SN5/SN5-SES.webp" alt="Description" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
+
+  </div>
+
+
+
 
     <div class="info-highlight">
       <h2>Design Reviews</h2>
@@ -112,19 +257,49 @@
       </div>
     </div>
 
-    <div class="info-highlight">
-      <h2>Validation</h2>
-      <div class="slides-container">
-        <iframe
-                src="https://docs.google.com/presentation/d/1joF1d73abQUElhkywimcrkRrI_Ixj8mQPfsoEWvpBmI/embed?start=false&loop=false&delayms=3000"
-                allowfullscreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true">
-        </iframe>
+  <div class="info-at-a-glance" style="margin-top: 40px; padding: 25px; background-color: var(--card-bg); border: 1px solid var(--grid-line); display: block;">
+    <h3 style="margin-top: 0; margin-bottom: 20px; text-align: center;">
+      <i class="fas fa-tasks" style="color: var(--secondary-blue); margin-right: 10px;"></i>
+      Project Roadmap
+    </h3>
+
+    <div style="display: flex; justify-content: space-around; text-align: center; gap: 20px; flex-wrap: wrap;">
+
+      <div style="flex: 1; min-width: 150px; opacity: 0.6;">
+        <h4 style="font-size: 1.1rem; color: var(--dark-gray); margin-bottom: 5px;">Phase 1: Design</h4>
+        <div style="background: var(--secondary-blue); height: 8px; border-radius: 4px; margin-top: 10px; width: 100%;"></div>
+        <p style="font-size: 0.85rem; margin-top: 8px; color: var(--dark-gray);"><i class="fas fa-check-circle"></i> Complete</p>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; opacity: 0.6;">
+        <i class="fas fa-chevron-right" style="font-size: 1.2rem; color: var(--light-gray);"></i>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4 style="font-size: 1.1rem; color: var(--secondary-blue); margin-bottom: 5px;">Phase 2: Manufacturing</h4>
+        <div style="background: repeating-linear-gradient(45deg, var(--primary-blue), var(--primary-blue) 10px, var(--secondary-blue) 10px, var(--secondary-blue) 20px); height: 8px; border-radius: 4px; margin-top: 10px; width: 100%;"></div>
+        <p style="color: var(--secondary-blue); font-weight: bold; font-size: 0.85rem; margin-top: 8px;">
+          <i class="fas fa-spinner fa-spin" style="margin-right: 5px;"></i> In Progress
+        </p>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; opacity: 0.6;">
+        <i class="fas fa-chevron-right" style="font-size: 1.2rem; color: var(--light-gray);"></i>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; opacity: 0.4;">
+        <h4 style="font-size: 1.1rem; color: var(--dark-gray); margin-bottom: 5px;">Phase 3: Testing</h4>
+        <div style="background: var(--grid-line); height: 8px; border-radius: 4px; margin-top: 10px; width: 100%;"></div>
+        <p style="font-size: 0.85rem; margin-top: 8px; color: var(--dark-gray);">Coming Spring 2026</p>
       </div>
     </div>
 
+    <p style="text-align: center; margin-top: 20px; font-size: 0.9em; font-style: italic; color: var(--light-gray);">
+      Manufacturing & Testing Updates Coming Soon!
+    </p>
   </div>
+
+</div>
 </div>
 </div>
 <script src="../navbar.js"></script>

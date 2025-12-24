@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>2021 | Eagle Scout Shed</title>
+    <script>
+        // Check preference immediately to prevent white flash
+        const theme = localStorage.getItem('engineering-theme');
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            document.body.classList.add('dark-mode'); // Fallback
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

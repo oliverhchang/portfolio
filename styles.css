@@ -11,7 +11,7 @@
 }
 /* Update the selector to include 'html.dark-mode' */
 body.dark-mode, html.dark-mode {
-    --primary-background: #121212; /* Deep charcoal */
+    --primary-background: #141414; /* Deep charcoal */
     --light-gray: #cccccc;         /* Light grey for descriptions */
     --dark-gray: #e0e0e0;          /* Almost white for main text */
     --black: #ffffff;              /* White for titles */
@@ -470,7 +470,7 @@ section {
     bottom: 4%;
     left: 4%;
     transform: none;
-    width: 30%;
+    width: 35%;
     min-width: 0;
     max-width: none;
     padding: 2cqi;
