@@ -463,7 +463,13 @@ section {
     height: 110%;
     border-radius: 1.5rem;
 }
-
+#receiptraccoon-banner-image {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+}
 /* === FLUID BLUE CARD STYLES === */
 .project-display-data {
     position: absolute;
