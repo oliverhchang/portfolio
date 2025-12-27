@@ -25,6 +25,20 @@
         body.index-page header {
             display: none;
         }
+
+        /* --- NEW CSS FOR DOODLE --- */
+        .hidden-doodle {
+            position: fixed;
+            bottom: 40px;  /* Moved up slightly */
+            right: 40px;   /* Moved left slightly */
+            width: 120px;  /* Adjust size as needed */
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.15s ease-out;
+            /* Optional: Rotates it slightly for a handwritten feel */
+            transform: rotate(-10deg);
+        }
     </style>
 </head>
 
@@ -55,11 +69,36 @@
     </section>
 </div>
 
+<img id="corner-doodle" src="Logos/receiptraccoon_tp.png" alt="Hidden Doodle" class="hidden-doodle">
+
 <div id="scroll-detect" style="height: 100vh;"></div>
 
 <script src="Javascript/lettering.js"></script>
-
 <script src="Javascript/navbar.js"></script>
+
+<script>
+    document.addEventListener('mousemove', (e) => {
+        const doodle = document.getElementById('corner-doodle');
+        if (!doodle) return;
+
+        const rect = doodle.getBoundingClientRect();
+        const doodleX = rect.left + rect.width / 2;
+        const doodleY = rect.top + rect.height / 2;
+
+        const dist = Math.hypot(e.clientX - doodleX, e.clientY - doodleY);
+
+        // You can adjust this number to make the reveal area larger or smaller
+        const revealRadius = 250;
+
+        if (dist < revealRadius) {
+            // Calculate opacity: 0 at the edge of radius, 1 at the center
+            const opacity = 1 - (dist / revealRadius);
+            doodle.style.opacity = Math.max(0, opacity); // Ensure it doesn't go below 0
+        } else {
+            doodle.style.opacity = 0;
+        }
+    });
+</script>
 
 </body>
 </html>

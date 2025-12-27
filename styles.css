@@ -943,3 +943,22 @@ section {
     transition: width 0.1s ease-out; /* Smooth movement */
     box-shadow: 0 0 10px var(--secondary-blue); /* Optional: Slight glow */
 }
+
+.hidden-doodle {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.15s ease-out;
+
+    /* 1. FORCE THE SIZE */
+    width: 250px !important;
+    max-width: none !important;
+
+    /* 2. ANCHOR IT TO THE CORNER */
+    right: 0px;
+    bottom: 0px;
+    top: auto !important;
+    transform: translate(100px, 400px) rotate(-10deg);
+
+    opacity: 0;
+}
