@@ -6,12 +6,14 @@
 
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('engineering-theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark-mode');
-                document.body.classList.add('dark-mode');
-            }
+            try {
+                const savedTheme = localStorage.getItem('engineering-theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                    document.documentElement.classList.add('dark-mode');
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) { console.log('Theme access denied'); }
         })();
     </script>
 
@@ -77,7 +79,7 @@
                 <img src="../Images/project-2025-receiptraccoon/ReceiptRaccoon_DiscordExample.webp" alt="Discord Commands" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
             </div>
         </div>
-        <h3>1. Vision-Language Processing</h3>
+        <h3>1. Vision-Language Processing </h3>
         <p>Instead of parsing text commands, the bot accepts raw image uploads. It streams the image bytes directly to the Gemini API with a strict <strong>JSON Schema</strong> constraint. This ensures that unstructured data (Store Name, Address, Line Items) is returned in a predictable format that matches our Supabase tables, regardless of the receipt's layout.</p>
         <h3>2. Async Tasks & Reliability</h3>
         <p>The bot utilizes <code>discord.ext.tasks</code> to maintain system health without blocking user interactions:</p>
@@ -293,7 +295,10 @@ bot.run(DISCORD_TOKEN)</code></pre>
     </div>
 
     <div class="info-highlight">
-        <h2>Database Architecture | Supabase</h2>
+        <h2>Database Architecture | Supabase
+
+            [Image of Relational Database Schema]
+        </h2>
         <p>In order to have a place to store all of the data, I used Supabase and integrated it so that the Discord bot can add entries the the tables. </p>
         <img src="../Images/project-2025-receiptraccoon/ReceiptRaccoon_supabase.webp" alt="Backend Logic" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
 
@@ -339,11 +344,11 @@ export default function ToiletriesTable({ transactions }) {
   const toiletryItems = []
 
   if (transactions && Array.isArray(transactions)) {
-    transactions.forEach(t => {
+    transactions.forEach(t =&gt; {
       // Guard against cases where receipt_items might be null
       const items = t.receipt_items || []
 
-      items.forEach(item => {
+      items.forEach(item =&gt; {
         // Updated to be case-insensitive and match "Toiletries/Cleaning"
         if (item.category?.toLowerCase().includes("toiletries")) {
           toiletryItems.push({
@@ -358,83 +363,83 @@ export default function ToiletriesTable({ transactions }) {
   }
 
   // Sort by newest first
-  toiletryItems.sort((a,b) => b.purchaseDate - a.purchaseDate)
+  toiletryItems.sort((a,b) =&gt; b.purchaseDate - a.purchaseDate)
 
   // 2. Calculate stats with Safety Guards
   const today = new Date()
-  const rows = toiletryItems.map(item => {
+  const rows = toiletryItems.map(item =&gt; {
     const diffTime = Math.abs(today - item.purchaseDate)
     const daysSince = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
     // Safety check: ensure price isn't null and daysSince isn't zero
     const safePrice = item.price || 0
-    const costPerDay = daysSince > 0 ? (safePrice / daysSince) : safePrice
+    const costPerDay = daysSince &gt; 0 ? (safePrice / daysSince) : safePrice
 
     return { ...item, daysSince, costPerDay, safePrice }
   })
 
   return (
-    <div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#2d3748' }}>Toiletries Tracker</h3>
-                    <span style={{ fontSize: '0.8rem', color: '#a0aec0' }}>{rows.length} Items Tracked</span>
-            </div>
+    &lt;div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}&gt;
+      &lt;div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}&gt;
+        &lt;h3 style={{ margin: 0, fontSize: '1.1rem', color: '#2d3748' }}&gt;Toiletries Tracker&lt;/h3&gt;
+        &lt;span style={{ fontSize: '0.8rem', color: '#a0aec0' }}&gt;{rows.length} Items Tracked&lt;/span&gt;
+      &lt;/div&gt;
 
-            <table style={{width: '100%', borderCollapse: 'collapse'}}>
-            <thead>
-            <tr style={{textAlign: 'left', color: '#a0aec0', fontSize: '0.85rem', borderBottom: '1px solid #edf2f7'}}>
-            <th style={{padding: '12px'}}>Item</th>
-            <th style={{padding: '12px'}}>Last Purchased</th>
-            <th style={{padding: '12px'}}>Days Ago</th>
-            <th style={{padding: '12px'}}>Cost / Day</th>
-            </tr>
-            </thead>
-            <tbody>
-            {rows.map((row, idx) => (
-            <tr key={idx} style={{borderBottom: '1px solid #f7fafc', fontSize: '0.95rem', color: '#4a5568'}}>
-            <td style={{padding: '12px', fontWeight: '500'}}>
-            {row.name || 'Unknown Product'}
-            </td>
-            <td style={{padding: '12px'}}>{row.formattedDate}</td>
-            <td style={{padding: '12px'}}>
-            <span style={{
-                  background: row.daysSince > 30 ? '#fff5f5' : '#f0fff4',
-                    color: row.daysSince > 30 ? '#c53030' : '#2f855a',
+      &lt;table style={{width: '100%', borderCollapse: 'collapse'}}&gt;
+        &lt;thead&gt;
+          &lt;tr style={{textAlign: 'left', color: '#a0aec0', fontSize: '0.85rem', borderBottom: '1px solid #edf2f7'}}&gt;
+            &lt;th style={{padding: '12px'}}&gt;Item&lt;/th&gt;
+            &lt;th style={{padding: '12px'}}&gt;Last Purchased&lt;/th&gt;
+            &lt;th style={{padding: '12px'}}&gt;Days Ago&lt;/th&gt;
+            &lt;th style={{padding: '12px'}}&gt;Cost / Day&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {rows.map((row, idx) =&gt; (
+            &lt;tr key={idx} style={{borderBottom: '1px solid #f7fafc', fontSize: '0.95rem', color: '#4a5568'}}&gt;
+              &lt;td style={{padding: '12px', fontWeight: '500'}}&gt;
+                {row.name || 'Unknown Product'}
+              &lt;/td&gt;
+              &lt;td style={{padding: '12px'}}&gt;{row.formattedDate}&lt;/td&gt;
+              &lt;td style={{padding: '12px'}}&gt;
+                &lt;span style={{
+                    background: row.daysSince &gt; 30 ? '#fff5f5' : '#f0fff4',
+                    color: row.daysSince &gt; 30 ? '#c53030' : '#2f855a',
                     padding: '4px 8px', borderRadius: '6px', fontSize: '0.85rem', fontWeight: 'bold'
-                }}>
+                }}&gt;
                   {row.daysSince} days
-                </span>
-            </td>
-            <td style={{padding: '12px'}}>
-            {/* Applied the (value || 0) Safety Guard here */}
-            ${(row.costPerDay || 0).toFixed(2)}
-            </td>
-            </tr>
-            ))}
-            {rows.length === 0 && (
-            <tr>
-                <td colSpan={4} style={{padding: '40px', textAlign: 'center', color: '#a0aec0'}}>
-                <div style={{fontSize: '1.5rem', marginBottom: '8px'}}>🦝</div>
-        No toiletries detected in your receipts yet.
-        </td>
-        </tr>
-        )}
-        </tbody>
-        </table>
-    </div>
-    )
-    }</code></pre>
-</div>
-</div>
-
-<div class="info-mechanism" style="display: block; margin-top: 40px;">
-    <h3>Spending Trends</h3>
-    <p>The next thing I wanted to really understand was where my weekly grocery bills were going. </p>
-    <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
-        <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
-            SpendingTrend.jsx
+                &lt;/span&gt;
+              &lt;/td&gt;
+              &lt;td style={{padding: '12px'}}&gt;
+                {/* Applied the (value || 0) Safety Guard here */}
+                ${(row.costPerDay || 0).toFixed(2)}
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          ))}
+          {rows.length === 0 && (
+            &lt;tr&gt;
+              &lt;td colSpan={4} style={{padding: '40px', textAlign: 'center', color: '#a0aec0'}}&gt;
+                &lt;div style={{fontSize: '1.5rem', marginBottom: '8px'}}&gt;🦝&lt;/div&gt;
+                No toiletries detected in your receipts yet.
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          )}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+            </div>
         </div>
-        <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">import React, { useState, useEffect, useMemo } from 'react'
+
+        <div class="info-mechanism" style="display: block; margin-top: 40px;">
+            <h3>Spending Trends</h3>
+            <p>The next thing I wanted to really understand was where my weekly grocery bills were going. </p>
+            <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
+                <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
+                    SpendingTrend.jsx
+                </div>
+                <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">import React, { useState, useEffect, useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import { startOfWeek, startOfMonth, startOfYear, format } from 'date-fns'
 
@@ -444,12 +449,12 @@ export default function SpendingTrendWithBreakdown({ transactions }) {
   const [selectedPoint, setSelectedPoint] = useState(null)
 
   // 1. Transform and Aggregate Data based on Toggle
-  const chartData = useMemo(() => {
+  const chartData = useMemo(() =&gt; {
     if (!transactions || transactions.length === 0) return []
 
     // Plot individual grocery trips
     if (groupBy === 'trip') {
-      return transactions.map(t => ({
+      return transactions.map(t =&gt; ({
         date: format(new Date(t.purchase_date), 'MMM d'),
         amount: t.total_amount || 0,
         label: t.store_name || 'Unknown Store',
@@ -460,7 +465,7 @@ export default function SpendingTrendWithBreakdown({ transactions }) {
 
     // Aggregate by Week, Month, or Year
     const groups = {}
-    transactions.forEach(t => {
+    transactions.forEach(t =&gt; {
       const d = new Date(t.purchase_date)
       let key = ""
       let label = ""
@@ -484,25 +489,25 @@ export default function SpendingTrendWithBreakdown({ transactions }) {
     })
 
     // Sort aggregated data by date
-    return Object.values(groups).sort((a, b) => new Date(a.date) - new Date(b.date))
+    return Object.values(groups).sort((a, b) =&gt; new Date(a.date) - new Date(b.date))
   }, [transactions, groupBy])
 
   // 2. Auto-select the latest data point when data or mode changes
-  useEffect(() => {
-    if (chartData.length > 0) {
+  useEffect(() =&gt; {
+    if (chartData.length &gt; 0) {
       setSelectedPoint(chartData[chartData.length - 1])
     }
   }, [chartData])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    &lt;div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}&gt;
 
       {/* TIME RANGE SELECTOR */}
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-        {['trip', 'week', 'month', 'year'].map(mode => (
-          <button
-                  key={mode}
-                  onClick={() => setGroupBy(mode)}
+      &lt;div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}&gt;
+        {['trip', 'week', 'month', 'year'].map(mode =&gt; (
+          &lt;button
+            key={mode}
+            onClick={() =&gt; setGroupBy(mode)}
             style={{
               padding: '6px 16px',
               borderRadius: '20px',
@@ -516,39 +521,39 @@ export default function SpendingTrendWithBreakdown({ transactions }) {
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
               boxShadow: groupBy === mode ? '0 4px 12px rgba(254, 107, 64, 0.2)' : 'none'
             }}
-          >
+          &gt;
             {mode}
-            </button>
-            ))}
-    </div>
+          &lt;/button&gt;
+        ))}
+      &lt;/div&gt;
 
-    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', height: '400px' }}>
+      &lt;div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', height: '400px' }}&gt;
 
-    {/* LEFT: The Spending Chart */}
-    <div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-    <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-                data={chartData}
-                onClick={(state) => {
-        if (state && state.activePayload) {
-        setSelectedPoint(state.activePayload[0].payload)
-        }
-        }}
-        >
-        <defs>
-            <linearGradient id="colorTrend" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#fe6b40" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#fe6b40" stopOpacity={0}/>
-            </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" />
-        <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} dy={10} />
-        <YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} tickFormatter={v => `$${v}`} />
-        <Tooltip
+        {/* LEFT: The Spending Chart */}
+        &lt;div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}&gt;
+          &lt;ResponsiveContainer width="100%" height="100%"&gt;
+            &lt;AreaChart
+              data={chartData}
+              onClick={(state) =&gt; {
+                if (state && state.activePayload) {
+                  setSelectedPoint(state.activePayload[0].payload)
+                }
+              }}
+            &gt;
+              &lt;defs&gt;
+                &lt;linearGradient id="colorTrend" x1="0" y1="0" x2="0" y2="1"&gt;
+                  &lt;stop offset="5%" stopColor="#fe6b40" stopOpacity={0.2}/&gt;
+                  &lt;stop offset="95%" stopColor="#fe6b40" stopOpacity={0}/&gt;
+                &lt;/linearGradient&gt;
+              &lt;/defs&gt;
+              &lt;CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" /&gt;
+              &lt;XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} dy={10} /&gt;
+              &lt;YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} tickFormatter={v =&gt; `$${v}`} /&gt;
+              &lt;Tooltip
                 contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
-        formatter={(value) => [`$${(value || 0).toFixed(2)}`, 'Total Spent']}
-        />
-        <Area
+                formatter={(value) =&gt; [`$${(value || 0).toFixed(2)}`, 'Total Spent']}
+              /&gt;
+              &lt;Area
                 type="monotone"
                 dataKey="amount"
                 stroke="#fe6b40"
@@ -557,66 +562,66 @@ export default function SpendingTrendWithBreakdown({ transactions }) {
                 fill="url(#colorTrend)"
                 activeDot={{ r: 6, strokeWidth: 0 }}
                 style={{ cursor: 'pointer' }}
-        />
-        </AreaChart>
-    </ResponsiveContainer>
-</div>
+              /&gt;
+            &lt;/AreaChart&gt;
+          &lt;/ResponsiveContainer&gt;
+        &lt;/div&gt;
 
-{/* RIGHT: Breakdown Panel */}
-<div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', overflowY: 'auto' }}>
-{selectedPoint ? (
-<div>
-    <h3 style={{ margin: '0', fontSize: '1.1rem', color: '#2d3748' }}>{selectedPoint.date}</h3>
-    <div style={{marginBottom: '20px'}}>
-    <div style={{fontSize: '0.85rem', color: '#a0aec0', fontWeight: '500'}}>{selectedPoint.label}</div>
-<div style={{fontSize: '1.8rem', fontWeight: '800', color: '#fe6b40'}}>
-${(selectedPoint.amount || 0).toFixed(2)}
-</div>
-</div>
+        {/* RIGHT: Breakdown Panel */}
+        &lt;div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', overflowY: 'auto' }}&gt;
+          {selectedPoint ? (
+            &lt;div&gt;
+              &lt;h3 style={{ margin: '0', fontSize: '1.1rem', color: '#2d3748' }}&gt;{selectedPoint.date}&lt;/h3&gt;
+              &lt;div style={{marginBottom: '20px'}}&gt;
+                &lt;div style={{fontSize: '0.85rem', color: '#a0aec0', fontWeight: '500'}}&gt;{selectedPoint.label}&lt;/div&gt;
+                &lt;div style={{fontSize: '1.8rem', fontWeight: '800', color: '#fe6b40'}}&gt;
+                  ${(selectedPoint.amount || 0).toFixed(2)}
+                &lt;/div&gt;
+              &lt;/div&gt;
 
-<h4 style={{fontSize: '0.7rem', color: '#cbd5e0', textTransform: 'uppercase', letterSpacing: '1px', borderBottom:'1px solid #edf2f7', paddingBottom:'8px', marginBottom:'12px'}}>
-Top Items in Period
-</h4>
+              &lt;h4 style={{fontSize: '0.7rem', color: '#cbd5e0', textTransform: 'uppercase', letterSpacing: '1px', borderBottom:'1px solid #edf2f7', paddingBottom:'8px', marginBottom:'12px'}}&gt;
+                  Top Items in Period
+              &lt;/h4&gt;
 
-<div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-{selectedPoint.items.slice(0, 15).map((item, idx) => (
-<div key={idx} style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem'}}>
-<span style={{color: '#4a5568', maxWidth:'140px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}>
-{item.name || 'Unknown Item'}
-</span>
-<span style={{fontWeight: '600', color: '#2d3748'}}>
-${(item.price || 0).toFixed(2)}
-</span>
-</div>
-))}
-{selectedPoint.items.length > 15 && (
-<div style={{fontSize: '0.75rem', color:'#a0aec0', textAlign:'center', marginTop:'5px'}}>
-+ {selectedPoint.items.length - 15} more items
-</div>
-)}
-</div>
-</div>
-) : (
-<div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbd5e0'}}>
-<p>Select a point to view spending</p>
-</div>
-)}
-</div>
-</div>
-</div>
-)
+              &lt;div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}&gt;
+                {selectedPoint.items.slice(0, 15).map((item, idx) =&gt; (
+                  &lt;div key={idx} style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem'}}&gt;
+                    &lt;span style={{color: '#4a5568', maxWidth:'140px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}&gt;
+                      {item.name || 'Unknown Item'}
+                    &lt;/span&gt;
+                    &lt;span style={{fontWeight: '600', color: '#2d3748'}}&gt;
+                        ${(item.price || 0).toFixed(2)}
+                    &lt;/span&gt;
+                  &lt;/div&gt;
+                ))}
+                {selectedPoint.items.length &gt; 15 && (
+                    &lt;div style={{fontSize: '0.75rem', color:'#a0aec0', textAlign:'center', marginTop:'5px'}}&gt;
+                        + {selectedPoint.items.length - 15} more items
+                    &lt;/div&gt;
+                )}
+              &lt;/div&gt;
+            &lt;/div&gt;
+          ) : (
+            &lt;div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbd5e0'}}&gt;
+              &lt;p&gt;Select a point to view spending&lt;/p&gt;
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
 }</code></pre>
-</div>
-</div>
-
-<div class="info-mechanism" style="display: block; margin-top: 40px;">
-    <h3>Item Price Tracker</h3>
-    <p>I also wanted to track the price of each item over the course of the time. The advantage of having all of my friends use this app is that the increased sample size can help look at trends over time.</p>
-    <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
-        <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
-            ItemPriceChart.jsx
+            </div>
         </div>
-        <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">// src/components/DashboardWidgets/ItemPriceChart.jsx
+
+        <div class="info-mechanism" style="display: block; margin-top: 40px;">
+            <h3>Item Price Tracker</h3>
+            <p>I also wanted to track the price of each item over the course of the time. The advantage of having all of my friends use this app is that the increased sample size can help look at trends over time.</p>
+            <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
+                <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
+                    ItemPriceChart.jsx
+                </div>
+                <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">// src/components/DashboardWidgets/ItemPriceChart.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../supabaseClient'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts'
@@ -636,7 +641,7 @@ export default function ItemPriceChart() {
   const dropdownRef = useRef(null)
 
   // 1. Fetch Item List on Mount
-  useEffect(() => {
+  useEffect(() =&gt; {
     fetchUniqueItems()
 
     // Click outside to close dropdown
@@ -646,12 +651,12 @@ export default function ItemPriceChart() {
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    return () =&gt; document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
   // 2. Fetch Prices when Selection Changes
-  useEffect(() => {
-    if (selectedItems.length > 0) {
+  useEffect(() =&gt; {
+    if (selectedItems.length &gt; 0) {
       fetchPriceHistory(selectedItems)
     } else {
       setChartData([])
@@ -667,7 +672,7 @@ export default function ItemPriceChart() {
 
       if (error) throw error
 
-      const unique = [...new Set(data.map(i => i.name).filter(n => n && n.trim().length > 0))]
+      const unique = [...new Set(data.map(i =&gt; i.name).filter(n =&gt; n && n.trim().length &gt; 0))]
       setAvailableItems(unique)
     } catch (err) {
       console.error("Error fetching items:", err)
@@ -690,7 +695,7 @@ export default function ItemPriceChart() {
 
       // Transform Data
       const rawPoints = []
-      data.forEach(row => {
+      data.forEach(row =&gt; {
         if (!row.receipts || !row.receipts.purchase_date) return
         rawPoints.push({
           dateKey: new Date(row.receipts.purchase_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
@@ -700,10 +705,10 @@ export default function ItemPriceChart() {
         })
       })
 
-      rawPoints.sort((a, b) => a.rawDate - b.rawDate)
+      rawPoints.sort((a, b) =&gt; a.rawDate - b.rawDate)
 
       const mergedMap = new Map()
-      rawPoints.forEach(p => {
+      rawPoints.forEach(p =&gt; {
         const existing = mergedMap.get(p.dateKey) || { date: p.dateKey, rawDate: p.rawDate }
         existing[p.item] = p.price
         mergedMap.set(p.dateKey, existing)
@@ -718,7 +723,7 @@ export default function ItemPriceChart() {
   }
 
   // -- DROPDOWN LOGIC --
-  const handleAddItem = (item) => {
+  const handleAddItem = (item) =&gt; {
     if (!selectedItems.includes(item)) {
       setSelectedItems([...selectedItems, item])
     }
@@ -726,151 +731,151 @@ export default function ItemPriceChart() {
     setIsDropdownOpen(false) // Close menu
   }
 
-  const handleRemoveItem = (itemToRemove) => {
-    setSelectedItems(selectedItems.filter(i => i !== itemToRemove))
+  const handleRemoveItem = (itemToRemove) =&gt; {
+    setSelectedItems(selectedItems.filter(i =&gt; i !== itemToRemove))
   }
 
   // Filter the list based on what user is typing
-  const filteredItems = availableItems.filter(item =>
+  const filteredItems = availableItems.filter(item =&gt;
     item.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
-    <div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', minHeight: '500px' }}>
+    &lt;div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', minHeight: '500px' }}&gt;
 
-      <div style={{marginBottom: '20px'}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px'}}>
-          <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#2d3748' }}>Price Tracker</h3>
-            {loading && <span style={{fontSize: '0.8rem', color: '#a0aec0'}}>Updating...</span>}
-    </div>
+      &lt;div style={{marginBottom: '20px'}}&gt;
+        &lt;div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px'}}&gt;
+          &lt;h3 style={{ margin: 0, fontSize: '1.1rem', color: '#2d3748' }}&gt;Price Tracker&lt;/h3&gt;
+            {loading && &lt;span style={{fontSize: '0.8rem', color: '#a0aec0'}}&gt;Updating...&lt;/span&gt;}
+        &lt;/div&gt;
 
-    {/* --- SEARCHABLE DROPDOWN CONTAINER --- */}
-    <div ref={dropdownRef} style={{position: 'relative', maxWidth: '400px'}}>
+        {/* --- SEARCHABLE DROPDOWN CONTAINER --- */}
+        &lt;div ref={dropdownRef} style={{position: 'relative', maxWidth: '400px'}}&gt;
 
-    {/* Input Box */}
-    <div style={{position: 'relative', display: 'flex', alignItems: 'center'}}>
-    <Search size={16} color="#a0aec0" style={{position: 'absolute', left: '12px'}}/>
-    <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => {
-    setSearchTerm(e.target.value)
-    setIsDropdownOpen(true)
-    }}
-    onFocus={() => setIsDropdownOpen(true)}
-    placeholder="Search or Select item..."
-    style={{
-    width: '100%', padding: '10px 10px 10px 38px',
-    borderRadius: '8px', border: '1px solid #e2e8f0',
-    fontSize: '0.9rem', outline: 'none'
-    }}
-    />
-    <ChevronDown size={16} color="#a0aec0" style={{position: 'absolute', right: '12px', pointerEvents: 'none'}}/>
-</div>
+          {/* Input Box */}
+          &lt;div style={{position: 'relative', display: 'flex', alignItems: 'center'}}&gt;
+            &lt;Search size={16} color="#a0aec0" style={{position: 'absolute', left: '12px'}}/&gt;
+            &lt;input
+              type="text"
+              value={searchTerm}
+              onChange={(e) =&gt; {
+                setSearchTerm(e.target.value)
+                setIsDropdownOpen(true)
+              }}
+              onFocus={() =&gt; setIsDropdownOpen(true)}
+              placeholder="Search or Select item..."
+              style={{
+                width: '100%', padding: '10px 10px 10px 38px',
+                borderRadius: '8px', border: '1px solid #e2e8f0',
+                fontSize: '0.9rem', outline: 'none'
+              }}
+            /&gt;
+            &lt;ChevronDown size={16} color="#a0aec0" style={{position: 'absolute', right: '12px', pointerEvents: 'none'}}/&gt;
+          &lt;/div&gt;
 
-{/* Floating List */}
-{isDropdownOpen && (
-<div style={{
-     position: 'absolute', top: '100%', left: 0, right: 0,
-background: 'white', border: '1px solid #e2e8f0',
-borderRadius: '8px', marginTop: '4px',
-maxHeight: '200px', overflowY: 'auto',
-boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-zIndex: 50
-}}>
-{filteredItems.length > 0 ? (
-filteredItems.map(item => (
-<div
-        key={item}
-        onClick={() => handleAddItem(item)}
-style={{
-padding: '10px 12px', cursor: 'pointer', fontSize: '0.9rem', color: '#4a5568',
-borderBottom: '1px solid #f7fafc',
-background: selectedItems.includes(item) ? '#f0fff4' : 'white' // Highlight if already selected
-}}
-onMouseOver={(e) => !selectedItems.includes(item) && (e.currentTarget.style.background = '#edf2f7')}
-onMouseOut={(e) => !selectedItems.includes(item) && (e.currentTarget.style.background = 'white')}
->
-{item} {selectedItems.includes(item) && '✓'}
-</div>
-))
-) : (
-<div style={{padding: '12px', color: '#a0aec0', fontSize: '0.85rem', textAlign: 'center'}}>
-No items found matching "{searchTerm}"
-</div>
-)}
-</div>
-)}
-</div>
-
-{/* SELECTED CHIPS */}
-<div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px'}}>
-{selectedItems.map((item, idx) => (
-<div key={item} style={{
-     display: 'flex', alignItems: 'center', gap: '6px',
-padding: '4px 10px', borderRadius: '20px',
-background: `${LINE_COLORS[idx % LINE_COLORS.length]}15`,
-color: LINE_COLORS[idx % LINE_COLORS.length],
-fontSize: '0.85rem', fontWeight: '600'
-}}>
-{item}
-<button
-        onClick={() => handleRemoveItem(item)}
-style={{border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex'}}
->
-<X size={14} color={LINE_COLORS[idx % LINE_COLORS.length]} />
-</button>
-</div>
-))}
-</div>
-</div>
-
-{/* CHART */}
-<div style={{height: '350px'}}>
-{selectedItems.length > 0 && chartData.length > 0 ? (
-<ResponsiveContainer width="100%" height="100%">
-    <LineChart data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" />
-        <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 12}} dy={10} />
-        <YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 12}} tickFormatter={v => `$${v}`} />
-        <Tooltip
-                contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}
-        formatter={(value, name) => [`$${value.toFixed(2)}`, name]}
-        />
-        <Legend verticalAlign="top" height={36}/>
-            {selectedItems.map((item, idx) => (
-            <Line
+          {/* Floating List */}
+          {isDropdownOpen && (
+            &lt;div style={{
+              position: 'absolute', top: '100%', left: 0, right: 0,
+              background: 'white', border: '1px solid #e2e8f0',
+              borderRadius: '8px', marginTop: '4px',
+              maxHeight: '200px', overflowY: 'auto',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              zIndex: 50
+            }}&gt;
+              {filteredItems.length &gt; 0 ? (
+                filteredItems.map(item =&gt; (
+                  &lt;div
                     key={item}
-                    type="monotone"
-                    dataKey={item}
-                    stroke={LINE_COLORS[idx % LINE_COLORS.length]}
-                    strokeWidth={3}
-                    dot={{fill: LINE_COLORS[idx % LINE_COLORS.length], r: 3}}
-                    connectNulls={true}
-            />
-            ))}
-    </LineChart>
-</ResponsiveContainer>
-) : (
-<div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a0aec0'}}>
-{selectedItems.length === 0 ? "Select an item to begin" : "No price history found for these items."}
-</div>
-)}
-</div>
-</div>
-)
-}</code></pre>
-</div>
-</div>
+                    onClick={() =&gt; handleAddItem(item)}
+                    style={{
+                      padding: '10px 12px', cursor: 'pointer', fontSize: '0.9rem', color: '#4a5568',
+                      borderBottom: '1px solid #f7fafc',
+                      background: selectedItems.includes(item) ? '#f0fff4' : 'white' // Highlight if already selected
+                    }}
+                    onMouseOver={(e) =&gt; !selectedItems.includes(item) && (e.currentTarget.style.background = '#edf2f7')}
+                    onMouseOut={(e) =&gt; !selectedItems.includes(item) && (e.currentTarget.style.background = 'white')}
+                  &gt;
+                    {item} {selectedItems.includes(item) && '✓'}
+                  &lt;/div&gt;
+                ))
+              ) : (
+                &lt;div style={{padding: '12px', color: '#a0aec0', fontSize: '0.85rem', textAlign: 'center'}}&gt;
+                   No items found matching "{searchTerm}"
+                &lt;/div&gt;
+              )}
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
 
-<div class="info-mechanism" style="display: block; margin-top: 40px;">
-    <h3>Multi-Category Analysis</h3>
-    <p>Similar to the previous graph but in pie chart form!</p>
-    <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
-        <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
-            CategoryLineChart.jsx
+        {/* SELECTED CHIPS */}
+        &lt;div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px'}}&gt;
+          {selectedItems.map((item, idx) =&gt; (
+            &lt;div key={item} style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              padding: '4px 10px', borderRadius: '20px',
+              background: `${LINE_COLORS[idx % LINE_COLORS.length]}15`,
+              color: LINE_COLORS[idx % LINE_COLORS.length],
+              fontSize: '0.85rem', fontWeight: '600'
+            }}&gt;
+              {item}
+              &lt;button
+                onClick={() =&gt; handleRemoveItem(item)}
+                style={{border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex'}}
+              &gt;
+                &lt;X size={14} color={LINE_COLORS[idx % LINE_COLORS.length]} /&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      {/* CHART */}
+      &lt;div style={{height: '350px'}}&gt;
+        {selectedItems.length &gt; 0 && chartData.length &gt; 0 ? (
+          &lt;ResponsiveContainer width="100%" height="100%"&gt;
+            &lt;LineChart data={chartData}&gt;
+              &lt;CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" /&gt;
+              &lt;XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 12}} dy={10} /&gt;
+              &lt;YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 12}} tickFormatter={v =&gt; `$${v}`} /&gt;
+              &lt;Tooltip
+                 contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}
+                 formatter={(value, name) =&gt; [`$${value.toFixed(2)}`, name]}
+              /&gt;
+              &lt;Legend verticalAlign="top" height={36}/&gt;
+              {selectedItems.map((item, idx) =&gt; (
+                &lt;Line
+                  key={item}
+                  type="monotone"
+                  dataKey={item}
+                  stroke={LINE_COLORS[idx % LINE_COLORS.length]}
+                  strokeWidth={3}
+                  dot={{fill: LINE_COLORS[idx % LINE_COLORS.length], r: 3}}
+                  connectNulls={true}
+                /&gt;
+              ))}
+            &lt;/LineChart&gt;
+          &lt;/ResponsiveContainer&gt;
+        ) : (
+           &lt;div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a0aec0'}}&gt;
+             {selectedItems.length === 0 ? "Select an item to begin" : "No price history found for these items."}
+           &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+            </div>
         </div>
-        <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">import React, { useState, useMemo } from 'react'
+
+        <div class="info-mechanism" style="display: block; margin-top: 40px;">
+            <h3>Multi-Category Analysis</h3>
+            <p>Similar to the previous graph but in pie chart form!</p>
+            <div style="margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid var(--grid-line);">
+                <div style="background: #2d2d2d; padding: 10px 20px; border-bottom: 1px solid #444; font-size: 0.85rem; color: #a0aec0; font-family: monospace;">
+                    CategoryLineChart.jsx
+                </div>
+                <pre style="margin: 0 !important; max-height: 500px; overflow-y: auto; border-radius: 0;"><code class="language-jsx">import React, { useState, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts'
 
 const VALID_CATEGORIES = [
@@ -896,53 +901,53 @@ export default function CategoryLineChart({ transactions }) {
   // 1. Change to an array to support multiple selections
   const [selectedCategories, setSelectedCategories] = useState(["Meat / Fish", "Vegetables"])
 
-  const chartData = useMemo(() => {
+  const chartData = useMemo(() =&gt; {
     if (!transactions) return []
 
     // Group totals by date
     const dateMap = {}
 
-    transactions.forEach(t => {
+    transactions.forEach(t =&gt; {
       const dateKey = new Date(t.purchase_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
       const rawDate = t.purchase_date
 
       if (!dateMap[dateKey]) {
         dateMap[dateKey] = { date: dateKey, rawDate: rawDate }
         // Initialize all valid categories to 0 for this date
-        VALID_CATEGORIES.forEach(cat => dateMap[dateKey][cat] = 0)
+        VALID_CATEGORIES.forEach(cat =&gt; dateMap[dateKey][cat] = 0)
       }
 
       const items = t.receipt_items || []
-      items.forEach(item => {
+      items.forEach(item =&gt; {
         if (VALID_CATEGORIES.includes(item.category)) {
           dateMap[dateKey][item.category] += (item.price || 0)
         }
       })
     })
 
-    return Object.values(dateMap).sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate))
+    return Object.values(dateMap).sort((a, b) =&gt; new Date(a.rawDate) - new Date(b.rawDate))
   }, [transactions])
 
-  const toggleCategory = (category) => {
-    setSelectedCategories(prev =>
+  const toggleCategory = (category) =&gt; {
+    setSelectedCategories(prev =&gt;
       prev.includes(category)
-        ? prev.filter(c => c !== category)
+        ? prev.filter(c !== category)
         : [...prev, category]
     )
   }
 
   return (
-    <div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', height: '550px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '1.1rem', color: '#2d3748' }}>Multi-Category Overlay</h3>
+    &lt;div style={{ background: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', height: '550px' }}&gt;
+      &lt;h3 style={{ margin: '0 0 16px 0', fontSize: '1.1rem', color: '#2d3748' }}&gt;Multi-Category Overlay&lt;/h3&gt;
 
             {/* Category Pill Selectors */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
-        {VALID_CATEGORIES.map(cat => {
+      &lt;div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}&gt;
+        {VALID_CATEGORIES.map(cat =&gt; {
           const isActive = selectedCategories.includes(cat)
           return (
-            <button
+            &lt;button
                     key={cat}
-                    onClick={() => toggleCategory(cat)}
+                    onClick={() =&gt; toggleCategory(cat)}
               style={{
                 padding: '6px 12px',
                 borderRadius: '20px',
@@ -954,28 +959,28 @@ export default function CategoryLineChart({ transactions }) {
                 cursor: 'pointer',
                 transition: 'all 0.2s'
               }}
-            >
+            &gt;
               {cat}
-            </button>
+            &lt;/button&gt;
             )
         })}
-    </div>
+    &lt;/div&gt;
 
-    <ResponsiveContainer width="100%" height="70%">
-        <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" />
-            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} dy={10} />
-            <YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} tickFormatter={v => `$${v}`} />
+    &lt;ResponsiveContainer width="100%" height="70%"&gt;
+        &lt;LineChart data={chartData}&gt;
+            &lt;CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#edf2f7" /&gt;
+            &lt;XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} dy={10} /&gt;
+            &lt;YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0', fontSize: 11}} tickFormatter={v =&gt; `$${v}`} /&gt;
 
-            <Tooltip
+            &lt;Tooltip
                     contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
-            formatter={(value) => [`$${(value || 0).toFixed(2)}`]} // Safety guard
+            formatter={(value) =&gt; [`$${(value || 0).toFixed(2)}`]} // Safety guard
             />
-            <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
+            &lt;Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} /&gt;
 
             {/* Dynamically render a Line for each selected category */}
-            {selectedCategories.map(cat => (
-            <Line
+            {selectedCategories.map(cat =&gt; (
+            &lt;Line
                     key={cat}
                     type="monotone"
                     dataKey={cat}
@@ -985,37 +990,35 @@ export default function CategoryLineChart({ transactions }) {
                     dot={{fill: CATEGORY_COLORS[cat], r: 4}}
                     activeDot={{r: 6, strokeWidth: 0}}
                     connectNulls={true} // Keeps line continuous if a date has $0 for that category
-            />
+            /&gt;
             ))}
-        </LineChart>
-    </ResponsiveContainer>
-</div>
+        &lt;/LineChart&gt;
+    &lt;/ResponsiveContainer&gt;
+&lt;/div&gt;
 )
 }</code></pre>
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 
     <div class="info-highlight">
         <h2>Raspberry Pi Integration</h2>
         <p>While the React frontend lives on the edge via Vercel, the Python Discord bot requires a persistent, long-running process. To avoid the recurring costs of cloud VPS providers (ex. AWS), I deployed the backend on a <strong>Raspberry Pi 4</strong> acting as a dedicated home server.</p>
     </div>
 
-<div class="info-highlight">
-    <h2>Conclusion</h2>
-    <p>Through this project, I learned so much about software development andhow to use each tool and service in tandem with one another. I'm excited to add more data points and functions to this app and continue development based on my own user experience!</p>
-</div>
+    <div class="info-highlight">
+        <h2>Conclusion</h2>
+        <p>Through this project, I learned so much about software development andhow to use each tool and service in tandem with one another. I'm excited to add more data points and functions to this app and continue development based on my own user experience!</p>
+    </div>
 
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
-<script src="../navbar.js"></script>
+
+<script src="../Javascript/navbar.js"></script>
 
 </body>
 </html>
