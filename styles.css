@@ -881,12 +881,12 @@ section {
 .grid-highlight {
     opacity: 1;
     mask-image: radial-gradient(
-            200px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             black 0%,
             transparent 100%
     );
     -webkit-mask-image: radial-gradient(
-            300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             black 0%,
             transparent 100%
     );
