@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>2025 | Wave Energy Converter</title>
+
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('engineering-theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark-mode');
-                document.body.classList.add('dark-mode');
-            }
+            try {
+                const savedTheme = localStorage.getItem('engineering-theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                    document.documentElement.classList.add('dark-mode');
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) {}
         })();
     </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,46 +25,140 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
 
 <div class="container">
+
     <div class="info-summery">
-        <h7 class="info-title">Wave Energy Converter (WEC)</h7>
-        <h3>2025 | Theoretical & Applied Fluid Dynamics Laboratory (TAFLAB) </h3>
+        <h7 class="info-title">Wave Energy Converter</h7>
+        <h3>2025 | Theoretical & Applied Fluid Dynamics Lab</h3>
     </div>
 
     <div class="info-banner-image-container">
-        <img class="info-banner-image" src="../Images/project-2025-taflab/TAFLAB-CAD.webp" alt="WEC CAD Model">
+        <img class="info-banner-image" src="../Images/project-2025-taflab/TAFLAB-C.webp" alt="WEC Schematic" height="100%">
     </div>
 
-    <p>Harnessing the ocean's energy, one swing at a time, using a oscillating pendulum at the bottom of the boat's keel.</p>
+    <p>A novel "springless" electromagnetic energy harvester designed to extend the mission life of Autonomous Surface Vessels (ASVs). By utilizing a rolling magnetic proof-mass inside a sealed spherical enclosure, this system harvests continuous power from low-frequency ocean swells where solar and wind fail.</p>
 
     <div class="info-at-a-glance">
         <div class="info-glance-section">
             <p class="text-mini">ROLE</p>
-            <p class="text-mini">Design & Manufacturing Engineer</p>
+            <p class="text-mini">Undergraduate Researcher</p>
         </div>
         <div class="info-glance-section">
-            <p class="text-mini">TOOLS</p>
-            <img class="info-tool-logo" src="../Logos/onshape.webp" alt="Onshape">
-            <img class="info-tool-logo" src="../Logos/fusion360.webp" alt="Fusion 360">
-            <img class="info-tool-logo" src="../Logos/arduino.webp" alt="Arduino">
-            <img class="info-tool-logo" src="../Logos/python.webp" alt="Python">
-            <img class="info-tool-logo" src="../Logos/etch.webp" alt="Etch">
+            <p class="text-mini">LAB</p>
+            <p class="text-mini">UC Berkeley TAFLAB</p>
+        </div>
+        <div class="info-glance-section">
+            <p class="text-mini">Tools</p>
+            <p class="text-mini">Python</p>
+            <p class="text-mini">MATLAB</p>
+            <p class="text-mini">Onshape</p>
+            <p class="text-mini">ANSYS Maxwell</p>
         </div>
     </div>
 
     <div class="info-highlight">
-        <h2>Modeling</h2>
-        <div class="slides-container">
+        <h2>Problem Statement</h2>
+        <p>Modern ASVs require 1–50W of continuous power for sensors and comms. While solar is powerful, it suffers from intermittency (night, clouds). Wind is consistent but low-density. <strong>Waves are the only energy source with 90% availability</strong> in open oceans.</p>
+        <p>However, the marine environment is hostile. Traditional harvesters with external moving parts succumb to biofouling and salt corrosion. The design requirement was clear: <strong>A fully enclosed, non-resonant system capable of harvesting ultra-low frequency (0.1–1.0 Hz) wave motion.</strong></p>
+    </div>
+
+    <div class="info-highlight">
+        <h2>Ideation</h2>
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Swinging</h3>
+                <p>Spherical magnet array over copper coils</p>
+            </div>
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-B-Sketch.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
+            </div>
+        </div>
+        <div class="info-mechanism">
+            <div class="info-text-content">
+                <h3>Rolling</h3>
+                <p>Magnetic ball of magnets rolls over copper coils</p>
+            </div>
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-C-Sketch.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>Proof of Concept</h2>
+        <p>I designed and fabricated simple testing rig constructed out of plywood with a magnet swinging over a stationary copper coil to demonstrate the effectiveness of this type of electromagnetic energy generator and to use as a benchmark for testing various coil configurations. </strong></p>
+        <div class="info-mechanism">
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-C-POC1.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
+            </div>
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-C-POC2.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
+            </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>Dynamics & Lagrangian Mechanics</h2>
+        <p>To optimize the system, I derived the nonlinear equations of motion using Lagrangian mechanics. The system couples the vessel's pitch angle $\alpha(t)$ with the ball's relative position $\beta(t)$.</p>
+
+        <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid var(--grid-line);">
+            <p style="margin-bottom: 10px; font-size: 0.9rem; color: var(--dark-gray);">Linearized Equation of Motion:</p>
+            $$ \frac{7}{5}R\ddot{\beta} + \frac{(c_i + c_L)R}{m}\dot{\beta} + g\beta = -g\alpha - \kappa\ddot{\alpha} $$
+        </div>
+
+        <p>This model revealed a critical <strong>"Null Point"</strong> at $d/R_i = 1.4$, where gravitational and inertial forces cancel out. Avoiding this geometric ratio was crucial for ensuring the ball actually moves under excitation.</p>
+        <p>Using MATLAB, we are bale to plot and visualize many properties of a system with a specific set of parameters</p>
+        <div class="info-image-content">
+            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB1.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
+        </div>
+        <div class="info-image-content">
+            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB2.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
+        </div>
+        <div class="info-image-content">
+            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB3.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>CAD</h2>
+        <p>Design was completed using Onshape making use of Variable Studios to allow for configurability as parameters are changed and optimized.</p>
+        <div class="info-image-content">
+            <img src="../Images/project-2025-taflab/TAFLAB-C-Variables.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
+        </div>
+        <div class="info-image-content">
+            <img src="../Images/project-2025-taflab/TAFLAB-C.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>Optimization & Testing </h2>
+        <p>Coming Soon!</p>
+    </div>
+
+    <div class="info-results" style="text-align: center;">
+        <h2>Full Technical Paper</h2>
+        <p>For the complete derivation and experimental validation setup, view the full publication below.</p>
+
+        <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
             <iframe
-                    src="https://docs.google.com/presentation/d/1dtCPmzqyA0uf_qpQnZrvUk1EbVuBBhJS9iaCWjTAcSE/embed?start=false&loop=false&delayms=3000"
-                    allowfullscreen
-                    mozallowfullscreen="true"
-                    webkitallowfullscreen="true">
+                    src="../Files/2025-SEP-POC.pdf"
+                    width="100%"
+                    height="800px"
+                    type="application/pdf"
+                    style="border: none;">
             </iframe>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <a href="../Files/2025-SEP-POC.pdf" target="_blank" style="text-decoration: none; color: #718096; font-size: 0.9rem;">
+                <i class="fas fa-external-link-alt"></i> Open in New Tab
+            </a>
         </div>
     </div>
 
@@ -70,36 +166,16 @@
 
 <script src="../Javascript/navbar.js"></script>
 
-<script>
-    document.querySelectorAll('.before-after-container').forEach(container => {
-        const before = container.querySelector('.before');
-        const slider = container.querySelector('.slider');
-
-        let isDragging = false;
-
-        const moveSlider = (x) => {
-            const rect = container.getBoundingClientRect();
-            let offsetX = x - rect.left;
-            offsetX = Math.max(0, Math.min(offsetX, rect.width));
-            const percent = (offsetX / rect.width) * 100;
-            before.style.width = percent + "%";
-            slider.style.left = percent + "%";
-        };
-
-        slider.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', e => {
-            if (isDragging) moveSlider(e.clientX);
-        });
-
-        // Mobile Touch Support
-        slider.addEventListener('touchstart', () => isDragging = true);
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('touchmove', e => {
-            if (isDragging) moveSlider(e.touches[0].clientX);
-        });
-    });
-</script>
-
 </body>
 </html>
+
+<script>
+    window.MathJax = {
+        tex: {
+            // Enables single $ for inline math
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
