@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Resume</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume</title>
 
   <link rel="stylesheet" href="styles.css">
 
@@ -12,22 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<body>
 
-<body>
-
-<script>
-  (function() {
-    const savedTheme = localStorage.getItem('engineering-theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-      document.documentElement.classList.add('dark-mode');
-      document.body.classList.add('dark-mode');
-    }
-  })();
-</script>
-  </script>
   <style>
     /* - - - - - Resume Embed Styles - - - - - */
     .resume-embed {
@@ -37,9 +22,19 @@
       border-radius: 12px;
       overflow: hidden;
     }
-
-    /* Styles are primarily handled in styles.css now for dark mode support */
   </style>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('engineering-theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.documentElement.classList.add('dark-mode');
+        document.body.classList.add('dark-mode');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -67,8 +62,13 @@
       </div>
       <div class="right-column">
         <h3>Mechanical Engineering</h3>
+
         <h4>Sophomore Year</h4>
         <ul>
+          <li class="course-item">MECENG 106: Fluid Dynamics</li>
+          <li class="course-item">MECENG 108: Mechanics of Materials</li>
+          <li class="course-item">MECENG 130: Planar Mechanisms</li>
+          <li class="course-item">MECENG 178: Statistics for Engineers</li>
           <li class="course-item">
             <strong>MECENG 100: Electronics for IOT</strong>
             <div class="project-card">
