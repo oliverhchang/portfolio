@@ -26,14 +26,15 @@
 <div class="container">
     <div class="info-summery">
         <h7 class="info-title">Combustion Chamber</h7>
-        <h3>2025 | Liquid Engine 3</h3>
+        <h3>2025 | Liquid Engine 3 (LE3)</h3>
     </div>
     <div class="info-banner-image-container">
-        <img class="info-banner-image"src="../Images/project-2025-star-LE3/LE3-Tilted.webp">
+        <img class="info-banner-image" src="../Images/project-2025-star-LE3/LE3-Tilted.webp" alt="Combustion Chamber Component">
     </div>
 
     <p>Joining the liquid engine subteam within STAR, I specialized in manufacturing, primarily using the machine shop's lathe and mill for parts with critical dimensions and interconnected fits.</p>
-    <p>This role strongly improved my DFM and skills in creating practical drawings, building upon the concepts in classes of fits and tolerancing. </p>
+    <p>This role strongly improved my DFM and skills in creating practical drawings, building upon the concepts in classes of fits and tolerancing.</p>
+
     <div class="info-at-a-glance">
         <div class="info-glance-section">
             <p class="text-mini">SKILLS</p>
@@ -48,8 +49,8 @@
         </div>
         <div class="info-glance-section">
             <p class="text-mini">TOOLS</p>
-            <img class="info-tool-logo" src="../Logos/etch.webp">
-            <img class="info-tool-logo" src="../Logos/onshape.webp">
+            <img class="info-tool-logo" src="../Logos/etch.webp" alt="Etch">
+            <img class="info-tool-logo" src="../Logos/onshape.webp" alt="Onshape">
         </div>
     </div>
 
@@ -58,7 +59,7 @@
             <h2>CAD</h2>
             <p>The specific subassembly these parts belong to is the injector and combustion chamber, which work together to mix and ignite liquid oxygen and kerosene, generating high-temperature, high-pressure combustion gases that produce thrust.</p>
             <div class="info-banner-image-container">
-                <img class="info-banner-image"src="../Images/project-2025-star-LE3/LE3-CAD.webp">
+                <img class="info-banner-image" src="../Images/project-2025-star-LE3/LE3-CAD.webp" alt="Injector CAD Assembly">
             </div>
         </div>
     </div>
@@ -71,13 +72,13 @@
                 <p>Clamps combustion chamber together.</p>
             </div>
             <div class="info-image-content">
-                <img src="../Images/project-2025-star-LE3/LE3-Rods.webp">
+                <img src="../Images/project-2025-star-LE3/LE3-Rods.webp" alt="Threaded Rods">
             </div>
         </div>
 
         <div class="info-mechanism">
             <div class="info-image-content">
-                <img src="../Images/project-2025-star-LE3/LE3-Kerosene.webp">
+                <img src="../Images/project-2025-star-LE3/LE3-Kerosene.webp" alt="Injector Parts">
             </div>
             <div class="info-text-content">
                 <h3>Injector Assembly</h3>
@@ -91,11 +92,30 @@
                 <p>Structurally integrates all components and tubes.</p>
             </div>
             <div class="info-image-content">
-                <img src="../Images/project-2025-star-LE3/LE3-Manifold.webp">
+                <img src="../Images/project-2025-star-LE3/LE3-Manifold.webp" alt="Reservoir Manifold">
             </div>
         </div>
 
-        <h2>Drawings</h2>
+        <h2>Drawings & GD&T</h2>
+        <p>Precision was paramount for the injector assembly. I utilized Geometric Dimensioning and Tolerancing (GD&T) to ensure the engine seals correctly under high pressure.</p>
+
+        <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid var(--grid-line);">
+            <ul style="padding-left: 20px; line-height: 1.6; color: var(--text-color);">
+                <li>
+                    <strong>Concentricity (Single-Setup Machining):</strong>
+                    Maintained 0.005” Total Runout between the pintle bore and outer diameter by referencing all machined critical features with dial indicator.
+                </li>
+                <li>
+                    <strong>Datums (Geometric Controls):</strong>
+                    Established the manifold mating face as <em>Datum A</em> to control the <strong>Perpendicularity (⊥ 0.002”)</strong> of the threaded rod pattern, ensuring uniform compression across the sealing face.
+                </li>
+                <li>
+                    <strong>Fits & Sealing (O-Ring Glands):</strong>
+                    Machined dimensions to within +0.000/-0.002” to guarantee <strong>20% volumetric squeeze</strong> on the O-rings, ensuring a leak-proof seal despite the thermal contractions.
+                </li>
+            </ul>
+        </div>
+
         <div class="info-planning">
             <div class="plan-slider">
                 <iframe id="slide-1" src="../Images/project-2025-star-LE3/LE3-Kerosene-Reservoir-Injector%20Drawing.pdf" width="100%" height="600px"></iframe>
@@ -115,7 +135,6 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const slider = document.querySelector('.plan-slider');
                 const navLinks = document.querySelectorAll('.plan-slider-nav a');
-                const images = document.querySelectorAll('.plan-slider img');
 
                 navLinks.forEach((link, index) => {
                     link.addEventListener('click', (event) => {
@@ -124,65 +143,23 @@
                         slider.scrollLeft = imgWidth * index;
                     });
                 });
-
-                images.forEach((img, index) => {
-                    img.addEventListener('click', (event) => {
-                        const imgWidth = slider.clientWidth;
-                        const clickX = event.clientX - img.getBoundingClientRect().left;
-
-                        if (clickX < imgWidth / 2) {
-                            // Clicked on the left side
-                            if (index > 0) {
-                                slider.scrollLeft = imgWidth * (index - 1);
-                            }
-                        } else {
-                            // Clicked on the right side
-                            if (index < images.length - 1) {
-                                slider.scrollLeft = imgWidth * (index + 1);
-                            }
-                        }
-                    });
-                });
             });
         </script>
     </div>
 
     <div class="info-results">
-        <h2>Results</h2>
-        <p>These parts are towards a hotfire testing setup that was ran this year, which will inform the final parts for LE3 as part of IREC 2026 competition.</p>
+        <h2>Results: Hotfire Test Assembly</h2>
+        <p>The manufactured components were integrated into the hotfire test stand shown below. The assembly features a load cell mounted inline with the thrust axis to directly measure engine performance.</p>
+
+        <div class="info-banner-image-container">
+            <img class="info-banner-image" src="../Images/project-2025-star-LE3/LE3-Assembly.webp" alt="Hotfire Test Assembly">
+        </div>
+
+        <p>This static fire setup validates the injector geometry and cooling efficiency before the final flight hardware is machined for the IREC 2026 competition.</p>
     </div>
 </div>
+
 <script src="../Javascript/navbar.js"></script>
 
-<script>
-    document.querySelectorAll('.before-after-container').forEach(container => {
-        const before = container.querySelector('.before');
-        const slider = container.querySelector('.slider');
-
-        let isDragging = false;
-
-        const moveSlider = (x) => {
-            const rect = container.getBoundingClientRect();
-            let offsetX = x - rect.left;
-            offsetX = Math.max(0, Math.min(offsetX, rect.width));
-            const percent = (offsetX / rect.width) * 100;
-            before.style.width = percent + "%";
-            slider.style.left = percent + "%";
-        };
-
-        slider.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', e => {
-            if (isDragging) moveSlider(e.clientX);
-        });
-
-        // Mobile Touch Support
-        slider.addEventListener('touchstart', () => isDragging = true);
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('touchmove', e => {
-            if (isDragging) moveSlider(e.touches[0].clientX);
-        });
-    });
-</script>
 </body>
 </html>
