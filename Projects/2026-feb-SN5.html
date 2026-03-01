@@ -120,10 +120,35 @@
 
   <div class="info-highlight">
     <h2>Tube Sizing & Calculations</h2>
-    <p>The Rules specify minimum inertias and thicknesses for some sizes of tubes, with many left unregulated if not particularily structurally important. Using first principlese justifications, we applied statics to create a sizing calculation spreadsheet for easy comparison as well as use Method of Deflections for a preliminary hand-calc to understand stress distribution for SN4. </p>
+    <p>The Rules specify minimum inertias and thicknesses for some sizes of tubes, with many left unregulated if not particularily structurally important. Using first principles justifications, we applied statics to create a sizing calculation spreadsheet for easy comparison as well as use Method of Deflections for a preliminary hand-calc to understand stress distribution for SN4. </p>
+
     <p>Using this <a class="bold" href="https://docs.google.com/spreadsheets/d/1msSWi8gsbL6fJpWygYyySvXI_8-PVcF_5Y8Z3boiA78/edit?usp=sharing" target="_blank">spreadsheet</a>, we're able to identify the changes from SN4 to SN5 for changes in area, weight, inertia, and stiffness. A key improvement for this year was going for thinner tubes down to 0.028" for non-structural applications given welder experience and training. Justification for those application areas can be found below.</p>
+
     <img src="../Images/project-2026-feb-SN5/SN5-TubeSize.webp" alt="Description" style="width: 100%; border-radius: 1.5rem; margin: 20px 0;">
-    <p>The tube calculation was actually an extension of a class project from the Mechanics of Materials course. using the Direct Stiffness Method to calculate chassis tube deflections. This involved deriving local element stiffness matrices based on material properties (E, G) and cross-sectional geometry (A, I, J), applying coordinate transformations for 3D space, and assembling a global stiffness matrix to solve for nodal displacements under load. </p>
+
+    <div class="info-mechanism" style="display: block; margin-top: 40px; margin-bottom: 40px;">
+      <h3>Interactive Tube Selection Chart</h3>
+      <p>To streamline the selection process and ensure rule compliance across all FSAE tube sizes, I developed a custom interactive D3.js visualization. This tool maps out the entire catalog of available 4130N steel tubes, filtering them by shape, wall thickness, and mass to instantly identify which options meet the strict Area and Area Moment of Inertia (MOI) requirements.</p>
+
+      <div style="margin-top: 20px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <iframe
+                src="../Webpages/FEB-Tube-Size-Chart.html"
+                width="100%"
+                height="650px"
+                style="border: none; display: block;">
+        </iframe>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="../Webpages/FEB-Tube-Size-Chart.html" target="_blank" style="text-decoration: none;">
+          <button style="padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue)); border: none; color: white; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;">
+            <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Open Full Screen Chart
+          </button>
+        </a>
+      </div>
+    </div>
+    <p>The tube calculation was actually an extension of a class project from the Mechanics of Materials course, using the Direct Stiffness Method to calculate chassis tube deflections. This involved deriving local element stiffness matrices based on material properties (E, G) and cross-sectional geometry (A, I, J), applying coordinate transformations for 3D space, and assembling a global stiffness matrix to solve for nodal displacements under load. </p>
+
     <div class="slides-container">
       <iframe
               src="https://docs.google.com/presentation/d/189H5ZUlvLkLP9UfOFlQd6gnIw7LgVfu5ydp6MPklgTU/embed?start=false&loop=false&delayms=3000"
@@ -132,7 +157,8 @@
               webkitallowfullscreen="true">
       </iframe>
     </div>
-    <p>I'm excited for future more advanced classes to take this simplified model (pin-pins, node specific, etc) to a more realistic one that could validate our FEA findings. However, it was still a great experience transforming a course project to FSAE application.</p>
+
+    <p>I'm excited for future more advanced classes to take this simplified model (pin-pins, node specific, etc.) to a more realistic one that could validate our FEA findings. However, it was still a great experience transforming a course project to an FSAE application.</p>
   </div>
 
   <div class="info-highlight">
