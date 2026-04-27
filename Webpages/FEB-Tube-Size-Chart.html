@@ -3,605 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSAE Tube Selection — VR3 4130N Catalog</title>
+    <title>FSAE Tube Selection — VR3 4130N</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg:         #0d0f14;
-            --panel:      #13161e;
-            --border:     #1f2535;
-            --border2:    #2a3048;
-            --text:       #e2e8f0;
-            --muted:      #6b7a99;
-            --accent:     #4f9eff;
-            --size-a:     #ff4d4d;
-            --size-b:     #ffb020;
-            --size-c:     #3ecf6e;
-            --size-d:     #4f9eff;
-            --round-dot:  #c084fc;
-            --sq-dot:     #38bdf8;
-            --rect-dot:   #34d399;
-            --mono:       'Space Mono', monospace;
-            --sans:       'DM Sans', sans-serif;
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 13px;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── Header ── */
-        header {
-            padding: 12px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-shrink: 0;
-            background: var(--panel);
-        }
-        header h1 {
-            font-family: var(--mono);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--accent);
-            text-transform: uppercase;
-        }
-        header span {
-            font-size: 11px;
-            color: var(--muted);
-            font-family: var(--mono);
-        }
-        .header-pills {
-            margin-left: auto;
-            display: flex;
-            gap: 8px;
-        }
-        .pill {
-            font-family: var(--mono);
-            font-size: 10px;
-            padding: 3px 10px;
-            border-radius: 100px;
-            border: 1px solid;
-            letter-spacing: 0.06em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s;
-            opacity: 0.5;
-        }
-        .pill.active { opacity: 1; }
-        .pill-a { color: var(--size-a); border-color: var(--size-a); }
-        .pill-a.active { background: rgba(255,77,77,0.12); }
-        .pill-b { color: var(--size-b); border-color: var(--size-b); }
-        .pill-b.active { background: rgba(255,176,32,0.12); }
-        .pill-c { color: var(--size-c); border-color: var(--size-c); }
-        .pill-c.active { background: rgba(62,207,110,0.12); }
-        .pill-d { color: var(--size-d); border-color: var(--size-d); }
-        .pill-d.active { background: rgba(79,158,255,0.12); }
-
-        /* ── Layout ── */
-        .layout {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        /* ── Sidebar ── */
-        .sidebar {
-            width: 230px;
-            flex-shrink: 0;
-            border-right: 1px solid var(--border);
-            background: var(--panel);
-            overflow-y: auto;
-            padding: 16px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
-        .section-label {
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 0.12em;
-            color: var(--muted);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        /* Tube shape toggles */
-        .shape-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--border2);
-            cursor: pointer;
-            transition: all 0.15s;
-            user-select: none;
-        }
-        .shape-toggle:hover { border-color: var(--border); background: rgba(255,255,255,0.03); }
-        .shape-toggle.active { border-color: currentColor; background: rgba(255,255,255,0.04); }
-        .shape-toggle svg { flex-shrink: 0; }
-        .shape-toggle span { font-size: 12px; font-weight: 500; }
-
-        /* Wall thickness checkboxes */
-        .wall-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 0;
-            cursor: pointer;
-            user-select: none;
-        }
-        .wall-swatch {
-            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-        }
-        .wall-item span { font-family: var(--mono); font-size: 11px; }
-        .wall-item input { display: none; }
-        .wall-check {
-            width: 14px; height: 14px; border-radius: 3px;
-            border: 1px solid var(--border2);
-            margin-left: auto; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.12s;
-        }
-        .wall-check.on { background: var(--accent); border-color: var(--accent); }
-        .wall-check.on::after { content: '✓'; font-size: 9px; color: #000; }
-
-        /* Range sliders */
-        .range-group { display: flex; flex-direction: column; gap: 8px; }
-        .range-row {
-            display: flex; align-items: center; gap: 8px;
-        }
-        .range-row label {
-            font-size: 11px; color: var(--muted); width: 32px; flex-shrink: 0;
-            font-family: var(--mono);
-        }
-        .range-row input[type=range] {
-            flex: 1;
-            -webkit-appearance: none;
-            height: 3px;
-            border-radius: 2px;
-            background: var(--border2);
-            outline: none;
-            cursor: pointer;
-        }
-        .range-row input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-        }
-        .range-val {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--text);
-            width: 44px;
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        /* Mass axis toggle */
-        .toggle-row {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 12px; cursor: pointer; user-select: none;
-        }
-        .toggle-switch {
-            width: 30px; height: 16px;
-            background: var(--border2);
-            border-radius: 8px;
-            position: relative;
-            transition: background 0.15s;
-            flex-shrink: 0;
-        }
-        .toggle-switch.on { background: var(--accent); }
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 2px; left: 2px;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: white;
-            transition: transform 0.15s;
-        }
-        .toggle-switch.on::after { transform: translateX(14px); }
-
-        .reset-btn {
-            padding: 7px 14px;
-            background: transparent;
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.15s;
-            width: 100%;
-        }
-        .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* ── Chart area ── */
-        .chart-wrap {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        #chart-svg { flex: 1; }
-
-        /* ── Tooltip ── */
-        #tooltip {
-            position: fixed;
-            pointer-events: none;
-            background: var(--panel);
-            border: 1px solid var(--border2);
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-size: 12px;
-            min-width: 240px;
-            opacity: 0;
-            transition: opacity 0.12s;
-            z-index: 100;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-        }
-        #tooltip.visible { opacity: 1; }
-        .tt-title {
-            font-family: var(--mono);
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            padding-bottom: 7px;
-            border-bottom: 1px solid var(--border2);
-        }
-        .tt-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 2px 0;
-            color: var(--muted);
-        }
-        .tt-row span:last-child {
-            font-family: var(--mono);
-            font-size: 11px;
-            color: var(--text);
-            font-weight: 700;
-        }
-        .tt-divider {
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: 7px;
-            margin-bottom: 2px;
-        }
-        .tt-unit {
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 0.06em;
-            color: var(--muted);
-            background: var(--border2);
-            padding: 1px 5px;
-            border-radius: 3px;
-            flex-shrink: 0;
-        }
-        .tt-imperial {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: #8899bb !important;
-        }
-        .tt-sep {
-            margin: 7px 0 3px;
-            border-top: 1px solid var(--border2);
-        }
-        margin-top: 8px;
-        padding-top: 7px;
-        border-top: 1px solid var(--border2);
-        display: flex;
-        gap: 5px;
-        flex-wrap: wrap;
-        }
-        .tt-badge {
-            font-family: var(--mono);
-            font-size: 9px;
-            padding: 2px 7px;
-            border-radius: 100px;
-            border: 1px solid;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-        }
-        .tt-badge.pass { color: var(--size-c); border-color: var(--size-c); background: rgba(62,207,110,0.08); }
-        .tt-badge.fail { color: var(--muted); border-color: var(--border2); }
-
-        /* ── Status bar ── */
-        .statusbar {
-            height: 26px;
-            border-top: 1px solid var(--border);
-            background: var(--panel);
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            gap: 20px;
-            flex-shrink: 0;
-        }
-        .statusbar span {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-        }
-        .statusbar span b { color: var(--text); }
-
-        /* D3 chart styles */
-        .grid line { stroke: #1a1f2e; stroke-width: 1; }
-        .grid path { stroke: none; }
-        .axis-label { font-family: 'DM Sans', sans-serif; fill: #6b7a99; font-size: 11px; }
-        .tick text { fill: #4a5568; font-family: 'Space Mono', monospace; font-size: 10px; }
-        .tick line { stroke: #1a1f2e; }
-        .domain { stroke: #1a1f2e; }
-
-        .zone-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-        }
-        .ref-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 9px;
-            fill: #3a4258;
-        }
-
-        .dot {
-            cursor: pointer;
-            transition: r 0.1s, opacity 0.15s;
-        }
-        .dot:hover { stroke-width: 2; }
-        .dot.dimmed { opacity: 0.08; }
-
-        /* Legend in chart */
-        .chart-legend text {
-            font-family: 'DM Sans', sans-serif;
-            fill: #6b7a99;
-            font-size: 11px;
-        }
+        body { font-family: 'DejaVu Sans', Arial, sans-serif; background: #fff; color: #111; font-size: 13px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        #header { padding: 10px 16px; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: #fafafa; flex-shrink: 0; }
+        #header h1 { font-size: 14px; font-weight: 600; }
+        #header .sub { font-size: 12px; color: #666; }
+        .size-pills { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+        .size-pill { font-size: 11px; padding: 2px 10px; border-radius: 4px; border: 1px solid; cursor: pointer; font-weight: 500; transition: all 0.1s; user-select: none; opacity: 0.45; }
+        .size-pill.on { opacity: 1; }
+        .pill-A { border-color: #c00; color: #c00; }
+        .pill-A.on { background: #fff0f0; }
+        .pill-B { border-color: #b06000; color: #b06000; }
+        .pill-B.on { background: #fff8ee; }
+        .pill-C { border-color: #1a7a3a; color: #1a7a3a; }
+        .pill-C.on { background: #f0faf4; }
+        .pill-D { border-color: #0060c0; color: #0060c0; }
+        .pill-D.on { background: #f0f6ff; }
+        #layout { display: flex; flex: 1; overflow: hidden; }
+        #sidebar { width: 200px; flex-shrink: 0; border-right: 1px solid #ddd; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: #fafafa; }
+        #sidebar::-webkit-scrollbar { width: 4px; }
+        #sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .sec-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 600; }
+        .shape-row { display: flex; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 4px; cursor: pointer; user-select: none; border: 1px solid transparent; transition: all 0.1s; font-size: 12px; }
+        .shape-row.on { border-color: #ccc; background: #f0f0f0; }
+        .shape-row:hover { background: #f0f0f0; }
+        .wall-row { display: flex; align-items: center; gap: 7px; padding: 3px 0; cursor: pointer; user-select: none; font-size: 11px; font-family: monospace; }
+        .wall-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .wall-check { width: 13px; height: 13px; border-radius: 3px; border: 1px solid #bbb; margin-left: auto; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; color: transparent; }
+        .wall-check.on { background: #444; border-color: #444; color: white; }
+        .range-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .range-row label { font-size: 11px; color: #888; width: 28px; }
+        .range-row input[type=range] { flex: 1; accent-color: #444; }
+        .range-val { font-size: 11px; font-family: monospace; width: 40px; text-align: right; color: #333; }
+        .toggle-row { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 12px; }
+        .tog { width: 28px; height: 15px; border-radius: 8px; background: #ccc; position: relative; flex-shrink: 0; transition: background 0.1s; }
+        .tog.on { background: #444; }
+        .tog::after { content: ''; position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: white; transition: transform 0.1s; }
+        .tog.on::after { transform: translateX(13px); }
+        .reset-btn { padding: 5px 10px; background: #fff; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer; width: 100%; color: #555; }
+        .reset-btn:hover { background: #f0f0f0; }
+        #chart-area { flex: 1; position: relative; overflow: hidden; }
+        #chart { width: 100%; height: 100%; position: absolute; }
+        #statusbar { padding: 4px 16px; border-top: 1px solid #ddd; font-size: 11px; color: #888; background: #fafafa; flex-shrink: 0; }
+        #tooltip { position: fixed; pointer-events: none; background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 10px 12px; font-size: 12px; min-width: 220px; opacity: 0; transition: opacity 0.1s; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+        #tooltip.vis { opacity: 1; }
+        .tt-title { font-weight: 600; font-size: 12px; margin-bottom: 7px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+        .tt-row { display: flex; justify-content: space-between; gap: 16px; padding: 2px 0; color: #888; font-size: 11px; }
+        .tt-row span:last-child { font-family: monospace; color: #222; }
+        .tt-imp { color: #aaa !important; font-size: 10px !important; }
+        .tt-div { font-size: 10px; color: #aaa; margin: 5px 0 2px; text-transform: uppercase; letter-spacing: 0.07em; }
+        .tt-sep { border-top: 1px solid #eee; margin: 6px 0; }
+        .tt-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 7px; }
+        .tt-badge { font-size: 10px; padding: 1px 7px; border-radius: 3px; border: 1px solid; }
+        .tt-badge.pass { color: #1a7a3a; border-color: #1a7a3a; background: #f0faf4; }
+        .tt-badge.fail { color: #bbb; border-color: #ddd; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>VR3 4130N — Tube Selection Chart</h1>
-    <span>FSAE 2026 · Area vs. Moment of Inertia</span>
-    <div class="header-pills">
-        <div class="pill pill-a active" data-size="A">SIZE A</div>
-        <div class="pill pill-b active" data-size="B">SIZE B</div>
-        <div class="pill pill-c active" data-size="C">SIZE C</div>
-        <div class="pill pill-d active" data-size="D">SIZE D</div>
+<div id="header">
+    <h1>VR3 4130N — Tube Selection</h1>
+    <span class="sub">FSAE 2026 · Area vs. Moment of Inertia</span>
+    <div class="size-pills">
+        <div class="size-pill pill-A on" data-sz="A">Size A</div>
+        <div class="size-pill pill-B on" data-sz="B">Size B</div>
+        <div class="size-pill pill-C on" data-sz="C">Size C</div>
+        <div class="size-pill pill-D on" data-sz="D">Size D</div>
     </div>
-</header>
+</div>
 
-<div class="layout">
-    <div class="sidebar">
-
-        <!-- Shape filter -->
+<div id="layout">
+    <div id="sidebar">
         <div>
-            <div class="section-label">Tube Shape</div>
-            <div style="display:flex;flex-direction:column;gap:5px;">
-                <div class="shape-toggle active" data-shape="round" style="color:#c084fc;">
-                    <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-                    <span>Round</span>
-                </div>
-                <div class="shape-toggle active" data-shape="square" style="color:#38bdf8;">
-                    <svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-                    <span>Square</span>
-                </div>
-                <div class="shape-toggle active" data-shape="rect" style="color:#34d399;">
-                    <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="3.5" width="12" height="7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-                    <span>Rectangular</span>
-                </div>
+            <div class="sec-label">Tube Shape</div>
+            <div class="shape-row on" data-shape="round">
+                <svg width="13" height="13"><circle cx="6.5" cy="6.5" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                <span>Round</span>
+            </div>
+            <div class="shape-row on" data-shape="square" style="margin-top:3px">
+                <svg width="13" height="13"><rect x="2" y="2" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                <span>Square</span>
+            </div>
+            <div class="shape-row on" data-shape="rect" style="margin-top:3px">
+                <svg width="13" height="13"><rect x="1" y="3.5" width="11" height="6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                <span>Rectangular</span>
             </div>
         </div>
 
-        <!-- Wall thickness -->
         <div>
-            <div class="section-label">Wall Thickness</div>
-            <div id="wall-filters" style="display:flex;flex-direction:column;gap:2px;"></div>
+            <div class="sec-label">Wall Thickness</div>
+            <div id="wall-list"></div>
         </div>
 
-        <!-- OD range -->
         <div>
-            <div class="section-label">OD / Side  (mm)</div>
-            <div class="range-group">
-                <div class="range-row">
-                    <label>Min</label>
-                    <input type="range" id="od-min" min="4" max="51" value="4" step="0.5">
-                    <div class="range-val" id="od-min-val">4</div>
-                </div>
-                <div class="range-row">
-                    <label>Max</label>
-                    <input type="range" id="od-max" min="4" max="51" value="51" step="0.5">
-                    <div class="range-val" id="od-max-val">51</div>
-                </div>
-            </div>
+            <div class="sec-label">OD / Side (mm)</div>
+            <div class="range-row"><label>Min</label><input type="range" id="od-min" min="4" max="51" value="4" step="0.5"><div class="range-val" id="od-min-v">4</div></div>
+            <div class="range-row"><label>Max</label><input type="range" id="od-max" min="4" max="51" value="51" step="0.5"><div class="range-val" id="od-max-v">51</div></div>
         </div>
 
-        <!-- Mass range -->
         <div>
-            <div class="section-label">Mass  (g/m)</div>
-            <div class="range-group">
-                <div class="range-row">
-                    <label>Min</label>
-                    <input type="range" id="mass-min" min="0" max="3600" value="0" step="10">
-                    <div class="range-val" id="mass-min-val">0</div>
-                </div>
-                <div class="range-row">
-                    <label>Max</label>
-                    <input type="range" id="mass-max" min="0" max="3600" value="3600" step="10">
-                    <div class="range-val" id="mass-max-val">3600</div>
-                </div>
-            </div>
+            <div class="sec-label">Mass (g/m)</div>
+            <div class="range-row"><label>Min</label><input type="range" id="ms-min" min="0" max="3600" value="0" step="10"><div class="range-val" id="ms-min-v">0</div></div>
+            <div class="range-row"><label>Max</label><input type="range" id="ms-max" min="0" max="3600" value="3600" step="10"><div class="range-val" id="ms-max-v">3600</div></div>
         </div>
 
-        <!-- Dot size toggle -->
         <div>
-            <div class="section-label">Dot Encoding</div>
-            <div class="toggle-row" id="mass-size-toggle">
-                <div class="toggle-switch on" id="toggle-knob"></div>
-                <span>Scale dot by mass</span>
-            </div>
-            <div class="toggle-row" id="mass-log-toggle" style="margin-top:6px;opacity:1;transition:opacity 0.2s;">
-                <div class="toggle-switch" id="log-knob"></div>
-                <span>Log scale  <span style="font-family:var(--mono);font-size:9px;color:var(--muted);">more contrast</span></span>
-            </div>
+            <div class="sec-label">Dot Encoding</div>
+            <div class="toggle-row" id="tog-mass"><div class="tog on" id="tog-mass-k"></div><span>Scale by mass</span></div>
+            <div class="toggle-row" id="tog-log" style="margin-top:6px"><div class="tog" id="tog-log-k"></div><span>Log scale</span></div>
         </div>
 
-        <!-- Highlight legal only -->
         <div>
-            <div class="section-label">Highlight</div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-                <div class="toggle-row" id="legal-toggle">
-                    <div class="toggle-switch" id="legal-knob"></div>
-                    <span>Legal tubes only</span>
-                </div>
-            </div>
+            <div class="sec-label">Highlight</div>
+            <div class="toggle-row" id="tog-legal"><div class="tog" id="tog-legal-k"></div><span>Legal only</span></div>
         </div>
 
         <button class="reset-btn" id="reset-btn">↺ Reset Filters</button>
-
     </div>
 
-    <div class="chart-wrap">
-        <svg id="chart-svg"></svg>
+    <div id="chart-area">
+        <svg id="chart"></svg>
     </div>
 </div>
 
-<div class="statusbar">
-    <span>Showing <b id="stat-visible">—</b> tubes</span>
-    <span>·</span>
-    <span>Hover a dot for specs</span>
-    <span>·</span>
-    <span>Toggle sizes in header</span>
-</div>
+<div id="statusbar">Showing <b id="stat">—</b> tubes &nbsp;·&nbsp; Hover a dot for specs &nbsp;·&nbsp; Toggle sizes in header</div>
 
 <div id="tooltip"></div>
 
 <script>
-    // ─────────────────────────────────────────────────────
-    // DATA
-    // ─────────────────────────────────────────────────────
-    const DENSITY = 7850; // kg/m³
-
+    const DENSITY = 7850;
     const RULES = {
-        A: { area: 173.0, moi: 11320.0, color: '#ff4d4d' },
-        B: { area: 114.0, moi:  8080.0, color: '#ffb020' },
-        C: { area:  91.0, moi:  6400.0, color: '#3ecf6e' },
-        D: { area: 126.0, moi: 17900.0, color: '#4f9eff' },
+        A: { area: 173,  moi: 11320, color: '#cc0000' },
+        B: { area: 114,  moi: 8080,  color: '#b06000' },
+        C: { area: 91,   moi: 6400,  color: '#1a7a3a' },
+        D: { area: 126,  moi: 17900, color: '#0060c0' },
     };
-
     const WALL_COLORS = {
-        0.71: '#ff6b6b', 0.89: '#ff9f43', 1.24: '#48dbad',
-        1.47: '#54a0ff', 1.65: '#c084fc', 2.11: '#fd9644',
-        2.41: '#f368e0', 3.05: '#8395a7', 4.78: '#dfe6e9',
+        0.71:'#e45555', 0.89:'#e08830', 1.24:'#3a8a3a',
+        1.47:'#4080bb', 1.65:'#8855aa', 2.11:'#aa6030',
+        2.41:'#bb44aa', 3.05:'#888888', 4.78:'#aaaaaa',
     };
 
-    function roundProps(od, t) {
-        const id = od - 2*t;
-        if (id <= 0) return null;
-        const area = Math.PI/4 * (od**2 - id**2);
-        const moi  = Math.PI/64 * (od**4 - id**4);
-        const mass = area * 1e-6 * DENSITY * 1000; // g/m
-        return { area, moi, mass, od, t, id };
+    function roundP(od, t) {
+        const id = od - 2*t; if (id <= 0) return null;
+        const a = Math.PI/4*(od**2-id**2), m = Math.PI/64*(od**4-id**4);
+        return { area:a, moi:m, mass:a*1e-6*DENSITY*1000, od, t, id, shape:'round',
+            label:`Round ${od.toFixed(2)}×${t.toFixed(2)}mm`, colorKey:t, displayOD:od };
     }
-    function squareProps(s, t) {
-        const inner = s - 2*t;
-        if (inner <= 0) return null;
-        const area = s**2 - inner**2;
-        const moi  = (s**4 - inner**4) / 12;
-        const mass = area * 1e-6 * DENSITY * 1000;
-        return { area, moi, mass, od: s, t, id: inner };
+    function squareP(s, t) {
+        const i = s-2*t; if (i <= 0) return null;
+        const a = s**2-i**2, m = (s**4-i**4)/12;
+        return { area:a, moi:m, mass:a*1e-6*DENSITY*1000, od:s, t, id:i, shape:'square',
+            label:`Square ${s.toFixed(2)}×${t.toFixed(2)}mm`, colorKey:t, displayOD:s };
     }
-    function rectProps(w, h, t) {
-        const wi = w - 2*t, hi = h - 2*t;
-        if (wi <= 0 || hi <= 0) return null;
-        const area = w*h - wi*hi;
-        const moi  = (w*h**3 - wi*hi**3) / 12;
-        const mass = area * 1e-6 * DENSITY * 1000;
-        return { area, moi, mass, od: h, w, h, t, wi, hi };
+    function rectP(w, h, t) {
+        const wi=w-2*t, hi=h-2*t; if (wi<=0||hi<=0) return null;
+        const a = w*h-wi*hi, m = (w*h**3-wi*hi**3)/12;
+        return { area:a, moi:m, mass:a*1e-6*DENSITY*1000, od:h, t, wi, hi, w, h, shape:'rect',
+            label:`Rect ${w.toFixed(1)}×${h.toFixed(1)}×${t.toFixed(2)}mm`, colorKey:t, displayOD:h, displayW:w };
     }
 
-    // Build tube list
     const tubes = [];
+    [[4.78,.71],[6.35,.71],[6.35,.89],[6.35,1.65],[7.92,.89],[7.92,1.47],[7.92,1.65],[7.92,2.11],
+        [9.53,.71],[9.53,.89],[9.53,1.24],[9.53,1.47],[9.53,1.65],[9.53,2.11],[11.10,.89],[11.10,1.47],
+        [11.10,1.65],[11.10,2.11],[12.70,.71],[12.70,.89],[12.70,1.24],[12.70,1.47],[12.70,1.65],[12.70,2.11],
+        [12.70,2.41],[12.70,3.05],[14.27,.89],[14.27,1.65],[15.88,.71],[15.88,.89],[15.88,1.24],[15.88,1.47],
+        [15.88,1.65],[15.88,2.11],[15.88,2.41],[15.88,3.05],[19.05,.71],[19.05,.89],[19.05,1.24],[19.05,1.47],
+        [19.05,1.65],[19.05,2.11],[19.05,2.41],[19.05,3.05],[19.05,4.78],[22.23,.89],[22.23,1.24],[22.23,1.47],
+        [22.23,1.65],[22.23,2.11],[22.23,2.41],[22.23,3.05],[25.40,.71],[25.40,.89],[25.40,1.24],[25.40,1.47],
+        [25.40,1.65],[25.40,2.11],[25.40,2.41],[25.40,3.05],[28.58,.89],[28.58,1.24],[28.58,1.47],[28.58,1.65],
+        [28.58,2.11],[28.58,2.41],[28.58,3.05],[31.75,.89],[31.75,1.24],[31.75,1.47],[31.75,1.65],[31.75,2.11],
+        [31.75,2.41],[31.75,3.05],[34.93,.89],[34.93,1.47],[34.93,1.65],[34.93,2.11],[34.93,2.41],[34.93,3.05],
+        [38.10,.89],[38.10,1.24],[38.10,1.47],[38.10,1.65],[38.10,2.11],[38.10,2.41],[38.10,3.05],[41.28,1.47],
+        [41.28,1.65],[41.28,2.11],[41.28,2.41],[41.28,3.05],[44.45,1.24],[44.45,1.65],[44.45,2.41],[44.45,3.05],
+        [50.80,1.24],[50.80,1.65],[50.80,2.41],[50.80,3.05]
+    ].forEach(([od,t]) => { const p=roundP(od,t); if(p) tubes.push(p); });
 
-    const roundRaw = [
-        [4.78,0.71],[6.35,0.71],[6.35,0.89],[6.35,1.65],
-        [7.92,0.89],[7.92,1.47],[7.92,1.65],[7.92,2.11],
-        [9.53,0.71],[9.53,0.89],[9.53,1.24],[9.53,1.47],[9.53,1.65],[9.53,2.11],
-        [11.10,0.89],[11.10,1.47],[11.10,1.65],[11.10,2.11],
-        [12.70,0.71],[12.70,0.89],[12.70,1.24],[12.70,1.47],[12.70,1.65],[12.70,2.11],[12.70,2.41],[12.70,3.05],
-        [14.27,0.89],[14.27,1.65],
-        [15.88,0.71],[15.88,0.89],[15.88,1.24],[15.88,1.47],[15.88,1.65],[15.88,2.11],[15.88,2.41],[15.88,3.05],
-        [19.05,0.71],[19.05,0.89],[19.05,1.24],[19.05,1.47],[19.05,1.65],[19.05,2.11],[19.05,2.41],[19.05,3.05],[19.05,4.78],
-        [22.23,0.89],[22.23,1.24],[22.23,1.47],[22.23,1.65],[22.23,2.11],[22.23,2.41],[22.23,3.05],
-        [25.40,0.71],[25.40,0.89],[25.40,1.24],[25.40,1.47],[25.40,1.65],[25.40,2.11],[25.40,2.41],[25.40,3.05],
-        [28.58,0.89],[28.58,1.24],[28.58,1.47],[28.58,1.65],[28.58,2.11],[28.58,2.41],[28.58,3.05],
-        [31.75,0.89],[31.75,1.24],[31.75,1.47],[31.75,1.65],[31.75,2.11],[31.75,2.41],[31.75,3.05],
-        [34.93,0.89],[34.93,1.47],[34.93,1.65],[34.93,2.11],[34.93,2.41],[34.93,3.05],
-        [38.10,0.89],[38.10,1.24],[38.10,1.47],[38.10,1.65],[38.10,2.11],[38.10,2.41],[38.10,3.05],
-        [41.28,1.47],[41.28,1.65],[41.28,2.11],[41.28,2.41],[41.28,3.05],
-        [44.45,1.24],[44.45,1.65],[44.45,2.41],[44.45,3.05],
-        [50.80,1.24],[50.80,1.65],[50.80,2.41],[50.80,3.05],
-    ];
-    roundRaw.forEach(([od,t]) => {
-        const p = roundProps(od,t);
-        if (!p) return;
-        tubes.push({ ...p, shape:'round', label:`Round ${od.toFixed(2)}×${t.toFixed(2)}mm`,
-            colorKey: t, displayOD: od });
-    });
+    [[9.53,.71],[12.70,.71],[15.88,.71],[19.05,.71],[19.05,.89],[19.05,1.65],[22.23,.89],
+        [25.40,.71],[25.40,.89],[25.40,1.65],[31.75,.89],[38.10,.89],[50.80,.89]
+    ].forEach(([s,t]) => { const p=squareP(s,t); if(p) tubes.push(p); });
 
-    const squareRaw = [
-        [9.53,0.71],[12.70,0.71],[15.88,0.71],
-        [19.05,0.71],[19.05,0.89],[19.05,1.65],
-        [22.23,0.89],[25.40,0.71],[25.40,0.89],[25.40,1.65],
-        [31.75,0.89],[38.10,0.89],[50.80,0.89],
-    ];
-    squareRaw.forEach(([s,t]) => {
-        const p = squareProps(s,t);
-        if (!p) return;
-        tubes.push({ ...p, shape:'square', label:`Square ${s.toFixed(2)}×${t.toFixed(2)}mm`,
-            colorKey: t, displayOD: s });
-    });
+    [[12.70,25.40,.71],[12.70,25.40,.89],[19.05,38.10,.71],[25.40,38.10,.71],
+        [25.40,38.10,.89],[25.40,44.45,.89],[25.40,50.80,.89]
+    ].forEach(([w,h,t]) => { const p=rectP(w,h,t); if(p) tubes.push(p); });
 
-    const rectRaw = [
-        [12.70,25.40,0.71],[12.70,25.40,0.89],
-        [19.05,38.10,0.71],
-        [25.40,38.10,0.71],[25.40,38.10,0.89],
-        [25.40,44.45,0.89],[25.40,50.80,0.89],
-    ];
-    rectRaw.forEach(([w,h,t]) => {
-        const p = rectProps(w,h,t);
-        if (!p) return;
-        tubes.push({ ...p, shape:'rect', label:`Rect ${w.toFixed(1)}×${h.toFixed(1)}×${t.toFixed(2)}mm`,
-            colorKey: t, displayOD: h, displayW: w });
-    });
-
-    // Compute which sizes each tube legally qualifies for
     tubes.forEach(d => {
         d.legalSizes = Object.entries(RULES)
             .filter(([,r]) => d.area >= r.area && d.moi >= r.moi)
@@ -609,453 +197,284 @@
     });
 
     const allWalls = [...new Set(tubes.map(d => d.t))].sort((a,b) => a-b);
-    const massMM = d3.extent(tubes, d => d.mass);
+    const MM2IN = 1/25.4;
 
-    // ─────────────────────────────────────────────────────
-    // STATE
-    // ─────────────────────────────────────────────────────
+    function fmtIn(mm) {
+        const dec = mm*MM2IN;
+        const s64 = Math.round(dec*64);
+        const w = Math.floor(s64/64), n = s64%64;
+        function gcd(a,b){return b?gcd(b,a%b):a;}
+        const g = n>0?gcd(n,64):1;
+        const rN=n/g, rD=64/g;
+        return `${dec.toFixed(4)}" (≈${w?w:''}${rN>0?rN+'/'+rD+'"':'"'})`;
+    }
+
     const state = {
-        shapes:   new Set(['round','square','rect']),
-        walls:    new Set(allWalls),
-        odMin:    4, odMax: 51,
-        massMin:  0, massMax: 3600,
-        sizes:    new Set(['A','B','C','D']),
-        massSize: true,
-        massLog:  false,
-        legalOnly: false,
+        shapes: new Set(['round','square','rect']),
+        walls:  new Set(allWalls),
+        odMin: 4, odMax: 51,
+        massMin: 0, massMax: 3600,
+        sizes: new Set(['A','B','C','D']),
+        massSize: true, massLog: false, legalOnly: false,
     };
 
-    // ─────────────────────────────────────────────────────
-    // CHART
-    // ─────────────────────────────────────────────────────
-    const svg = d3.select('#chart-svg');
-    const margin = { top: 30, right: 40, bottom: 50, left: 70 };
-    let W, H, xScale, yScale;
+    // Build wall checkboxes
+    const wallList = document.getElementById('wall-list');
+    allWalls.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'wall-row'; row.dataset.wall = t;
+        const c = WALL_COLORS[t] || '#888';
+        row.innerHTML = `
+    <div class="wall-dot" style="background:${c}"></div>
+    <span style="flex:1">${t.toFixed(2)} mm<br><span style="color:#aaa;font-size:9px">${(t*MM2IN).toFixed(4)}"</span></span>
+    <div class="wall-check on" id="wc${t.toFixed(2).replace('.','_')}">✓</div>`;
+        row.onclick = () => {
+            const k = parseFloat(row.dataset.wall);
+            const ch = row.querySelector('.wall-check');
+            if (state.walls.has(k)) { state.walls.delete(k); ch.classList.remove('on'); ch.textContent=''; }
+            else { state.walls.add(k); ch.classList.add('on'); ch.textContent='✓'; }
+            draw();
+        };
+        wallList.appendChild(row);
+    });
 
-    const chartG   = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const gridG    = chartG.append('g').attr('class','grid-x');
-    const gridGY   = chartG.append('g').attr('class','grid-y');
-    const zonesG   = chartG.append('g').attr('class','zones');
-    const refG     = chartG.append('g').attr('class','ref-curves');
-    const dotsG    = chartG.append('g').attr('class','dots');
-    const axisGX   = chartG.append('g').attr('class','axis-x');
-    const axisGY   = chartG.append('g').attr('class','axis-y');
-    const labelsG  = chartG.append('g').attr('class','zone-labels');
+    // Chart setup
+    const svg = d3.select('#chart');
+    const mg = { top:30, right:30, bottom:50, left:70 };
+    let W, H, xS, yS;
+    const g    = svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+    const gGrid  = g.append('g'), gGridY = g.append('g');
+    const gZones = g.append('g'), gRef  = g.append('g');
+    const gDots  = g.append('g');
+    const gAX    = g.append('g'), gAY   = g.append('g');
+    const gLabels = g.append('g');
 
-    // Axis labels
-    svg.append('text').attr('class','axis-label').attr('id','xlabel')
-        .attr('text-anchor','middle').text('Cross-Sectional Area  (mm²)');
-    svg.append('text').attr('class','axis-label').attr('id','ylabel')
-        .attr('text-anchor','middle').text('Area Moment of Inertia  (mm⁴)')
+    svg.append('text').attr('id','xlbl').attr('text-anchor','middle')
+        .attr('font-size',11).attr('fill','#666').attr('font-family','Arial,sans-serif');
+    svg.append('text').attr('id','ylbl').attr('text-anchor','middle')
+        .attr('font-size',11).attr('fill','#666').attr('font-family','Arial,sans-serif')
         .attr('transform','rotate(-90)');
 
-    function resize() {
-        const rect = document.getElementById('chart-svg').getBoundingClientRect();
-        W = rect.width  - margin.left - margin.right;
-        H = rect.height - margin.top  - margin.bottom;
-        if (W <= 0 || H <= 0) return;
-
-        xScale = d3.scaleLinear().domain([0, 320]).range([0, W]);
-        yScale = d3.scaleLinear().domain([0, 45000]).range([H, 0]);
-
-        // Axis labels
-        d3.select('#xlabel').attr('x', margin.left + W/2).attr('y', margin.top + H + 40);
-        d3.select('#ylabel').attr('x', -(margin.top + H/2)).attr('y', 14);
-
-        draw();
-    }
-
-    // ── Imperial conversion helpers ──────────────────────
-    const MM2IN = 1 / 25.4;
-    function fmtIn(mm) {
-        const dec = mm * MM2IN;
-        const sixtyfourths = Math.round(dec * 64);
-        const whole = Math.floor(sixtyfourths / 64);
-        const num   = sixtyfourths % 64;
-        function gcd(a,b){ return b ? gcd(b,a%b) : a; }
-        const g = num > 0 ? gcd(num, 64) : 1;
-        const rNum = num / g, rDen = 64 / g;
-        const fracStr  = rNum > 0 ? `${rNum}/${rDen}"` : '';
-        const wholeStr = whole > 0 ? `${whole}` : '';
-        const frac = (wholeStr + fracStr) || '0"';
-        return `${dec.toFixed(4)}"  (≈${frac})`;
-    }
-    function fmtWallIn(mm) {
-        // Wall thicknesses are defined in standard inch increments — show as-is
-        return `${(mm * MM2IN).toFixed(4)}"`;
-    }
-
     function shapeColor(d) {
-        if (d.shape === 'square') return '#38bdf8';
-        if (d.shape === 'rect')   return '#34d399';
-        return WALL_COLORS[d.t] || '#aaa';
+        if (d.shape==='square') return '#2277bb';
+        if (d.shape==='rect')   return '#229966';
+        return WALL_COLORS[d.t] || '#888';
     }
-
     function markerPath(shape, r) {
-        if (shape === 'square') {
-            const s = r * 1.5;
-            return `M${-s},${-s}h${s*2}v${s*2}h${-s*2}z`;
-        }
-        if (shape === 'rect') {
-            return `M${-r*1.8},${-r}h${r*3.6}v${r*2}h${-r*3.6}z`;
-        }
-        return null; // circle
+        if (shape==='square') { const s=r*1.5; return `M${-s},${-s}h${s*2}v${s*2}h${-s*2}z`; }
+        if (shape==='rect') return `M${-r*1.8},${-r}h${r*3.6}v${r*2}h${-r*3.6}z`;
+        return null;
     }
 
     function draw() {
-        if (!xScale) return;
+        const rect = document.getElementById('chart-area').getBoundingClientRect();
+        W = rect.width - mg.left - mg.right;
+        H = rect.height - mg.top - mg.bottom;
+        if (W<=0||H<=0) return;
+        xS = d3.scaleLinear().domain([0,320]).range([0,W]);
+        yS = d3.scaleLinear().domain([0,45000]).range([H,0]);
 
-        // ── Grids ──
-        gridG.selectAll('*').remove();
-        gridGY.selectAll('*').remove();
-        gridG.attr('transform', `translate(0,${H})`).call(
-            d3.axisBottom(xScale).ticks(8).tickSize(-H).tickFormat('')
-        ).select('.domain').remove();
-        gridGY.call(
-            d3.axisLeft(yScale).ticks(8).tickSize(-W).tickFormat('')
-        ).select('.domain').remove();
-        gridG.selectAll('line').attr('stroke','#1a1f2e').attr('stroke-width',1);
-        gridGY.selectAll('line').attr('stroke','#1a1f2e').attr('stroke-width',1);
+        d3.select('#xlbl').attr('x',mg.left+W/2).attr('y',mg.top+H+42).text('Cross-sectional area (mm²)');
+        d3.select('#ylbl').attr('x',-(mg.top+H/2)).attr('y',14).text('Area moment of inertia (mm⁴)');
 
-        // ── Axes ──
-        axisGX.attr('transform',`translate(0,${H})`).call(
-            d3.axisBottom(xScale).ticks(8).tickFormat(d3.format('d'))
-        );
-        axisGY.call(
-            d3.axisLeft(yScale).ticks(8).tickFormat(d => d >= 1000 ? d3.format('.0s')(d) : d)
-        );
-        axisGX.select('.domain').attr('stroke','#1a1f2e');
-        axisGX.selectAll('.tick line').attr('stroke','#1a1f2e');
-        axisGX.selectAll('.tick text').attr('fill','#4a5568').style('font-family','Space Mono').style('font-size','10px');
-        axisGY.select('.domain').attr('stroke','#1a1f2e');
-        axisGY.selectAll('.tick line').attr('stroke','#1a1f2e');
-        axisGY.selectAll('.tick text').attr('fill','#4a5568').style('font-family','Space Mono').style('font-size','10px');
+        // Grids
+        gGrid.selectAll('*').remove(); gGridY.selectAll('*').remove();
+        gGrid.attr('transform',`translate(0,${H})`).call(d3.axisBottom(xS).ticks(8).tickSize(-H).tickFormat(''));
+        gGridY.call(d3.axisLeft(yS).ticks(8).tickSize(-W).tickFormat(''));
+        gGrid.selectAll('line,path').attr('stroke','#e8e8e8').attr('stroke-width',.5);
+        gGridY.selectAll('line,path').attr('stroke','#e8e8e8').attr('stroke-width',.5);
 
-        // ── Reference curves ──
-        refG.selectAll('*').remove();
-        const odSweep = d3.range(5, 55, 0.2);
-        const refWalls = [0.89, 1.24, 1.65, 2.11];
-        refWalls.forEach(tw => {
-            const pts = odSweep.map(od => roundProps(od, tw)).filter(Boolean);
-            refG.append('path')
-                .datum(pts)
-                .attr('fill','none')
-                .attr('stroke','#1e2535')
-                .attr('stroke-width', 1)
-                .attr('d', d3.line().x(d => xScale(d.area)).y(d => yScale(d.moi)));
+        // Axes
+        gAX.attr('transform',`translate(0,${H})`).call(d3.axisBottom(xS).ticks(8).tickFormat(d3.format('d')));
+        gAY.call(d3.axisLeft(yS).ticks(8).tickFormat(d => d>=1000?d3.format('.0s')(d):d));
+        [gAX,gAY].forEach(ax => {
+            ax.select('.domain').attr('stroke','#ccc');
+            ax.selectAll('.tick line').attr('stroke','#ccc');
+            ax.selectAll('.tick text').attr('fill','#666').style('font-size','10px').style('font-family','monospace');
         });
-        const refDias = [19.05, 25.40, 31.75, 38.10];
-        refDias.forEach(od => {
-            const walls = d3.range(0.5, od/2, 0.05);
-            const pts = walls.map(t => roundProps(od, t)).filter(Boolean);
-            refG.append('path')
-                .datum(pts)
-                .attr('fill','none')
-                .attr('stroke','#1a2035')
-                .attr('stroke-width', 1)
-                .attr('stroke-dasharray','3,3')
-                .attr('d', d3.line().x(d => xScale(d.area)).y(d => yScale(d.moi)));
-            // tiny label at end
+
+        // Reference curves
+        gRef.selectAll('*').remove();
+        const odSw = d3.range(5,55,.3);
+        [.89,1.24,1.65,2.11].forEach(tw => {
+            const pts = odSw.map(od=>roundP(od,tw)).filter(Boolean);
+            gRef.append('path').datum(pts).attr('fill','none').attr('stroke','#e0e0e0').attr('stroke-width',.8)
+                .attr('d',d3.line().x(d=>xS(d.area)).y(d=>yS(d.moi)));
+        });
+        [19.05,25.40,31.75,38.10].forEach(od => {
+            const pts = d3.range(.5,od/2,.05).map(t=>roundP(od,t)).filter(Boolean);
+            gRef.append('path').datum(pts).attr('fill','none').attr('stroke','#e8e8e8')
+                .attr('stroke-width',.8).attr('stroke-dasharray','3,3')
+                .attr('d',d3.line().x(d=>xS(d.area)).y(d=>yS(d.moi)));
             const last = pts[pts.length-1];
-            if (last && xScale(last.area) < W && yScale(last.moi) > 0) {
-                refG.append('text').attr('class','ref-label')
-                    .attr('x', xScale(last.area)+3).attr('y', yScale(last.moi)-3)
-                    .text(`⌀${od.toFixed(1)}`);
+            if (last && xS(last.area)<W && yS(last.moi)>0) {
+                gRef.append('text').attr('x',xS(last.area)+3).attr('y',yS(last.moi)-3)
+                    .attr('fill','#ccc').attr('font-size',9).text(`⌀${od.toFixed(1)}`);
             }
         });
 
-        // ── Rules zones & lines ──
-        zonesG.selectAll('*').remove();
-        labelsG.selectAll('*').remove();
-
-        const sizeOrder = ['C','B','A','D'];
-        sizeOrder.forEach(sz => {
+        // Size zones
+        gZones.selectAll('*').remove(); gLabels.selectAll('*').remove();
+        ['C','B','A','D'].forEach(sz => {
             if (!state.sizes.has(sz)) return;
-            const r = RULES[sz];
-            const x0 = xScale(r.area), y0 = yScale(r.moi);
-            const c  = r.color;
-
-            // Shaded zone
-            zonesG.append('rect')
-                .attr('x', x0).attr('y', 0)
-                .attr('width', W - x0).attr('height', y0)
-                .attr('fill', c).attr('opacity', 0.04);
-
-            // Vertical line
-            zonesG.append('line')
-                .attr('x1', x0).attr('x2', x0)
-                .attr('y1', 0).attr('y2', H)
-                .attr('stroke', c).attr('stroke-width', 1.5)
-                .attr('stroke-dasharray','5,3').attr('opacity',0.85);
-
-            // Horizontal line
-            zonesG.append('line')
-                .attr('x1', 0).attr('x2', W)
-                .attr('y1', y0).attr('y2', y0)
-                .attr('stroke', c).attr('stroke-width', 1.5)
-                .attr('stroke-dasharray','5,3').attr('opacity',0.85);
-
-            // Corner dot
-            zonesG.append('circle')
-                .attr('cx', x0).attr('cy', y0).attr('r', 4)
-                .attr('fill', c);
-
-            // Label box
-            const lx = x0 + 6, ly = y0 + 14;
-            const label = `Size ${sz}   A≥${r.area}   I≥${r.moi.toLocaleString()}`;
-            const bg = labelsG.append('rect')
-                .attr('rx', 4).attr('ry', 4)
-                .attr('fill','#0d0f14').attr('stroke', c)
-                .attr('stroke-width', 1.5).attr('opacity', 0.95);
-            const txt = labelsG.append('text').attr('class','zone-label')
-                .attr('x', lx + 7).attr('y', ly + 12)
-                .attr('fill', c)
-                .text(label);
+            const r=RULES[sz], x0=xS(r.area), y0=yS(r.moi), c=r.color;
+            gZones.append('rect').attr('x',x0).attr('y',0).attr('width',W-x0).attr('height',y0)
+                .attr('fill',c).attr('opacity',.04);
+            gZones.append('line').attr('x1',x0).attr('x2',x0).attr('y1',0).attr('y2',H)
+                .attr('stroke',c).attr('stroke-width',1).attr('stroke-dasharray','5,3').attr('opacity',.65);
+            gZones.append('line').attr('x1',0).attr('x2',W).attr('y1',y0).attr('y2',y0)
+                .attr('stroke',c).attr('stroke-width',1).attr('stroke-dasharray','5,3').attr('opacity',.65);
+            gZones.append('circle').attr('cx',x0).attr('cy',y0).attr('r',3.5).attr('fill',c);
+            const lx=x0+6, ly=y0+14;
+            const bg = gLabels.append('rect').attr('rx',3).attr('fill','white')
+                .attr('stroke',c).attr('stroke-width',.8).attr('opacity',.95);
+            const txt = gLabels.append('text').attr('x',lx+6).attr('y',ly+11).attr('fill',c)
+                .attr('font-size',10).attr('font-weight',600)
+                .attr('font-family','Arial,sans-serif')
+                .text(`${sz}  A≥${r.area}  I≥${r.moi.toLocaleString()}`);
             const bb = txt.node().getBBox();
-            bg.attr('x', bb.x-7).attr('y', bb.y-5).attr('width', bb.width+14).attr('height', bb.height+10);
+            bg.attr('x',bb.x-6).attr('y',bb.y-4).attr('width',bb.width+12).attr('height',bb.height+8);
         });
 
-        // ── Dots ──
+        // Filter
         const filtered = tubes.filter(d => {
             if (!state.shapes.has(d.shape)) return false;
             if (!state.walls.has(d.t)) return false;
             if (d.displayOD < state.odMin || d.displayOD > state.odMax) return false;
             if (d.mass < state.massMin || d.mass > state.massMax) return false;
-            if (state.legalOnly && d.legalSizes.length === 0) return false;
+            if (state.legalOnly && d.legalSizes.length===0) return false;
             return true;
         });
+        document.getElementById('stat').textContent = filtered.length;
 
-        document.getElementById('stat-visible').textContent = filtered.length;
-
-        const massDomain = d3.extent(tubes, d => d.mass);
-        const rScale = state.massLog
-            ? d3.scalePow().exponent(0.25).domain(massDomain).range([3, 22]).clamp(true)
-            : d3.scaleSqrt().domain(massDomain).range([3, 16]);
+        const massDomain = d3.extent(tubes, d=>d.mass);
+        const rSc = state.massLog
+            ? d3.scalePow().exponent(.25).domain(massDomain).range([3,20]).clamp(true)
+            : d3.scaleSqrt().domain(massDomain).range([3,14]);
         const baseR = 5;
+        const fSet = new Set(filtered.map(d => tubes.indexOf(d)));
 
-        // Bind all tubes for consistent dimming
-        const allDots = dotsG.selectAll('.dot').data(tubes, (d,i) => i);
+        const all = gDots.selectAll('.dot').data(tubes, (_,i)=>i);
+        all.exit().remove();
+        const ent = all.enter().append('g').attr('class','dot');
+        ent.filter(d=>d.shape==='round').append('circle');
+        ent.filter(d=>d.shape!=='round').append('path');
+        const mrg = ent.merge(all);
 
-        allDots.exit().remove();
-
-        const enter = allDots.enter().append('g').attr('class','dot');
-
-        // circles for round
-        enter.filter(d => d.shape === 'round')
-            .append('circle');
-        // paths for square/rect
-        enter.filter(d => d.shape !== 'round')
-            .append('path');
-
-        const merged = enter.merge(allDots);
-
-        merged.attr('transform', d => `translate(${xScale(d.area)},${yScale(d.moi)})`);
-
-        merged.select('circle')
-            .attr('r', d => state.massSize ? rScale(d.mass) : baseR)
+        mrg.attr('transform', d=>`translate(${xS(d.area)},${yS(d.moi)})`).style('cursor','pointer');
+        mrg.select('circle')
+            .attr('r', d=>state.massSize?rSc(d.mass):baseR)
             .attr('fill', shapeColor)
-            .attr('stroke', '#0d0f14')
-            .attr('stroke-width', 0.8);
-
-        merged.select('path')
-            .attr('d', d => markerPath(d.shape, state.massSize ? rScale(d.mass) : baseR))
+            .attr('stroke','white').attr('stroke-width',.5);
+        mrg.select('path')
+            .attr('d', d=>markerPath(d.shape, state.massSize?rSc(d.mass):baseR))
             .attr('fill', shapeColor)
-            .attr('stroke', '#0d0f14')
-            .attr('stroke-width', 0.8);
+            .attr('stroke','white').attr('stroke-width',.5);
+        mrg.attr('opacity', d => fSet.has(tubes.indexOf(d)) ? 1 : 0.06);
 
-        // Dimming: dim tubes not in filtered set
-        const filteredSet = new Set(filtered.map((d,i) => tubes.indexOf(d)));
-        merged.attr('opacity', (d) => {
-            const idx = tubes.indexOf(d);
-            return filteredSet.has(idx) ? 1 : 0.05;
-        });
-
-        // Tooltip events
-        merged.on('mouseover', function(event, d) {
-            const idx = tubes.indexOf(d);
-            if (!filteredSet.has(idx)) return;
-
-            d3.select(this).select('circle, path')
-                .attr('stroke','white').attr('stroke-width', 2);
-
-            const tt = document.getElementById('tooltip');
-            const badges = Object.entries(RULES).map(([sz, r]) => {
-                const pass = d.area >= r.area && d.moi >= r.moi;
-                return `<span class="tt-badge ${pass?'pass':'fail'}">${pass?'✓':''} Size ${sz}</span>`;
-            }).join('');
-
-            const odMM = d.shape === 'rect'
+        mrg.on('mouseover', function(ev, d) {
+            if (!fSet.has(tubes.indexOf(d))) return;
+            d3.select(this).select('circle,path').attr('stroke','#333').attr('stroke-width',1.5);
+            const odMM = d.shape==='rect'
                 ? `${d.displayW?.toFixed(2)} × ${d.h?.toFixed(2)} mm`
                 : `${d.displayOD?.toFixed(2)} mm`;
-            const odIN = d.shape === 'rect'
-                ? `${fmtIn(d.displayW)}  ×  ${fmtIn(d.h)}`
+            const odIN = d.shape==='rect'
+                ? `${(d.displayW*MM2IN).toFixed(4)}" × ${(d.h*MM2IN).toFixed(4)}"`
                 : fmtIn(d.displayOD);
-
+            const badges = Object.entries(RULES).map(([sz,r]) => {
+                const p = d.area>=r.area && d.moi>=r.moi;
+                return `<span class="tt-badge ${p?'pass':'fail'}">${p?'✓ ':''}Size ${sz}</span>`;
+            }).join('');
+            const tt = document.getElementById('tooltip');
             tt.innerHTML = `
-      <div class="tt-title" style="color:${shapeColor(d)}">${d.label}</div>
-      <div class="tt-divider">OD / Side</div>
-      <div class="tt-row"><span class="tt-unit">mm</span><span>${odMM}</span></div>
-      <div class="tt-row"><span class="tt-unit">in</span><span class="tt-imperial">${odIN}</span></div>
-      <div class="tt-divider">Wall Thickness</div>
-      <div class="tt-row"><span class="tt-unit">mm</span><span>${d.t.toFixed(2)} mm</span></div>
-      <div class="tt-row"><span class="tt-unit">in</span><span class="tt-imperial">${fmtWallIn(d.t)}</span></div>
+      <div class="tt-title">${d.label}</div>
+      <div class="tt-div">OD / Side</div>
+      <div class="tt-row"><span>mm</span><span>${odMM}</span></div>
+      <div class="tt-row"><span>in</span><span class="tt-imp">${odIN}</span></div>
+      <div class="tt-div">Wall thickness</div>
+      <div class="tt-row"><span>mm</span><span>${d.t.toFixed(2)} mm</span></div>
+      <div class="tt-row"><span>in</span><span class="tt-imp">${(d.t*MM2IN).toFixed(4)}"</span></div>
       <div class="tt-sep"></div>
       <div class="tt-row"><span>Area</span><span>${d.area.toFixed(1)} mm²</span></div>
       <div class="tt-row"><span>MOI (Ixx)</span><span>${d.moi.toFixed(0)} mm⁴</span></div>
       <div class="tt-row"><span>Mass</span><span>${d.mass.toFixed(1)} g/m</span></div>
-      <div class="tt-badges">${badges}</div>
-    `;
-            tt.classList.add('visible');
-            moveTooltip(event);
+      <div class="tt-badges">${badges}</div>`;
+            tt.classList.add('vis');
+            moveTT(ev);
         })
-            .on('mousemove', moveTooltip)
+            .on('mousemove', moveTT)
             .on('mouseleave', function() {
-                d3.select(this).select('circle, path')
-                    .attr('stroke','#0d0f14').attr('stroke-width', 0.8);
-                document.getElementById('tooltip').classList.remove('visible');
+                d3.select(this).select('circle,path').attr('stroke','white').attr('stroke-width',.5);
+                document.getElementById('tooltip').classList.remove('vis');
             });
     }
 
-    function moveTooltip(event) {
+    function moveTT(ev) {
         const tt = document.getElementById('tooltip');
-        const vw = window.innerWidth, vh = window.innerHeight;
-        let x = event.clientX + 16, y = event.clientY - 10;
-        if (x + 260 > vw) x = event.clientX - 270;
-        if (y + 260 > vh) y = event.clientY - 260;
-        tt.style.left = x + 'px';
-        tt.style.top  = y + 'px';
+        let x=ev.clientX+14, y=ev.clientY-10;
+        if (x+245>window.innerWidth) x=ev.clientX-259;
+        if (y+270>window.innerHeight) y=ev.clientY-270;
+        tt.style.left=x+'px'; tt.style.top=y+'px';
     }
 
-    // ─────────────────────────────────────────────────────
-    // SIDEBAR: build wall checkboxes
-    // ─────────────────────────────────────────────────────
-    const wallContainer = document.getElementById('wall-filters');
-    allWalls.forEach(t => {
-        const row = document.createElement('div');
-        row.className = 'wall-item';
-        row.dataset.wall = t;
-        const color = WALL_COLORS[t] || '#aaa';
-        row.innerHTML = `
-    <div class="wall-swatch" style="background:${color}"></div>
-    <div style="display:flex;flex-direction:column;gap:1px;flex:1;">
-      <span style="font-family:var(--mono);font-size:11px;">${t.toFixed(2)} mm</span>
-      <span style="font-family:var(--mono);font-size:9px;color:#5a6a88;">${fmtWallIn(t)}</span>
-    </div>
-    <div class="wall-check on" id="wc-${t.toFixed(2).replace('.','_')}"></div>
-  `;
-        row.addEventListener('click', () => {
-            const key = parseFloat(row.dataset.wall);
-            const check = row.querySelector('.wall-check');
-            if (state.walls.has(key)) { state.walls.delete(key); check.classList.remove('on'); }
-            else { state.walls.add(key); check.classList.add('on'); }
-            draw();
-        });
-        wallContainer.appendChild(row);
+    // Controls
+    document.querySelectorAll('.shape-row').forEach(el => el.onclick=()=>{
+        const s=el.dataset.shape;
+        state.shapes.has(s)?state.shapes.delete(s):state.shapes.add(s);
+        el.classList.toggle('on',state.shapes.has(s)); draw();
     });
-
-    // ─────────────────────────────────────────────────────
-    // CONTROLS WIRING
-    // ─────────────────────────────────────────────────────
-
-    // Shape toggles
-    document.querySelectorAll('.shape-toggle').forEach(el => {
-        el.addEventListener('click', () => {
-            const shape = el.dataset.shape;
-            if (state.shapes.has(shape)) { state.shapes.delete(shape); el.classList.remove('active'); }
-            else { state.shapes.add(shape); el.classList.add('active'); }
-            draw();
-        });
+    document.querySelectorAll('.size-pill').forEach(el => el.onclick=()=>{
+        const s=el.dataset.sz;
+        state.sizes.has(s)?state.sizes.delete(s):state.sizes.add(s);
+        el.classList.toggle('on',state.sizes.has(s)); draw();
     });
-
-    // Size pills in header
-    document.querySelectorAll('.pill').forEach(el => {
-        el.addEventListener('click', () => {
-            const sz = el.dataset.size;
-            if (state.sizes.has(sz)) { state.sizes.delete(sz); el.classList.remove('active'); }
-            else { state.sizes.add(sz); el.classList.add('active'); }
-            draw();
-        });
-    });
-
-    // OD range
-    ['od-min','od-max'].forEach(id => {
-        document.getElementById(id).addEventListener('input', function() {
-            const val = parseFloat(this.value);
-            if (id === 'od-min') { state.odMin = val; document.getElementById('od-min-val').textContent = val; }
-            else { state.odMax = val; document.getElementById('od-max-val').textContent = val; }
-            draw();
-        });
-    });
-
-    // Mass range
-    ['mass-min','mass-max'].forEach(id => {
-        document.getElementById(id).addEventListener('input', function() {
-            const val = parseFloat(this.value);
-            if (id === 'mass-min') { state.massMin = val; document.getElementById('mass-min-val').textContent = val; }
-            else { state.massMax = val; document.getElementById('mass-max-val').textContent = val; }
-            draw();
-        });
-    });
-
-    // Mass size toggle
-    document.getElementById('mass-size-toggle').addEventListener('click', () => {
-        state.massSize = !state.massSize;
-        document.getElementById('toggle-knob').classList.toggle('on', state.massSize);
-        document.getElementById('mass-log-toggle').style.opacity = state.massSize ? '1' : '0.3';
-        document.getElementById('mass-log-toggle').style.pointerEvents = state.massSize ? 'auto' : 'none';
+    ['od-min','od-max'].forEach(id => document.getElementById(id).oninput=function(){
+        const v=parseFloat(this.value);
+        if(id==='od-min'){state.odMin=v;document.getElementById('od-min-v').textContent=v;}
+        else{state.odMax=v;document.getElementById('od-max-v').textContent=v;}
         draw();
     });
-
-    // Log scale toggle
-    document.getElementById('mass-log-toggle').addEventListener('click', () => {
-        state.massLog = !state.massLog;
-        document.getElementById('log-knob').classList.toggle('on', state.massLog);
+    ['ms-min','ms-max'].forEach(id => document.getElementById(id).oninput=function(){
+        const v=parseFloat(this.value);
+        if(id==='ms-min'){state.massMin=v;document.getElementById('ms-min-v').textContent=v;}
+        else{state.massMax=v;document.getElementById('ms-max-v').textContent=v;}
         draw();
     });
-
-    // Legal only toggle
-    document.getElementById('legal-toggle').addEventListener('click', () => {
-        state.legalOnly = !state.legalOnly;
-        document.getElementById('legal-knob').classList.toggle('on', state.legalOnly);
+    document.getElementById('tog-mass').onclick=()=>{
+        state.massSize=!state.massSize;
+        document.getElementById('tog-mass-k').classList.toggle('on',state.massSize); draw();
+    };
+    document.getElementById('tog-log').onclick=()=>{
+        state.massLog=!state.massLog;
+        document.getElementById('tog-log-k').classList.toggle('on',state.massLog); draw();
+    };
+    document.getElementById('tog-legal').onclick=()=>{
+        state.legalOnly=!state.legalOnly;
+        document.getElementById('tog-legal-k').classList.toggle('on',state.legalOnly); draw();
+    };
+    document.getElementById('reset-btn').onclick=()=>{
+        state.shapes=new Set(['round','square','rect']);
+        state.walls=new Set(allWalls);
+        state.odMin=4; state.odMax=51;
+        state.massMin=0; state.massMax=3600;
+        state.sizes=new Set(['A','B','C','D']);
+        state.massSize=true; state.massLog=false; state.legalOnly=false;
+        document.querySelectorAll('.shape-row').forEach(el=>el.classList.add('on'));
+        document.querySelectorAll('.size-pill').forEach(el=>el.classList.add('on'));
+        document.querySelectorAll('.wall-check').forEach(el=>{el.classList.add('on');el.textContent='✓';});
+        document.getElementById('od-min').value=4; document.getElementById('od-max').value=51;
+        document.getElementById('od-min-v').textContent=4; document.getElementById('od-max-v').textContent=51;
+        document.getElementById('ms-min').value=0; document.getElementById('ms-max').value=3600;
+        document.getElementById('ms-min-v').textContent=0; document.getElementById('ms-max-v').textContent=3600;
+        document.getElementById('tog-mass-k').classList.add('on');
+        document.getElementById('tog-log-k').classList.remove('on');
+        document.getElementById('tog-legal-k').classList.remove('on');
         draw();
-    });
+    };
 
-    // Reset
-    document.getElementById('reset-btn').addEventListener('click', () => {
-        state.shapes = new Set(['round','square','rect']);
-        state.walls  = new Set(allWalls);
-        state.odMin  = 4; state.odMax = 51;
-        state.massMin = 0; state.massMax = 3600;
-        state.sizes  = new Set(['A','B','C','D']);
-        state.massSize = true;
-        state.massLog  = false;
-        state.legalOnly = false;
-
-        document.querySelectorAll('.shape-toggle').forEach(el => el.classList.add('active'));
-        document.querySelectorAll('.pill').forEach(el => el.classList.add('active'));
-        wallContainer.querySelectorAll('.wall-check').forEach(el => el.classList.add('on'));
-        document.getElementById('od-min').value = 4;
-        document.getElementById('od-max').value = 51;
-        document.getElementById('od-min-val').textContent = 4;
-        document.getElementById('od-max-val').textContent = 51;
-        document.getElementById('mass-min').value = 0;
-        document.getElementById('mass-max').value = 3600;
-        document.getElementById('mass-min-val').textContent = 0;
-        document.getElementById('mass-max-val').textContent = 3600;
-        document.getElementById('toggle-knob').classList.add('on');
-        document.getElementById('log-knob').classList.remove('on');
-        document.getElementById('mass-log-toggle').style.opacity = '1';
-        document.getElementById('mass-log-toggle').style.pointerEvents = 'auto';
-        document.getElementById('legal-knob').classList.remove('on');
-        draw();
-    });
-
-    // ─────────────────────────────────────────────────────
-    // RESPONSIVE RESIZE
-    // ─────────────────────────────────────────────────────
-    const ro = new ResizeObserver(() => resize());
-    ro.observe(document.getElementById('chart-svg'));
-    resize();
+    const ro = new ResizeObserver(draw);
+    ro.observe(document.getElementById('chart-area'));
+    draw();
 </script>
 </body>
 </html>
