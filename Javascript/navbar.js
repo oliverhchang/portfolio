@@ -5,11 +5,9 @@ const currentFile = window.location.pathname.split("/").pop();
 const inProjectsFolder = window.location.pathname.includes("/Projects/");
 const p = inProjectsFolder ? "../" : "";
 
-// Check if we are on the Welcome Screen (Home)
 const isHomePage = (currentFile === 'index.html' || currentFile === '');
 
 // 2. DEFINE HTML
-// Only create the Progress Bar HTML if we are NOT on the home page
 const progressBarHTML = isHomePage ? '' : `
   <div class="progress-container">
     <div class="progress-bar" id="myBar"></div>
@@ -22,6 +20,7 @@ const navHTML = progressBarHTML + `
       <div>
         <ul><li><a href="${p}index.html">Oliver Chang</a></li></ul>
       </div>
+      
       <ul>
         <li><a href="${p}about.html">About Me</a></li>
         <li><a href="${p}projects.html">Projects</a></li>
@@ -29,17 +28,16 @@ const navHTML = progressBarHTML + `
       </ul>
       
       <div class="social-icons">
+        <a id="theme-toggle" class="theme-link" title="Toggle Dark Mode" style="cursor: pointer;">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </a>
         <a href="https://www.linkedin.com/in/oliver-h-chang/" target="_blank"><i class="fab fa-linkedin"></i></a>
         <a href="https://github.com/oliverhchang" target="_blank"><i class="fab fa-github"></i></a>
         <a href="https://instagram.com/oliverhchang" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="mailto:oli.chang664@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=oli.chang664@gmail.com" target="_blank" title="Email oli.chang664@gmail.com"><i class="fas fa-envelope"></i></a>
       </div>
     </nav>
   </header>
-
-  <div class="theme-toggle-fab" id="theme-toggle-btn" title="Toggle Dark Mode">
-    <i class="fas fa-moon" id="theme-icon"></i>
-  </div>
 `;
 
 // 3. INJECT HTML
@@ -58,11 +56,11 @@ navLinks.forEach(link => {
     }
 });
 
-// 5. PROGRESS BAR LOGIC (Only run if NOT home page)
+// 5. PROGRESS BAR LOGIC
 if (!isHomePage) {
     window.addEventListener('scroll', () => {
         const bar = document.getElementById("myBar");
-        if (!bar) return; // Safety check
+        if (!bar) return;
 
         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -71,13 +69,12 @@ if (!isHomePage) {
         if (height > 0) {
             scrolled = (winScroll / height) * 100;
         }
-
         bar.style.width = scrolled + "%";
     });
 }
 
 // 6. DARK MODE LOGIC
-const toggleBtn = document.getElementById('theme-toggle-btn');
+const themeToggleLink = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 const htmlElement = document.documentElement;
 const bodyElement = document.body;
@@ -96,16 +93,19 @@ function setTheme(isDark) {
     }
 }
 
-// Initialization
 const savedTheme = localStorage.getItem('engineering-theme');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
 
-if (htmlElement.classList.contains('dark-mode') || savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+if (shouldBeDark) {
+    htmlElement.classList.add('dark-mode');
+    bodyElement.classList.add('dark-mode');
     themeIcon.classList.replace('fa-moon', 'fa-sun');
 }
 
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
+if (themeToggleLink) {
+    themeToggleLink.addEventListener('click', (e) => {
+        e.preventDefault();
         const isCurrentlyDark = htmlElement.classList.contains('dark-mode');
         setTheme(!isCurrentlyDark);
     });

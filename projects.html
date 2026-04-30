@@ -3,337 +3,380 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects</title>
+  <title>Oliver Chang | Projects</title>
+
   <script>
     (function() {
       const savedTheme = localStorage.getItem('engineering-theme');
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
       if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
         document.documentElement.classList.add('dark-mode');
         document.body.classList.add('dark-mode');
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css">
+
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-<aside class="project-outline">
-  <ul>
-    <li><a href="#TAFLAB" class="outline-link" data-target="TAFLAB">TAFLAB</a></li>
-    <li><a href="#feb" class="outline-link" data-target="feb">Formula Electric</a></li>
-    <li><a href="#star" class="outline-link" data-target="star">STAR Rocketry</a></li>
-    <li><a href="#combat" class="outline-link" data-target="combat">Combat Robotics</a></li>
-    <li><a href="#frc" class="outline-link" data-target="frc">FIRST Robotics</a></li>
-    <li><a href="#carpentry" class="outline-link" data-target="carpentry">Carpentry</a></li>
-    <li><a href="#cad" class="outline-link" data-target="cad">CAD</a></li>
-    <li><a href="#programming" class="outline-link" data-target="programming">Programming</a></li>
-  </ul>
-</aside>
 
 <div class="container">
   <section>
     <h1>Projects</h1>
 
-    <h2 id="TAFLAB" class="project-section">Theoretical & Applied Fluid Dynamics Laboratory (TAFLAB)</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-TAFLAB-WEC.html">
-          <div class="project-banner-container">
-            <img id="taflab-banner-image" src="Images/project-2025-taflab/TAFLAB-A-Photo.webp" alt="TAFLAB Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/taflab.webp" alt="Logo">
-            <h4 class="card-description">WEC</h4>
-            <h5 class="card-title">2025 | Design Engineer</h5>
-          </div>
-        </a>
-      </article>
+    <div class="filter-tabs" role="tablist">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="fluids">TAFLAB</button>
+      <button class="filter-tab" data-filter="feb">Formula Electric</button>
+      <button class="filter-tab" data-filter="star">Rocketry</button>
+      <button class="filter-tab" data-filter="combat">Combat Robotics</button>
+      <button class="filter-tab" data-filter="frc">FRC</button>
+      <button class="filter-tab" data-filter="coursework">Coursework</button>
+      <button class="filter-tab" data-filter="carpentry">Carpentry</button>
+      <button class="filter-tab" data-filter="cad">CAD</button>
+      <button class="filter-tab" data-filter="programming">Programming</button>
     </div>
 
-    <h2 id="feb" class="project-section">Formula Electric @ Berkeley (FEB)</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2026-feb-SN5.html">
-          <div class="project-banner-container">
-            <img id="SN5-banner-image" src="Images/project-2026-feb-SN5/SN5-Sims.webp" alt="SN5 Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/feb.webp" alt="Logo">
-            <h4 class="card-description">SN5</h4>
-            <h5 class="card-title">2025 | Chassis Engineer</h5>
-          </div>
-        </a>
-      </article>
-      <article class="project-display-article">
-        <a href="Projects/2025-feb-SN4.html">
-          <div class="project-banner-container">
-            <img id="SN4-banner-image" src="Images/project-2025-feb-SN4/SN4-Torsion-Jig-Side.webp" alt="SN4 Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/feb.webp" alt="Logo">
-            <h4 class="card-description">SN4</h4>
-            <h5 class="card-title">2024 | Chassis Engineer</h5>
+    <div class="project-group" data-group="fluids">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/taflab.webp" alt="">
+        <span class="group-title">Theoretical &amp; Applied Fluid Dynamics Lab</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-TAFLAB-WEC.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-taflab/TAFLAB-Project.webp" alt="TAFLAB WEC"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/taflab.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">WEC</span>
+              <span class="footer-meta">2025 &middot; Lead Research Engineer</span>
+            </div>
           </div>
         </a>
-      </article>
+      </div>
     </div>
 
-    <h2 id="star" class="project-section">Berkeley Space Technologies & Rocketry (STAR)</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-star-LE3.html">
-          <div class="project-banner-container">
-            <img id="BART-banner-image" src="Images/project-2025-star-LE3/LE3-Banner.webp" alt="LE3 Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/star.webp" alt="Logo">
-            <h4 class="card-description">LE3</h4>
-            <h5 class="card-title">2025 | Collegiate Rocketry</h5>
-          </div>
-        </a>
-      </article>
-      <article class="project-display-article">
-        <a href="Projects/2024-star-BART.html">
-          <div class="project-banner-container">
-            <img id="BART-banner-image" src="Images/project-2024-star-bart/bart-launch-midlaunch.webp" alt="BART Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/star.webp" alt="Logo">
-            <h4 class="card-description">BART</h4>
-            <h5 class="card-title">2024 | Collegiate Rocketry</h5>
+    <div class="project-group" data-group="feb">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/feb.webp" alt="">
+        <span class="group-title">Formula Electric @ Berkeley</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2026-feb-SN5.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2026-feb-SN5/SN5-Powdercoated.webp" alt="SN5"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/feb.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">SN5</span>
+              <span class="footer-meta">2025 &middot; Chassis Engineer</span>
+            </div>
           </div>
         </a>
-      </article>
+        <a href="Projects/2025-feb-SN4.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-feb-SN4/SN4-Torsion-Jig-Side.webp" alt="SN4"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/feb.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">SN4</span>
+              <span class="footer-meta">2024 &middot; Chassis Engineer</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
 
-    <h2 id="combat" class="project-section">Combat Robotics</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-combat-hauteclere.html">
-          <div class="project-banner-container">
-            <img id="hauteclere-banner-image" src="Images/project-2025-hauteclere/HauteclereV2-Banner.webp" alt="Hauteclere Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/rce.webp" alt="Logo">
-            <h4 class="card-description">Hauteclere</h4>
-            <h5 class="card-title">2025 | Plastic Antweight</h5>
-          </div>
-        </a>
-      </article>
-
-      <article class="project-display-article">
-        <a href="Projects/2025-combat-skofnung.html">
-          <div class="project-banner-container">
-            <img id="hauteclere-banner-image" src="Images/project-2025-skofnung/Skofnung-Banner.webp" alt="Skofnung Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/rce.webp" alt="Logo">
-            <h4 class="card-description">Skofnung</h4>
-            <h5 class="card-title">2025 | Plastic Antweight</h5>
+    <div class="project-group" data-group="star">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/star.webp" alt="">
+        <span class="group-title">Berkeley Space Technologies &amp; Rocketry</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-star-LE3.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-star-LE3/LE3-Banner.webp" alt="LE3"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/star.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">LE3</span>
+              <span class="footer-meta">2025 &middot; Collegiate Rocketry</span>
+            </div>
           </div>
         </a>
-      </article>
+        <a href="Projects/2024-star-BART.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2024-star-bart/bart-launch-midlaunch.webp" alt="BART"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/star.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">BART</span>
+              <span class="footer-meta">2024 &middot; Collegiate Rocketry</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
 
-    <h2 id="frc" class="project-section">FIRST Robotics Competition</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2024-frc-serrano.html">
-          <div class="project-banner-container">
-            <img id="serrano-banner-image" src="Images/project-2024-frc/serrano-left.webp" alt="Serrano Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/fremonthighrobotics.webp" alt="Logo">
-            <h4 class="card-description">Serrano</h4>
-            <h5 class="card-title">2024 | FRC Robot Design</h5>
-          </div>
-        </a>
-      </article>
-
-      <article class="project-display-article">
-        <a href="Projects/2023-frc-slanty.html">
-          <div class="project-banner-container">
-            <img id="slanty-banner-image" src="Images/project-2023-frc/slanty-banner.webp" alt="Slanty Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/fremonthighrobotics.webp" alt="Logo">
-            <h4 class="card-description">Slanty</h4>
-            <h5 class="card-title">2023 | FRC Robot Design</h5>
+    <div class="project-group" data-group="combat">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/rce.webp" alt="">
+        <span class="group-title">Combat Robotics</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-combat-hauteclere.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-hauteclere/HauteclereV2-Banner.webp" alt="Hauteclere"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/rce.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Hauteclere</span>
+              <span class="footer-meta">2025 &middot; Plastic Antweight</span>
+            </div>
           </div>
         </a>
-      </article>
-
-      <article class="project-display-article">
-        <a href="Projects/2023-frc-grippy.html">
-          <div class="project-banner-container">
-            <img class="project-banner-image" src="Images/project-2018-frc/grippy-banner.webp" alt="Grippy Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/fremonthighrobotics.webp" alt="Logo">
-            <h4 class="card-description">Grippy</h4>
-            <h5 class="card-title">2023 | FRC Robot Design</h5>
+        <a href="Projects/2025-combat-skofnung.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-skofnung/Skofnung-Jacobs.webp" alt="Skofnung"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/rce.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Skofnung</span>
+              <span class="footer-meta">2025 &middot; Plastic Antweight</span>
+            </div>
           </div>
         </a>
-      </article>
+      </div>
     </div>
 
-    <h2 id="carpentry" class="project-section">Carpentry</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-feb-RFS.html">
-          <div class="project-banner-container">
-            <img id="RFS-workshop-banner-image" src="Images/project-2025-feb-RFS/RFS-Jacobs.webp" alt="RFS Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/feb.webp" alt="Logo">
-            <h4 class="card-description">FEB Workshop</h4>
-            <h5 class="card-title">2025 | Carpentry</h5>
+    <div class="project-group" data-group="frc">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/fremonthighrobotics.webp" alt="">
+        <span class="group-title">FIRST Robotics Competition</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2024-frc-serrano.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2024-frc/serrano-left.webp" alt="Serrano"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/fremonthighrobotics.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Serrano</span>
+              <span class="footer-meta">2024 &middot; FRC Robot Design</span>
+            </div>
           </div>
         </a>
-      </article>
+        <a href="Projects/2023-frc-slanty.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2023-frc/slanty-banner.webp" alt="Slanty"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/fremonthighrobotics.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Slanty</span>
+              <span class="footer-meta">2023 &middot; FRC Robot Design</span>
+            </div>
+          </div>
+        </a>
+        <a href="Projects/2023-frc-grippy.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2018-frc/grippy-banner.webp" alt="Grippy"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/fremonthighrobotics.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Grippy</span>
+              <span class="footer-meta">2023 &middot; FRC Robot Design</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="project-group" data-group="coursework">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/berkeley.svg" alt="UC Berkeley">
+        <span class="group-title">Academic Coursework</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
 
-      <article class="project-display-article">
-        <a href="Projects/2023-fhs-workshop.html">
-          <div class="project-banner-container">
-            <img id="workshop-banner-image" src="Images/project-2023-workshop/workshop-banner.webp" alt="Workshop Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/fuhsd.webp" alt="Logo">
-            <h4 class="card-description">FHS Workshop</h4>
-            <h5 class="card-title">2023 | Carpentry</h5>
+        <a href="Files/ME100 Project Report.pdf" target="_blank" class="proj-card">
+          <div class="card-banner"><img src="Images/project-course/ME100-RiceCooker.webp" alt="Automated Rice Cooker"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/berkeley.svg" alt="Berkeley">
+            <div class="footer-text">
+              <span class="footer-name">Automated Rice Cooker</span>
+              <span class="footer-meta">ME 100 &middot; View Report</span>
+            </div>
           </div>
         </a>
-      </article>
 
-      <article class="project-display-article">
-        <a href="Projects/2021-bsa-shed.html">
-          <div class="project-banner-container">
-            <img id="equipment-shed-banner-image" src="Images/project-2021-equipment-shed/shed-closed.webp" alt="Shed Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/scoutsbsa.webp" alt="Logo">
-            <h4 class="card-description">Equipment Shed</h4>
-            <h5 class="card-title">2021 | Eagle Scout Project</h5>
+        <a href="Files/E26%20Project%20Report.pdf" target="_blank" class="proj-card">
+          <div class="card-banner"><img src="Images/project-course/E26-Turbine.webp" alt="Wind Turbine"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/berkeley.svg" alt="Berkeley">
+            <div class="footer-text">
+              <span class="footer-name">Wind Turbine CAD</span>
+              <span class="footer-meta">ENGIN 26 &middot; View Report</span>
+            </div>
           </div>
         </a>
-      </article>
+
+        <a href="https://drive.google.com/drive/folders/10bv20ZkEQCoUVZSSi8GZHCEuU0PCaYE-?usp=sharing" target="_blank" class="proj-card">
+          <div class="card-banner"><img src="Images/project-course/E29-BikeTrailer.webp" alt="Bike Trailer"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/berkeley.svg" alt="Berkeley">
+            <div class="footer-text">
+              <span class="footer-name">Bike Trailer</span>
+              <span class="footer-meta">ENGIN 29 &middot; View Drive Folder</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+    <div class="project-group" data-group="carpentry">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/fuhsd.webp" alt="">
+        <span class="group-title">Carpentry</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-feb-RFS.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-feb-RFS/RFS-Jacobs.webp" alt="FEB Workshop"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/feb.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">FEB Workshop</span>
+              <span class="footer-meta">2025 &middot; Carpentry</span>
+            </div>
+          </div>
+        </a>
+        <a href="Projects/2023-fhs-workshop.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2023-workshop/workshop-banner.webp" alt="FHS Workshop"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/fuhsd.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">FHS Workshop</span>
+              <span class="footer-meta">2023 &middot; Carpentry</span>
+            </div>
+          </div>
+        </a>
+        <a href="Projects/2021-bsa-shed.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2021-equipment-shed/shed-closed.webp" alt="Equipment Shed"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/scoutsbsa.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Equipment Shed</span>
+              <span class="footer-meta">2021 &middot; Eagle Scout Project</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
 
-    <h2 id="cad" class="project-section">CAD</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-asme-cadathon.html">
-          <div class="project-banner-container">
-            <img id="cadathon-banner-image"  src="Images/project-2025-ASME-CADathon/CARE-Banner-Image.webp" alt="CADathon Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/asme.webp" alt="Logo">
-            <h4 class="card-description">C.A.R.E.</h4>
-            <h5 class="card-title">2025 | ASME CADathon</h5>
+    <div class="project-group" data-group="cad">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/asme.webp" alt="">
+        <span class="group-title">CAD</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-asme-cadathon.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-ASME-CADathon/CARE-Banner-Image.webp" alt="C.A.R.E."></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/asme.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">C.A.R.E.</span>
+              <span class="footer-meta">2025 &middot; ASME CADathon</span>
+            </div>
           </div>
         </a>
-      </article>
+        <a href="Projects/2022-lawnmower.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2022-lawnmower/lawnmower-banner.webp" alt="Lawnmower CAD"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/grass.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Lawnmower CAD</span>
+              <span class="footer-meta">2022 &middot; CAD Practice</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <article class="project-display-article">
-        <a href="Projects/2022-lawnmower.html">
-          <div class="project-banner-container">
-            <img id="lawnmower-banner-image" src="Images/project-2022-lawnmower/lawnmower-banner.webp" alt="Lawnmower Banner">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/grass.webp" alt="Logo">
-            <h4 class="card-description">Lawnmower CAD</h4>
-            <h5 class="card-title">2022 | CAD Practice</h5>
-          </div>
-        </a>
-      </article>
-    </div>
-    <h2 id="programming" class="project-section">Programming</h2>
-    <div class="project-display">
-      <article class="project-display-article">
-        <a href="Projects/2025-receiptraccoon.html">
-          <div class="project-banner-container">
-            <img id="receiptraccoon-banner-image"  src="Images/project-2025-receiptraccoon/ReceiptRaccoon_UI.webp" alt="Receipt Raccoon UI">
-          </div>
-          <div class="project-display-data">
-            <img class="card-logo" src="Logos/receiptraccoon.webp" alt="Logo">
-            <h4 class="card-description">Receipt Raccoon</h4>
-            <h5 class="card-title">2025 | App Dev</h5>
+    <div class="project-group" data-group="programming">
+      <div class="group-header">
+        <img class="group-header-logo" src="Logos/receiptraccoon.webp" alt="">
+        <span class="group-title">Programming</span>
+        <div class="group-rule"></div>
+      </div>
+      <div class="project-grid">
+        <a href="Projects/2025-receiptraccoon.html" class="proj-card">
+          <div class="card-banner"><img src="Images/project-2025-receiptraccoon/ReceiptRaccoon_UI.webp" alt="Receipt Raccoon"></div>
+          <div class="card-footer">
+            <img class="footer-logo" src="Logos/receiptraccoon.webp" alt="">
+            <div class="footer-text">
+              <span class="footer-name">Receipt Raccoon</span>
+              <span class="footer-meta">2025 &middot; App Dev</span>
+            </div>
           </div>
         </a>
-      </article>
+      </div>
     </div>
+
   </section>
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(".project-section");
-    const links = document.querySelectorAll(".outline-link");
+    // 1. Filter Logic
+    const tabs   = document.querySelectorAll(".filter-tab");
+    const groups = document.querySelectorAll(".project-group");
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const id = entry.target.id;
-        const link = document.querySelector(`.outline-link[data-target="${id}"]`);
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove("active"));
-          link.classList.add("active");
-        }
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const filter = tab.dataset.filter;
+        groups.forEach(group => {
+          const match = filter === "all" || group.dataset.group === filter;
+          group.classList.toggle("hidden", !match);
+        });
       });
-    }, {
-      threshold: 0.6
     });
 
-    sections.forEach(section => observer.observe(section));
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    // 1. SIDEBAR HIGHLIGHT LOGIC
-    const sections = document.querySelectorAll(".project-section");
-    const links = document.querySelectorAll(".outline-link");
-
-    const sidebarObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const id = entry.target.id;
-        const link = document.querySelector(`.outline-link[data-target="${id}"]`);
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove("active"));
-          if(link) link.classList.add("active");
-        }
-      });
-    }, {
-      threshold: 0.2
-    });
-
-    sections.forEach(section => sidebarObserver.observe(section));
-
-    // 2. SCROLL REVEAL ANIMATION LOGIC
-    const cards = document.querySelectorAll(".project-display-article");
-
-    const revealObserver = new IntersectionObserver((entries, observer) => {
+    // 2. Scroll Reveal Animation
+    const revealObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Add the class that triggers the CSS animation
           entry.target.classList.add("visible");
-          // Stop watching this element (so it doesn't fade out again)
-          observer.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.15, // Trigger when 15% of the card is visible
-      rootMargin: "0px 0px -50px 0px" // Offset slightly so it triggers before hitting the very bottom
-    });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
-    cards.forEach(card => revealObserver.observe(card));
+    document.querySelectorAll(".proj-card").forEach(c => revealObserver.observe(c));
+
+    // 3. Smooth Fade-Out Page Transition
+    let redirected = false;
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (redirected) return;
+        redirected = true;
+
+        const targetUrl = card.getAttribute('href');
+        document.body.style.transition = "opacity 0.4s ease";
+        document.body.style.opacity = 0;
+
+        setTimeout(() => { window.location.href = targetUrl; }, 400);
+      });
+    });
   });
 </script>
 <script src="Javascript/navbar.js"></script>

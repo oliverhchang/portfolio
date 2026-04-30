@@ -1,0 +1,65 @@
+h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-top: 2em;
+    margin-bottom: 0em;
+    text-align: left;
+    letter-spacing: -1.25px;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    background-clip: text;
+    display: inline-block;
+    position: relative;
+    margin-right: 1rem;
+    padding-bottom: 5px;
+}
+h2 {
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    padding-bottom: .5rem;
+    letter-spacing: -.025em;
+    border-bottom: 1px solid var(--grid-line);
+    scroll-margin: 5rem;
+    color: var(--black);
+}
+h3 { font-size: 1.25em; color: var(--dark-gray); line-height: 1.6; }
+h4 {
+    color: var(--black);
+    background-image: linear-gradient(333deg, #323235 73%, #5e5e63);
+    letter-spacing: -.01em;
+    background-clip: text;
+    margin-top: 4px; margin-bottom: 4px;
+    font-size: 36px; font-weight: 700; line-height: 140%;
+}
+h5 {
+    color: var(--dark-gray);
+    margin: 0px; letter-spacing: .1em; text-transform: uppercase;
+    font-size: 14px; font-weight: 600; line-height: 160%;
+}
+h6 {
+    font-size: 80px; font-weight: 800; margin-top: 1.5em; margin-bottom: 0em;
+    letter-spacing: -1.25px; -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    background-clip: text;
+}
+h7 {
+    -webkit-text-fill-color: transparent; -webkit-background-clip: text;
+    background-image: linear-gradient(333deg, var(--black) 30%, var(--light-gray));
+    background-clip: text; margin-top: 0; margin-bottom: 0;
+    font-size: 48px; font-weight: 700; line-height: 140%;
+}
+p {
+    font-weight: 200; font-size: 18px; line-height: 1.75rem; color: var(--dark-gray);
+}
+.bold {
+    font-weight:800; -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text; text-decoration:none;
+}
+.credits-hyperlink {
+    background: linear-gradient(#4BA4EC, #3474DF);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}

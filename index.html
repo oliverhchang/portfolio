@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Oliver Chang | Index</title>
+
     <script>
         (function() {
             const savedTheme = localStorage.getItem('engineering-theme');
@@ -15,7 +16,13 @@
             }
         })();
     </script>
-    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
@@ -26,18 +33,28 @@
             display: none;
         }
 
-        /* --- NEW CSS FOR DOODLE --- */
+        /* --- DOODLE STYLES --- */
         .hidden-doodle {
             position: fixed;
-            bottom: 40px;  /* Moved up slightly */
-            right: 40px;   /* Moved left slightly */
-            width: 120px;  /* Adjust size as needed */
+            width: 300px;
             opacity: 0;
             z-index: 1;
             pointer-events: none;
             transition: opacity 0.15s ease-out;
-            /* Optional: Rotates it slightly for a handwritten feel */
+        }
+
+        /* Bottom Right Positioning */
+        .hidden-doodle.br {
+            bottom: 40px;
+            right: 40px;
             transform: rotate(-10deg);
+        }
+
+        /* Top Right Positioning */
+        .hidden-doodle.tr {
+            top: 40px;
+            right: 40px;
+            transform: rotate(15deg);
         }
     </style>
 </head>
@@ -69,7 +86,8 @@
     </section>
 </div>
 
-<img id="corner-doodle" src="Logos/receiptraccoon_tp.png" alt="Hidden Doodle" class="hidden-doodle">
+<img id="corner-doodle-br" src="Logos/Doodles/receiptraccoon-doodle.png" alt="Raccoon Doodle" class="hidden-doodle br">
+<img id="corner-doodle-tr" src="Logos/Doodles/rocketrecovery-doodle.png" alt="Rocket Doodle" class="hidden-doodle tr">
 
 <div id="scroll-detect" style="height: 100vh;"></div>
 
@@ -78,25 +96,26 @@
 
 <script>
     document.addEventListener('mousemove', (e) => {
-        const doodle = document.getElementById('corner-doodle');
-        if (!doodle) return;
-
-        const rect = doodle.getBoundingClientRect();
-        const doodleX = rect.left + rect.width / 2;
-        const doodleY = rect.top + rect.height / 2;
-
-        const dist = Math.hypot(e.clientX - doodleX, e.clientY - doodleY);
-
-        // You can adjust this number to make the reveal area larger or smaller
+        const doodles = document.querySelectorAll('.hidden-doodle');
         const revealRadius = 250;
 
-        if (dist < revealRadius) {
-            // Calculate opacity: 0 at the edge of radius, 1 at the center
-            const opacity = 1 - (dist / revealRadius);
-            doodle.style.opacity = Math.max(0, opacity); // Ensure it doesn't go below 0
-        } else {
-            doodle.style.opacity = 0;
-        }
+        doodles.forEach(doodle => {
+            const rect = doodle.getBoundingClientRect();
+            // Calculate center of the doodle
+            const doodleX = rect.left + rect.width / 2;
+            const doodleY = rect.top + rect.height / 2;
+
+            // Distance formula
+            const dist = Math.hypot(e.clientX - doodleX, e.clientY - doodleY);
+
+            if (dist < revealRadius) {
+                // Invert distance to get opacity (closer = 1, edge of radius = 0)
+                const opacity = 1 - (dist / revealRadius);
+                doodle.style.opacity = Math.max(0, opacity);
+            } else {
+                doodle.style.opacity = 0;
+            }
+        });
     });
 </script>
 
