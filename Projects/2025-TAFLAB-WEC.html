@@ -51,11 +51,7 @@
     <div class="info-at-a-glance">
         <div class="info-glance-section">
             <p class="text-mini">ROLE</p>
-            <p class="text-mini">Undergraduate Researcher</p>
-        </div>
-        <div class="info-glance-section">
-            <p class="text-mini">LAB</p>
-            <p class="text-mini">UC Berkeley TAFLAB</p>
+            <p class="text-mini">Lead Research Engineer</p>
         </div>
         <div class="info-glance-section">
             <p class="text-mini">Tools</p>
@@ -64,120 +60,143 @@
             <p class="text-mini">Onshape</p>
             <p class="text-mini">ANSYS Maxwell</p>
         </div>
-    </div>
-
-    <div class="info-highlight">
-        <h2>Problem Statement</h2>
-        <p>Modern ASVs require 1–50W of continuous power for sensors and comms. While solar is powerful, it suffers from intermittency (night, clouds). Wind is consistent but low-density. <strong>Waves are the only energy source with 90% availability</strong> in open oceans.</p>
-        <p>However, the marine environment is hostile. Traditional harvesters with external moving parts succumb to biofouling and salt corrosion. The design requirement was clear: <strong>A fully enclosed, non-resonant system capable of harvesting ultra-low frequency (0.1–1.0 Hz) wave motion.</strong></p>
-    </div>
-
-    <div class="info-highlight">
-        <h2>Ideation</h2>
-        <div class="info-mechanism">
-            <div class="info-text-content">
-                <h3>Swinging</h3>
-                <p>Spherical magnet array over copper coils</p>
-            </div>
-            <div class="info-image-content">
-                <img src="../Images/project-2025-taflab/TAFLAB-B-Sketch.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
-            </div>
-        </div>
-        <div class="info-mechanism">
-            <div class="info-text-content">
-                <h3>Rolling</h3>
-                <p>Magnetic ball of magnets rolls over copper coils</p>
-            </div>
-            <div class="info-image-content">
-                <img src="../Images/project-2025-taflab/TAFLAB-C-Sketch.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
-            </div>
+        <div class="info-glance-section">
+            <p class="text-mini">TEAM</p>
+            <p class="text-mini">Prof. Reza Alam (Professor)</p>
+            <p class="text-mini">Arsh K (PHD Advisor)</p>
+            <p class="text-mini">Leonid M (PHD Advisor)</p>
+            <p class="text-mini">Matthew L (Undergraduate)</p>
+            <p class="text-mini">Jovan B (Undergraduate)</p>
         </div>
     </div>
 
-    <div class="info-highlight">
-        <h2>Proof of Concept</h2>
-        <p>I designed and fabricated simple testing rig constructed out of plywood with a magnet swinging over a stationary copper coil to demonstrate the effectiveness of this type of electromagnetic energy generator and to use as a benchmark for testing various coil configurations. </strong></p>
-        <div class="info-mechanism">
-            <div class="info-image-content">
-                <img src="../Images/project-2025-taflab/TAFLAB-C-POC1.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
-            </div>
-            <div class="info-image-content">
-                <img src="../Images/project-2025-taflab/TAFLAB-C-POC2.webp" alt="System Diagram" width="100%" style="border-radius: 1rem;">
-            </div>
-    </div>
-
-    <div class="info-highlight">
-        <h2>Dynamics & Lagrangian Mechanics</h2>
-        <p>To optimize the system, I derived the nonlinear equations of motion using Lagrangian mechanics. The system couples the vessel's pitch angle $\alpha(t)$ with the ball's relative position $\beta(t)$.</p>
-
-        <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid var(--grid-line);">
-            <p style="margin-bottom: 10px; font-size: 0.9rem; color: var(--dark-gray);">Linearized Equation of Motion:</p>
-            $$ \frac{7}{5}R\ddot{\beta} + \frac{(c_i + c_L)R}{m}\dot{\beta} + g\beta = -g\alpha - \kappa\ddot{\alpha} $$
-        </div>
-
-        <p>This model revealed a critical <strong>"Null Point"</strong> at $d/R_i = 1.4$, where gravitational and inertial forces cancel out. Avoiding this geometric ratio was crucial for ensuring the ball actually moves under excitation.</p>
-        <p>Using MATLAB, we are bale to plot and visualize many properties of a system with a specific set of parameters</p>
-        <div class="info-image-content">
-            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB1.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
-        </div>
-        <div class="info-image-content">
-            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB2.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
-        </div>
-        <div class="info-image-content">
-            <img src="../Images/project-2025-taflab/TAFLAB-MATLAB3.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
-        </div>
-    </div>
-
-    <div class="info-highlight">
-        <h2>CAD</h2>
-        <p>Design was completed using Onshape making use of Variable Studios to allow for configurability as parameters are changed and optimized.</p>
-        <div class="info-image-content">
-            <img src="../Images/project-2025-taflab/TAFLAB-C-Variables.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
-        </div>
-        <div class="info-image-content">
-            <img src="../Images/project-2025-taflab/TAFLAB-C.webp" alt="Design Flowchart" width="100%" style="border-radius: 1rem;">
-        </div>
-    </div>
-
-    <div class="info-highlight">
-        <h2>Optimization & Testing </h2>
-        <p>Coming Soon!</p>
-    </div>
-
-    <div class="info-highlight">
-        <h2>Full Technical Paper</h2>
-        <p>For the complete derivation and experimental validation setup, view the full pdfs below.</p>
-
-        <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-            <iframe
-                    src="../Files/2025-SEP-POC.pdf"
-                    width="100%"
-                    height="800px"
-                    type="application/pdf"
-                    style="border: none;">
-            </iframe>
-        </div>
-
-        <div style="margin-top: 15px;">
-            <a href="../Files/2025-SEP-Abstract.pdf" target="_blank" style="text-decoration: none; color: #718096; font-size: 0.9rem;">
-                <i class="fas fa-external-link-alt"></i> Open in New Tab
+    <div class="pdf-links-container">
+        <div class="image-wrapper">
+            <a href="https://cad.onshape.com/documents/1cb0863dc452a01eacce7489/w/62503314ddfecef7098ae1a9/e/d56fb6c8660b4d9327d05525?renderMode=0&uiState=69f2bea6a4fb7ac3cb14124f" target="_blank">
+                <img src="../Images/project-2025-taflab/TAFLAB-Onshape.webp">
             </a>
+            <h3>Onshape CAD</h3>
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>1. Project Overview</h2>
+
+        <p>My involvement with the Wave Energy Converter (WEC) project began last summer while working as a technician on the lab's Autonomous Surface Vessels (ASVs). My primary responsibilities centered around waterproofing critical systems, integrating sensors, and performing preventative maintenance to ensure the vessels could survive harsh marine environments. During this time, I experienced firsthand the severe power limitations of ASVs. Relying entirely on intermittent solar and wind power meant that mission durations were often cut short by overcast days or calm nights, highlighting a critical need for a more consistent, weather-independent energy source.</p>
+
+        <p>Driven by this challenge, I took ownership of the WEC initiative for the current academic year, elevating it from a PhD student's side project into a primary research endeavor. Stepping into the role of Lead Research Engineer, I now drive the project's technical direction at the level of an M.S. student. I actively manage a team of two undergraduate researchers to design, analytically model, and physically test a fully enclosed, non-resonant electromagnetic harvester capable of capturing ultra-low frequency (0.1–1.0 Hz) wave motion.</p>
+    </div>
+
+    <div class="info-highlight">
+        <h2>2. Proof of Concept & ANSYS Maxwell</h2>
+        <p>To establish the viability of the sliding magnet-over-coil design, we initially fabricated a simplified 1 degree-of-freedom (DOF) proof-of-concept testing rig. This allowed us to benchmark the baseline power generation and validate our fundamental assumptions regarding surface friction, coil spacing, and load resistance. Following the physical prototype, we utilized ANSYS Maxwell to run detailed electromagnetic simulations. By quantifying the magnetic coupling efficiency between neodymium magnets and our custom copper stator, we optimized coil geometry and array configurations, yielding a highly accurate magnetic flux linkage model.</p>
+
+        <div class="info-mechanism" style="margin-top: 20px;">
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-POC1.webp" alt="Proof of Concept & Maxwell Validation" width="100%" style="border-radius: 1rem;">
+            </div>
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-POC2.webp" alt="Proof of Concept Setup" width="100%" style="border-radius: 1rem;">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>3. Theoretical Background & Analytical Modeling</h2>
+        <p>To accurately predict power output and system behavior, we developed a comprehensive analytical framework using Python. This involved deriving nonlinear equations of motion via Lagrangian mechanics to model the dynamics of the magnet array responding to wave-induced rocking. Concurrently, we applied advanced electromagnetic integration techniques to calculate the flux and voltage over the magnets and coils. This created a system of Ordinary Differential Equations (ODEs) solved computationally for each discrete position, allowing us to accurately tune spring stiffness against specific wave frequencies.</p>
+
+        <h4 style="font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">Dynamics Modeling</h4>
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: var(--card-bg);">
+            <object data="../Files/2026-TAFLAB-Dynamics.pdf" type="application/pdf" width="100%" height="600px" style="display: block;">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center;">
+                    <i class="fas fa-file-pdf" style="font-size: 48px; color: var(--light-gray); margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 10px;">Dynamics Derivation</h3>
+                    <p style="margin-bottom: 25px; font-size: 0.9em;">Your browser does not support embedded PDFs.</p>
+                    <a href="../Files/2026-TAFLAB-Dynamics.pdf" target="_blank" style="padding: 12px 24px; background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue)); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.2s ease;">
+                        View Dynamics PDF
+                    </a>
+                </div>
+            </object>
         </div>
 
-        <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-            <iframe
-                    src="../Files/2025-SEP-Abstract.pdf"
-                    width="100%"
-                    height="800px"
-                    type="application/pdf"
-                    style="border: none;">
-            </iframe>
+        <h4 style="font-size: 1.2rem; margin-top: 40px; margin-bottom: 15px;">Electromagnetic Modeling</h4>
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: var(--card-bg);">
+            <object data="../Files/2026-TAFLAB-E&amp;M.pdf" type="application/pdf" width="100%" height="600px" style="display: block;">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center;">
+                    <i class="fas fa-file-pdf" style="font-size: 48px; color: var(--light-gray); margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 10px;">E&amp;M Derivation</h3>
+                    <p style="margin-bottom: 25px; font-size: 0.9em;">Your browser does not support embedded PDFs.</p>
+                    <a href="../Files/2026-TAFLAB-E&amp;M.pdf" target="_blank" style="padding: 12px 24px; background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue)); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.2s ease;">
+                        View E&amp;M PDF
+                    </a>
+                </div>
+            </object>
         </div>
 
-        <div style="margin-top: 15px;">
-            <a href="../Files/2025-SEP-POC.pdf" target="_blank" style="text-decoration: none; color: #718096; font-size: 0.9rem;">
-                <i class="fas fa-external-link-alt"></i> Open in New Tab
-            </a>
+        <div class="info-mechanism" style="margin-top: 40px;">
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-Graph1.webp" alt="Analytical Graph 1" width="100%" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            </div>
+            <div class="info-image-content">
+                <img src="../Images/project-2025-taflab/TAFLAB-Graph2.webp" alt="Analytical Graph 2" width="100%" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>4. CAD & Fabrication</h2>
+        <p>The mechanical implementation of the 1 DOF slider was meticulously modeled in Onshape. We selected a 1/32” polycarbonate boundary to minimize the air gap to roughly 1mm while ensuring structural integrity without introducing magnetic braking forces (eddy currents). The housing was designed with high modularity in mind, allowing us to rapidly swap out coil arrays, adjust the magnet configurations, and tune the restorative springs to match our target ocean swell frequencies.</p>
+        <div class="info-image-content" style="margin-top: 20px;">
+            <img src="../Images/project-2025-taflab/TAFLAB-CAD-Exploded.webp" alt="Exploded CAD View" width="100%" style="border-radius: 1rem;">
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>5. Testing & Results</h2>
+        <p>Physical testing was conducted by integrating an HMT901 accelerometer to capture precise kinematic data while recording the electrical output across a tailored resistor load. During our trials, we achieved an impressive <strong>162 mW of power at 0.73 Hz</strong>. When comparing this physical yield to our Python ODE simulations (which predicted 170 mW at a 4.5 N/m spring stiffness), we observed an exceptionally low <strong>5% error rate</strong>, successfully validating both our theoretical model and the efficiency of our prototype.</p>
+
+        <div class="pdf-links-container" style="margin-top: 20px;">
+            <div class="image-wrapper">
+                <img src="../Images/project-2025-taflab/TAFLAB-Testing1.webp" alt="Testing Setup 1" style="border-radius: 1rem; width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+            </div>
+            <div class="image-wrapper">
+                <img src="../Images/project-2025-taflab/TAFLAB-Testing2.webp" alt="Testing Setup 2" style="border-radius: 1rem; width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+            </div>
+            <div class="image-wrapper">
+                <img src="../Images/project-2025-taflab/TAFLAB-Testing3.webp" alt="Testing Setup 3" style="border-radius: 1rem; width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+
+    <div class="info-highlight">
+        <h2>6. Documentation & Presentations</h2>
+        <p>Below is the comprehensive research poster detailing the wave energy converter's architecture and performance, alongside our iterative presentation slide decks delivered throughout the semester.</p>
+
+        <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grid-line); box-shadow: 0 4px 20px rgba(0,0,0,0.1); background: var(--card-bg);">
+            <object data="../Files/2026-TAFLAB-WaveEnergyConverterPoster.pdf" type="application/pdf" width="100%" height="800px" style="display: block;">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center;">
+                    <i class="fas fa-file-pdf" style="font-size: 48px; color: var(--light-gray); margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 10px;">Wave Energy Converter Poster</h3>
+                    <p style="margin-bottom: 25px; font-size: 0.9em;">Your browser does not support embedded PDFs.</p>
+                    <a href="../Files/2026-TAFLAB-WaveEnergyConverterPoster.pdf" target="_blank" style="padding: 12px 24px; background-image: linear-gradient(to bottom right, var(--primary-blue), var(--secondary-blue)); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.2s ease;">
+                        View / Download Poster
+                    </a>
+                </div>
+            </object>
+        </div>
+
+        <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 30px;">
+            <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTJ7I2btHlYvJWrPfRRMWcTMRpD8c0gHeAjb8cqA02QUCK7X8-z3rcrJHmfQZpDu0HMn1R4GemX4Ab7/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+
+            <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTWVMwRmUyOzN61OMrrWqFDeWFe4Yjr4ZsDp3WPKYhcV57Iu097UshL5iIo8nDMMFHbq5SAqA0BTxNs/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+
+            <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTSkwmknkeF0hhp7EyKrni9aHAa8PoKdTJaB6JaIiKln5a3tJM-LVBt2HQbAndfoeIaH9iwwFX3wWIT/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
         </div>
     </div>
 
@@ -185,16 +204,13 @@
 
 <script src="../Javascript/navbar.js"></script>
 
-</body>
-</html>
-
 <script>
     window.MathJax = {
         tex: {
-            // Enables single $ for inline math
             inlineMath: [['$', '$'], ['\\(', '\\)']]
         }
     };
 </script>
 
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
