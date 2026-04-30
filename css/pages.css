@@ -135,3 +135,36 @@ section { padding: 20px 40px; text-align: left; }
 .right-column li { font-size: 1rem; }
 .course-item strong, .course-item b { color: var(--black); transition: color 0.3s ease; }
 .education-section ul li { color: var(--dark-gray); }
+
+/* ============================================================
+   MOBILE RESPONSIVENESS FIXES (Phones & Small Tablets)
+============================================================ */
+@media screen and (max-width: 768px) {
+
+    /* 1. Fix Category Titles Running Off Screen */
+    .group-title {
+        white-space: normal; /* Allows long text to drop to a second line */
+        font-size: 15px; /* Slightly scaled down for mobile screens */
+        line-height: 1.4;
+    }
+
+    /* 2. Fix 'At A Glance' Running Off Screen */
+    .info-at-a-glance {
+        flex-direction: column; /* Stacks the columns vertically on top of each other */
+        gap: 30px; /* Adds breathing room between the stacked items */
+        padding: 30px;
+    }
+    .info-glance-section {
+        margin: 0; /* Removes the side-margins that were squishing the text */
+        width: 100%;
+    }
+
+    /* 3. Bonus Fix: Stack the Text/Image Mechanisms so they don't squish */
+    .info-mechanism {
+        flex-direction: column;
+    }
+    .info-image-content, .info-text-content {
+        width: 100%;
+        justify-content: center;
+    }
+}
