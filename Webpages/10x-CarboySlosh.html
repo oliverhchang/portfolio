@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rotational Washing Simulator</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #111; /* Keep the 3D scene dark for contrast */
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        #canvas-container { width: 100vw; height: 100vh; }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border: 2px solid #000;
+            width: 320px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            color: #000;
+            box-shadow: 5px 5px 0px rgba(0,0,0,1);
+        }
+
+        /* Straightforward scrollbar */
+        #ui::-webkit-scrollbar { width: 8px; }
+        #ui::-webkit-scrollbar-thumb { background: #000; }
+        #ui::-webkit-scrollbar-track { background: #eee; border-left: 1px solid #ccc; }
+
+        h3 {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 8px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .slider-group { margin-bottom: 16px; }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .val {
+            font-family: 'Courier New', monospace;
+            background: #eee;
+            padding: 2px 6px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        /* Native browser styling for inputs is cleaner and less "designed" */
+        input[type="range"] {
+            width: 100%;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .status-panel {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 3px solid #000;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .data-label { font-weight: 700; }
+
+        .data-val {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #dirText {
+            padding: 2px 6px;
+            border: 1px solid currentColor;
+            font-size: 12px;
+            background: #f8f8f8;
+        }
+
+        /* Heatmap Key */
+        .heatmap-key {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 3px solid #000;
+        }
+
+        .heatmap-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .heatmap-gradient {
+            width: 100%;
+            height: 14px;
+            background: linear-gradient(to right, rgb(0,0,0), rgb(150,0,255), rgb(255,0,0), rgb(255,255,0), rgb(255,255,255));
+            border: 2px solid #000;
+            margin-bottom: 6px;
+        }
+
+        .heatmap-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 800;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            background: #fff;
+            color: #000;
+            border: 2px solid #000;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0 rgba(0,0,0,1);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        button:active {
+            box-shadow: 0px 0px 0 rgba(0,0,0,1);
+            transform: translate(3px, 3px);
+        }
+
+        #rotateBarrelBtn {
+            background: #eef2ff;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+<div id="ui">
+    <h3>Wash Impact Simulator</h3>
+
+    <div class="slider-group">
+        <label>Target RPM <span id="rpmVal" class="val">50</span></label>
+        <input type="range" id="rpmSlider" min="20" max="100" value="50">
+    </div>
+    <div class="slider-group">
+        <label>Ramp Time (sec) <span id="rampVal" class="val">0.8</span></label>
+        <input type="range" id="rampSlider" min="0.1" max="3.0" step="0.1" value="0.8">
+        <div class="hint">Lower = Violent start/stop (Agitation)</div>
+    </div>
+    <div class="slider-group">
+        <label>Passes Before Reverse <span id="altVal" class="val">2.0</span></label>
+        <input type="range" id="altSlider" min="0" max="6" step="0.5" value="2.0">
+        <div class="hint">0 = Constant Spin</div>
+    </div>
+    <div class="slider-group">
+        <label>Liquid Volume (L) <span id="volVal" class="val">3.2</span></label>
+        <input type="range" id="volSlider" min="0.8" max="8.0" step="0.4" value="3.2">
+    </div>
+    <div class="slider-group">
+        <label>Axis Offset (in) <span id="offsetVal" class="val">2.0</span></label>
+        <input type="range" id="offsetSlider" min="0" max="8" step="0.5" value="2.0">
+    </div>
+    <div class="slider-group">
+        <label>Tilt Angle (deg) <span id="tiltVal" class="val">15</span></label>
+        <input type="range" id="tiltSlider" min="0" max="45" value="15">
+    </div>
+    <div class="slider-group">
+        <label>Creep Angle (deg) <span id="creepVal" class="val">45</span></label>
+        <input type="range" id="creepSlider" min="5" max="180" step="5" value="45">
+    </div>
+
+    <div class="status-panel">
+        <div class="data-row">
+            <span class="data-label">Motor Status</span>
+            <span id="dirText">RAMP UP</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Particle Count</span>
+            <span class="data-val" id="particleCount">4000</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Coverage</span>
+            <span class="data-val" id="coveragePct">0%</span>
+        </div>
+    </div>
+
+    <div class="heatmap-key">
+        <span class="heatmap-title">Surface Impact Heatmap</span>
+        <div class="heatmap-gradient"></div>
+        <div class="heatmap-labels">
+            <span>0%</span>
+            <span>50%</span>
+            <span>100%</span>
+        </div>
+    </div>
+
+    <button id="resetBtn">Reset Thermal Map</button>
+    <button id="pauseBtn">Pause Simulation</button>
+    <button id="rotateBarrelBtn">Rotate Barrel (Creep)</button>
+</div>
+
+<div id="canvas-container"></div>
+
+<script>
+    // ─── Constants ───────────────────────────────────────────────────────────────
+    const G_LOCAL = 386.09; // in/s² (gravity in local cylinder units)
+    const R_CYL   = 7.0;    // inches
+    const H_CYL   = 14.0;   // inches
+    const DT       = 1 / 60; // fixed timestep
+
+    // Collision inset prevents 2D point sprites from clipping through 3D walls visually
+    const R_COLL = R_CYL - 0.5;
+    const H_COLL = (H_CYL / 2) - 0.5;
+
+    // Heatmap grid resolution
+    const BARREL_RES_W = 128;
+    const BARREL_RES_H = 64;
+    const CAP_RES      = 64;
+
+    // ─── State ───────────────────────────────────────────────────────────────────
+    let NUM_PARTICLES = 4000;
+    let simTime       = 0;
+    let omega         = 0; // current angular velocity (rad/s)
+    let isPaused      = false;
+
+    let barrelGrid = new Float32Array(BARREL_RES_W * BARREL_RES_H);
+    let topGrid    = new Float32Array(CAP_RES * CAP_RES);
+    let botGrid    = new Float32Array(CAP_RES * CAP_RES);
+    const FIXED_MAX_ENERGY = 30.0; // Optimized threshold for scrubbing impacts
+
+    // Coverage tracking: unique cells touched
+    let barrelTouched = new Uint8Array(BARREL_RES_W * BARREL_RES_H);
+    let topTouched    = new Uint8Array(CAP_RES * CAP_RES);
+    let botTouched    = new Uint8Array(CAP_RES * CAP_RES);
+    let coverageTotal = 0;
+    const TOTAL_SURFACE_CELLS = BARREL_RES_W * BARREL_RES_H + Math.PI * (CAP_RES / 2) ** 2 * 2; // approx
+
+    // ─── Canvas Textures ─────────────────────────────────────────────────────────
+    const barrelCanvas = document.createElement('canvas');
+    barrelCanvas.width = BARREL_RES_W; barrelCanvas.height = BARREL_RES_H;
+    const barrelCtx = barrelCanvas.getContext('2d');
+
+    const topCanvas = document.createElement('canvas');
+    topCanvas.width = CAP_RES; topCanvas.height = CAP_RES;
+    const topCtx = topCanvas.getContext('2d');
+
+    const botCanvas = document.createElement('canvas');
+    botCanvas.width = CAP_RES; botCanvas.height = CAP_RES;
+    const botCtx = botCanvas.getContext('2d');
+
+    const barrelTex = new THREE.CanvasTexture(barrelCanvas);
+    const topTex    = new THREE.CanvasTexture(topCanvas);
+    const botTex    = new THREE.CanvasTexture(botCanvas);
+    barrelTex.magFilter = THREE.NearestFilter;
+    topTex.magFilter    = THREE.NearestFilter;
+    botTex.magFilter    = THREE.NearestFilter;
+
+    function getThermalColor(n) {
+        n = Math.max(0, Math.min(1, n));
+        if (n < 0.25) {
+            return `rgb(${Math.floor(n * 4 * 150)}, 0, ${Math.floor(n * 4 * 255)})`;
+        } else if (n < 0.50) {
+            const t = (n - 0.25) * 4;
+            return `rgb(${150 + Math.floor(t * 105)}, 0, ${255 - Math.floor(t * 255)})`;
+        } else if (n < 0.75) {
+            const t = (n - 0.50) * 4;
+            return `rgb(255, ${Math.floor(t * 255)}, 0)`;
+        } else {
+            const t = (n - 0.75) * 4;
+            return `rgb(255, 255, ${Math.floor(t * 255)})`;
+        }
+    }
+
+    function maskCaps() {
+        const center = CAP_RES / 2, radiusSq = center * center;
+        for (let y = 0; y < CAP_RES; y++) {
+            for (let x = 0; x < CAP_RES; x++) {
+                if ((x - center) ** 2 + (y - center) ** 2 > radiusSq) {
+                    topCtx.fillStyle = '#000'; topCtx.fillRect(x, y, 1, 1);
+                    botCtx.fillStyle = '#000'; botCtx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+    }
+
+    function resetPaint() {
+        barrelGrid.fill(0); topGrid.fill(0); botGrid.fill(0);
+        barrelTouched.fill(0); topTouched.fill(0); botTouched.fill(0);
+        coverageTotal = 0;
+
+        barrelCtx.fillStyle = '#0a0a0f'; barrelCtx.fillRect(0, 0, BARREL_RES_W, BARREL_RES_H);
+        topCtx.fillStyle    = '#0a0a0f'; topCtx.fillRect(0, 0, CAP_RES, CAP_RES);
+        botCtx.fillStyle    = '#0a0a0f'; botCtx.fillRect(0, 0, CAP_RES, CAP_RES);
+        maskCaps();
+
+        barrelTex.needsUpdate = true;
+        topTex.needsUpdate    = true;
+        botTex.needsUpdate    = true;
+        document.getElementById('coveragePct').innerText = '0%';
+    }
+
+    // ─── Three.js Setup ───────────────────────────────────────────────────────────
+    const scene    = new THREE.Scene();
+    const camera   = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 48);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(innerWidth, innerHeight);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    const tumbleAxis = new THREE.Group();
+    const offsetRig  = new THREE.Group();
+    const tiltRig    = new THREE.Group();
+
+    // Adjusted opacity down to 0.45 to make droplets much more visible
+    const materials = [
+        new THREE.MeshBasicMaterial({ map: barrelTex, side: THREE.DoubleSide, transparent: true, opacity: 0.45 }),
+        new THREE.MeshBasicMaterial({ map: topTex,    side: THREE.DoubleSide, transparent: true, opacity: 0.45 }),
+        new THREE.MeshBasicMaterial({ map: botTex,    side: THREE.DoubleSide, transparent: true, opacity: 0.45 }),
+    ];
+
+    const geometry     = new THREE.CylinderGeometry(R_CYL, R_CYL, H_CYL, 32);
+    const cylinderMesh = new THREE.Mesh(geometry, materials);
+
+    const axisMat  = new THREE.LineBasicMaterial({ color: 0x666666, transparent: true, opacity: 0.4 });
+    const axisGeo  = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-25, 0, 0), new THREE.Vector3(25, 0, 0)]);
+    const axisLine = new THREE.Line(axisGeo, axisMat);
+
+    scene.add(tumbleAxis);
+    tumbleAxis.add(axisLine);
+    tumbleAxis.add(offsetRig);
+    offsetRig.add(tiltRig);
+    tiltRig.add(cylinderMesh);
+
+    let particles = [];
+
+    function initParticles() {
+        particles = [];
+        cylinderMesh.updateMatrixWorld(true);
+        const mat = cylinderMesh.matrixWorld;
+
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const r     = Math.random() * R_CYL * 0.65;
+            const ly    = (Math.random() - 0.5) * H_CYL * 0.8;
+            const lx    = Math.cos(angle) * r;
+            const lz    = Math.sin(angle) * r;
+
+            const wp = new THREE.Vector3(lx, ly, lz).applyMatrix4(mat);
+
+            particles.push({
+                x: wp.x, y: wp.y, z: wp.z,
+                vx: 0, vy: 0, vz: 0,
+            });
+        }
+    }
+    initParticles();
+
+    const pointsGeo = new THREE.BufferGeometry();
+    let   positions  = new Float32Array(NUM_PARTICLES * 3);
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const pointsMat  = new THREE.PointsMaterial({
+        color: 0x00c8ff, size: 0.38,
+        blending: THREE.AdditiveBlending,
+        transparent: true, opacity: 0.85,
+    });
+    const pointsMesh = new THREE.Points(pointsGeo, pointsMat);
+    pointsMesh.frustumCulled = false;
+    scene.add(pointsMesh);
+
+    // ─── UI ───────────────────────────────────────────────────────────────────────
+    const rpmSlider    = document.getElementById('rpmSlider');
+    const rampSlider   = document.getElementById('rampSlider');
+    const altSlider    = document.getElementById('altSlider');
+    const volSlider    = document.getElementById('volSlider');
+    const offsetSlider = document.getElementById('offsetSlider');
+    const tiltSlider   = document.getElementById('tiltSlider');
+    const creepSlider  = document.getElementById('creepSlider');
+
+    function onParamChange() { resetPaint(); simTime = 0; }
+
+    volSlider.addEventListener('input', () => {
+        const liters = parseFloat(volSlider.value);
+        document.getElementById('volVal').innerText = liters.toFixed(1);
+        NUM_PARTICLES = Math.floor(liters * 1250);
+        document.getElementById('particleCount').innerText = NUM_PARTICLES;
+
+        positions = new Float32Array(NUM_PARTICLES * 3);
+        pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        initParticles();
+        onParamChange();
+    });
+
+    creepSlider.addEventListener('input', () => {
+        document.getElementById('creepVal').innerText = creepSlider.value;
+    });
+
+    rpmSlider.addEventListener('input',    onParamChange);
+    rampSlider.addEventListener('input',   onParamChange);
+    altSlider.addEventListener('input',    onParamChange);
+    offsetSlider.addEventListener('input', onParamChange);
+    tiltSlider.addEventListener('input',   onParamChange);
+
+    document.getElementById('resetBtn').addEventListener('click', resetPaint);
+    document.getElementById('pauseBtn').addEventListener('click', (e) => {
+        isPaused = !isPaused;
+        if (isPaused) {
+            e.target.innerText = "Resume Simulation";
+        } else {
+            e.target.innerText = "Pause Simulation";
+        }
+    });
+
+    document.getElementById('rotateBarrelBtn').addEventListener('click', () => {
+        const angleDeg = parseFloat(creepSlider.value);
+        cylinderMesh.rotation.y += angleDeg * (Math.PI / 180);
+    });
+
+    resetPaint();
+
+    const _localPos = new THREE.Vector3();
+    const _worldPos = new THREE.Vector3();
+
+    function splatBarrel(px, py, energy) {
+        let painted = false;
+        for(let dy = -1; dy <= 1; dy++) {
+            for(let dx = -1; dx <= 1; dx++) {
+                const nx = px + dx;
+                const ny = py + dy;
+                if(nx >= 0 && nx < BARREL_RES_W && ny >= 0 && ny < BARREL_RES_H) {
+                    const idx = ny * BARREL_RES_W + nx;
+                    if (!barrelTouched[idx]) { barrelTouched[idx] = 1; coverageTotal++; }
+                    barrelGrid[idx] += energy * (dx === 0 && dy === 0 ? 1.0 : 0.4);
+                    barrelCtx.fillStyle = getThermalColor(barrelGrid[idx] / FIXED_MAX_ENERGY);
+                    barrelCtx.fillRect(nx, ny, 1, 1);
+                    painted = true;
+                }
+            }
+        }
+        return painted;
+    }
+
+    function splatCap(grid, ctx, touched, px, py, energy) {
+        let painted = false;
+        for(let dy = -1; dy <= 1; dy++) {
+            for(let dx = -1; dx <= 1; dx++) {
+                const nx = px + dx;
+                const ny = py + dy;
+                if(nx >= 0 && nx < CAP_RES && ny >= 0 && ny < CAP_RES) {
+                    const idx = ny * CAP_RES + nx;
+                    if (!touched[idx]) { touched[idx] = 1; coverageTotal++; }
+                    grid[idx] += energy * (dx === 0 && dy === 0 ? 1.0 : 0.4);
+                    ctx.fillStyle = getThermalColor(grid[idx] / FIXED_MAX_ENERGY);
+                    ctx.fillRect(nx, ny, 1, 1);
+                    painted = true;
+                }
+            }
+        }
+        return painted;
+    }
+
+    // ─── Main Physics Step ────────────────────────────────────────────────────────
+    function stepPhysics() {
+        const rpm      = parseFloat(rpmSlider.value);
+        const rampTime = parseFloat(rampSlider.value);
+        const altRevs  = parseFloat(altSlider.value);
+        const offset   = parseFloat(offsetSlider.value);
+        const tilt     = parseFloat(tiltSlider.value);
+
+        document.getElementById('rpmVal').innerText    = rpm;
+        document.getElementById('rampVal').innerText   = rampTime.toFixed(1);
+        document.getElementById('altVal').innerText    = altRevs.toFixed(1);
+        document.getElementById('offsetVal').innerText = offset.toFixed(1);
+        document.getElementById('tiltVal').innerText   = tilt;
+
+        offsetRig.position.y = offset;
+        tiltRig.rotation.z   = tilt * (Math.PI / 180);
+
+        const targetOmega = (rpm * 2 * Math.PI) / 60;
+        let statusText  = 'CONSTANT SPIN';
+        let statusColor = '#16a34a'; // Default to green
+
+        if (altRevs > 0) {
+            const steadyTime = (altRevs * 2 * Math.PI) / targetOmega;
+            const halfCycle  = rampTime + steadyTime + rampTime;
+            const tMod       = simTime % (2 * halfCycle);
+
+            if (tMod < halfCycle) {
+                if      (tMod < rampTime)               { omega = targetOmega * (tMod / rampTime);              statusText = 'RAMP UP (CW)';  statusColor = '#d97706'; }
+                else if (tMod > halfCycle - rampTime)   { omega = targetOmega * ((halfCycle - tMod) / rampTime); statusText = 'BRAKING';       statusColor = '#dc2626'; }
+                else                                    { omega = targetOmega;                                    statusText = 'STEADY (CW)'; }
+            } else {
+                const tCcw = tMod - halfCycle;
+                if      (tCcw < rampTime)               { omega = -targetOmega * (tCcw / rampTime);              statusText = 'RAMP UP (CCW)'; statusColor = '#d97706'; }
+                else if (tCcw > halfCycle - rampTime)   { omega = -targetOmega * ((halfCycle - tCcw) / rampTime); statusText = 'BRAKING';      statusColor = '#dc2626'; }
+                else                                    { omega = -targetOmega;                                    statusText = 'STEADY (CCW)'; }
+            }
+        } else {
+            omega = targetOmega;
+        }
+
+        const dirEl = document.getElementById('dirText');
+        dirEl.innerText    = statusText;
+        dirEl.style.color  = statusColor;
+
+        tumbleAxis.rotation.x += omega * DT;
+        simTime += DT;
+
+        cylinderMesh.updateMatrixWorld(true);
+        const worldMat = cylinderMesh.matrixWorld;
+        const invMat = new THREE.Matrix4().copy(worldMat).invert();
+
+        let posIdx = 0;
+        let paintedBarrel = false, paintedTop = false, paintedBot = false;
+
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            const p = particles[i];
+
+            p.vy -= G_LOCAL * DT;
+            p.x += p.vx * DT;
+            p.y += p.vy * DT;
+            p.z += p.vz * DT;
+
+            _localPos.set(p.x, p.y, p.z).applyMatrix4(invMat);
+
+            let hitBarrel = false;
+            let hitTop = false;
+            let hitBot = false;
+
+            const r2 = _localPos.x * _localPos.x + _localPos.z * _localPos.z;
+            if (r2 > R_COLL * R_COLL) {
+                const r = Math.sqrt(r2);
+                if (r > 0.0001) {
+                    _localPos.x = (_localPos.x / r) * R_COLL;
+                    _localPos.z = (_localPos.z / r) * R_COLL;
+                }
+                hitBarrel = true;
+            }
+
+            if (_localPos.y > H_COLL) {
+                _localPos.y = H_COLL;
+                hitTop = true;
+            } else if (_localPos.y < -H_COLL) {
+                _localPos.y = -H_COLL;
+                hitBot = true;
+            }
+
+            if (hitBarrel || hitTop || hitBot) {
+                _worldPos.copy(_localPos).applyMatrix4(worldMat);
+                p.x = _worldPos.x;
+                p.y = _worldPos.y;
+                p.z = _worldPos.z;
+
+                const vWallX = 0;
+                const vWallY = -omega * p.z;
+                const vWallZ =  omega * p.y;
+
+                const vRel = Math.sqrt(
+                    Math.pow(p.vx - vWallX, 2) +
+                    Math.pow(p.vy - vWallY, 2) +
+                    Math.pow(p.vz - vWallZ, 2)
+                );
+
+                const momentumKeep = 0.65;
+                const wallDrag     = 0.35;
+
+                const noiseX = (Math.random() - 0.5) * 8.0;
+                const noiseY = (Math.random() - 0.5) * 8.0;
+                const noiseZ = (Math.random() - 0.5) * 8.0;
+
+                p.vx = (p.vx * momentumKeep) + (vWallX * wallDrag) + noiseX;
+                p.vy = (p.vy * momentumKeep) + (vWallY * wallDrag) + noiseY;
+                p.vz = (p.vz * momentumKeep) + (vWallZ * wallDrag) + noiseZ;
+
+                const energy = (vRel * 0.15) + 3.0;
+
+                if (hitBarrel) {
+                    let u = Math.atan2(_localPos.x, _localPos.z) / (2 * Math.PI);
+                    if (u < 0) u += 1.0;
+
+                    const v = (_localPos.y + H_CYL / 2) / H_CYL;
+                    const px = Math.max(0, Math.min(BARREL_RES_W - 1, Math.floor(u * BARREL_RES_W)));
+                    const py = Math.max(0, Math.min(BARREL_RES_H - 1, Math.floor((1 - v) * BARREL_RES_H)));
+
+                    if (splatBarrel(px, py, energy)) paintedBarrel = true;
+                }
+
+                if (hitTop || hitBot) {
+                    const isTop = hitTop;
+                    const u  = (_localPos.x + R_CYL) / (2 * R_CYL);
+                    const vv = (_localPos.z + R_CYL) / (2 * R_CYL);
+                    const px = Math.max(0, Math.min(CAP_RES - 1, Math.floor(u * CAP_RES)));
+                    const py = Math.max(0, Math.min(CAP_RES - 1, Math.floor((isTop ? 1 - vv : vv) * CAP_RES)));
+
+                    const grid = isTop ? topGrid : botGrid;
+                    const ctx  = isTop ? topCtx  : botCtx;
+                    const touched = isTop ? topTouched : botTouched;
+
+                    if (splatCap(grid, ctx, touched, px, py, energy)) {
+                        if (isTop) paintedTop = true; else paintedBot = true;
+                    }
+                }
+            } else {
+                if (isNaN(p.x) || Math.abs(p.y) > 1000 || Math.abs(p.x) > 1000 || Math.abs(p.z) > 1000) {
+                    _localPos.set((Math.random() - 0.5) * 5, 0, (Math.random() - 0.5) * 5);
+                    _worldPos.copy(_localPos).applyMatrix4(worldMat);
+                    p.x = _worldPos.x; p.y = _worldPos.y; p.z = _worldPos.z;
+                    p.vx = 0; p.vy = 0; p.vz = 0;
+                }
+            }
+
+            positions[posIdx++] = p.x;
+            positions[posIdx++] = p.y;
+            positions[posIdx++] = p.z;
+        }
+
+        if (paintedBarrel) barrelTex.needsUpdate = true;
+        if (paintedTop)    topTex.needsUpdate    = true;
+        if (paintedBot)    botTex.needsUpdate    = true;
+
+        if (Math.round(simTime * 60) % 30 === 0) {
+            const pct = Math.min(100, Math.round((coverageTotal / TOTAL_SURFACE_CELLS) * 100));
+            document.getElementById('coveragePct').innerText = pct + '%';
+        }
+
+        pointsGeo.attributes.position.needsUpdate = true;
+    }
+
+    // ─── Render Loop ──────────────────────────────────────────────────────────────
+    function animate() {
+        requestAnimationFrame(animate);
+        if (!isPaused) {
+            stepPhysics();
+        }
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+    });
+</script>
+</body>
+</html>
