@@ -8,7 +8,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #111; /* Keep the 3D scene dark for contrast */
+            background-color: #111;
             font-family: system-ui, -apple-system, sans-serif;
         }
         #canvas-container { width: 100vw; height: 100vh; }
@@ -27,7 +27,6 @@
             box-shadow: 5px 5px 0px rgba(0,0,0,1);
         }
 
-        /* Straightforward scrollbar */
         #ui::-webkit-scrollbar { width: 8px; }
         #ui::-webkit-scrollbar-thumb { background: #000; }
         #ui::-webkit-scrollbar-track { background: #eee; border-left: 1px solid #ccc; }
@@ -52,17 +51,44 @@
             font-weight: 700;
         }
 
-        .val {
-            font-family: 'Courier New', monospace;
-            background: #eee;
-            padding: 2px 6px;
-            border: 1px solid #ccc;
+        select.val-input {
+            width: 100%;
+            padding: 4px;
+            font-weight: bold;
             font-size: 12px;
-            min-width: 45px;
-            text-align: right;
+            text-transform: uppercase;
+            border: 1px solid #000;
+            background: #f8f8f8;
+            cursor: pointer;
+            margin-bottom: 4px;
         }
 
-        /* Native browser styling for inputs is cleaner and less "designed" */
+        .val-input {
+            font-family: 'Courier New', monospace;
+            background: #eee;
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            width: 60px;
+            text-align: right;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .val-input:focus {
+            border-color: #000;
+            background: #fff;
+        }
+
+        .val-input::-webkit-outer-spin-button,
+        .val-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .val-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
         input[type="range"] {
             width: 100%;
             margin: 0;
@@ -105,7 +131,6 @@
             background: #f8f8f8;
         }
 
-        /* Heatmap Key */
         .heatmap-key {
             margin-top: 20px;
             padding-top: 16px;
@@ -174,33 +199,41 @@
     <h3>Wash Impact Simulator</h3>
 
     <div class="slider-group">
-        <label>Target RPM <span id="rpmVal" class="val">50</span></label>
+        <label>Rotation Axis</label>
+        <select id="rotMode" class="val-input">
+            <option value="lateral">Lateral (End-over-End)</option>
+            <option value="longitudinal">Longitudinal (Roller)</option>
+        </select>
+    </div>
+
+    <div class="slider-group">
+        <label>Target RPM <input type="number" id="rpmVal" class="val-input" value="50" step="1"></label>
         <input type="range" id="rpmSlider" min="20" max="100" value="50">
     </div>
     <div class="slider-group">
-        <label>Ramp Time (sec) <span id="rampVal" class="val">0.8</span></label>
+        <label>Ramp Time (sec) <input type="number" id="rampVal" class="val-input" value="0.8" step="0.1"></label>
         <input type="range" id="rampSlider" min="0.1" max="3.0" step="0.1" value="0.8">
-        <div class="hint">Lower = Violent start/stop (Agitation)</div>
+        <div class="hint">Lower = Violent start/stop</div>
     </div>
     <div class="slider-group">
-        <label>Passes Before Reverse <span id="altVal" class="val">2.0</span></label>
+        <label>Passes Before Reverse <input type="number" id="altVal" class="val-input" value="2.0" step="0.5"></label>
         <input type="range" id="altSlider" min="0" max="6" step="0.5" value="2.0">
         <div class="hint">0 = Constant Spin</div>
     </div>
     <div class="slider-group">
-        <label>Liquid Volume (L) <span id="volVal" class="val">3.2</span></label>
+        <label>Liquid Volume (L) <input type="number" id="volVal" class="val-input" value="3.2" step="0.1"></label>
         <input type="range" id="volSlider" min="0.8" max="8.0" step="0.4" value="3.2">
     </div>
     <div class="slider-group">
-        <label>Axis Offset (in) <span id="offsetVal" class="val">2.0</span></label>
+        <label>Axis Offset (in) <input type="number" id="offsetVal" class="val-input" value="2.0" step="0.1"></label>
         <input type="range" id="offsetSlider" min="0" max="8" step="0.5" value="2.0">
     </div>
     <div class="slider-group">
-        <label>Tilt Angle (deg) <span id="tiltVal" class="val">15</span></label>
+        <label>Tilt Angle (deg) <input type="number" id="tiltVal" class="val-input" value="15" step="1"></label>
         <input type="range" id="tiltSlider" min="0" max="45" value="15">
     </div>
     <div class="slider-group">
-        <label>Creep Angle (deg) <span id="creepVal" class="val">45</span></label>
+        <label>Manual Creep (deg) <input type="number" id="creepVal" class="val-input" value="45" step="5"></label>
         <input type="range" id="creepSlider" min="5" max="180" step="5" value="45">
     </div>
 
@@ -255,20 +288,23 @@
     // ─── State ───────────────────────────────────────────────────────────────────
     let NUM_PARTICLES = 4000;
     let simTime       = 0;
-    let omega         = 0; // current angular velocity (rad/s)
+    let omega         = 0;
     let isPaused      = false;
+
+    // Persistent rotation states for toggling axes seamlessly
+    let tumbleAngle   = 0;
+    let rollAngle     = 0;
 
     let barrelGrid = new Float32Array(BARREL_RES_W * BARREL_RES_H);
     let topGrid    = new Float32Array(CAP_RES * CAP_RES);
     let botGrid    = new Float32Array(CAP_RES * CAP_RES);
-    const FIXED_MAX_ENERGY = 30.0; // Optimized threshold for scrubbing impacts
+    const FIXED_MAX_ENERGY = 30.0;
 
-    // Coverage tracking: unique cells touched
     let barrelTouched = new Uint8Array(BARREL_RES_W * BARREL_RES_H);
     let topTouched    = new Uint8Array(CAP_RES * CAP_RES);
     let botTouched    = new Uint8Array(CAP_RES * CAP_RES);
     let coverageTotal = 0;
-    const TOTAL_SURFACE_CELLS = BARREL_RES_W * BARREL_RES_H + Math.PI * (CAP_RES / 2) ** 2 * 2; // approx
+    const TOTAL_SURFACE_CELLS = BARREL_RES_W * BARREL_RES_H + Math.PI * (CAP_RES / 2) ** 2 * 2;
 
     // ─── Canvas Textures ─────────────────────────────────────────────────────────
     const barrelCanvas = document.createElement('canvas');
@@ -350,7 +386,6 @@
     const offsetRig  = new THREE.Group();
     const tiltRig    = new THREE.Group();
 
-    // Adjusted opacity down to 0.45 to make droplets much more visible
     const materials = [
         new THREE.MeshBasicMaterial({ map: barrelTex, side: THREE.DoubleSide, transparent: true, opacity: 0.45 }),
         new THREE.MeshBasicMaterial({ map: topTex,    side: THREE.DoubleSide, transparent: true, opacity: 0.45 }),
@@ -407,59 +442,65 @@
     pointsMesh.frustumCulled = false;
     scene.add(pointsMesh);
 
-    // ─── UI ───────────────────────────────────────────────────────────────────────
-    const rpmSlider    = document.getElementById('rpmSlider');
-    const rampSlider   = document.getElementById('rampSlider');
-    const altSlider    = document.getElementById('altSlider');
-    const volSlider    = document.getElementById('volSlider');
-    const offsetSlider = document.getElementById('offsetSlider');
-    const tiltSlider   = document.getElementById('tiltSlider');
-    const creepSlider  = document.getElementById('creepSlider');
-
+    // ─── UI Sync & Input Handling ─────────────────────────────────────────────────
     function onParamChange() { resetPaint(); simTime = 0; }
 
-    volSlider.addEventListener('input', () => {
-        const liters = parseFloat(volSlider.value);
-        document.getElementById('volVal').innerText = liters.toFixed(1);
+    function syncInputs(sliderId, inputId, updateFunc) {
+        const slider = document.getElementById(sliderId);
+        const input = document.getElementById(inputId);
+
+        slider.addEventListener('input', () => {
+            input.value = slider.value;
+            if(updateFunc) updateFunc();
+            onParamChange();
+        });
+
+        input.addEventListener('input', () => {
+            slider.value = input.value;
+            if(updateFunc) updateFunc();
+            onParamChange();
+        });
+    }
+
+    function updateVolume() {
+        const liters = parseFloat(document.getElementById('volVal').value) || 0.1;
         NUM_PARTICLES = Math.floor(liters * 1250);
         document.getElementById('particleCount').innerText = NUM_PARTICLES;
 
         positions = new Float32Array(NUM_PARTICLES * 3);
         pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
         initParticles();
-        onParamChange();
-    });
+    }
 
-    creepSlider.addEventListener('input', () => {
-        document.getElementById('creepVal').innerText = creepSlider.value;
-    });
+    syncInputs('rpmSlider', 'rpmVal');
+    syncInputs('rampSlider', 'rampVal');
+    syncInputs('altSlider', 'altVal');
+    syncInputs('volSlider', 'volVal', updateVolume);
+    syncInputs('offsetSlider', 'offsetVal');
+    syncInputs('tiltSlider', 'tiltVal');
+    syncInputs('creepSlider', 'creepVal');
 
-    rpmSlider.addEventListener('input',    onParamChange);
-    rampSlider.addEventListener('input',   onParamChange);
-    altSlider.addEventListener('input',    onParamChange);
-    offsetSlider.addEventListener('input', onParamChange);
-    tiltSlider.addEventListener('input',   onParamChange);
+    document.getElementById('rotMode').addEventListener('change', onParamChange);
 
     document.getElementById('resetBtn').addEventListener('click', resetPaint);
     document.getElementById('pauseBtn').addEventListener('click', (e) => {
         isPaused = !isPaused;
-        if (isPaused) {
-            e.target.innerText = "Resume Simulation";
-        } else {
-            e.target.innerText = "Pause Simulation";
-        }
+        e.target.innerText = isPaused ? "Resume Simulation" : "Pause Simulation";
     });
 
     document.getElementById('rotateBarrelBtn').addEventListener('click', () => {
-        const angleDeg = parseFloat(creepSlider.value);
-        cylinderMesh.rotation.y += angleDeg * (Math.PI / 180);
+        const angleDeg = parseFloat(document.getElementById('creepVal').value) || 0;
+        rollAngle += angleDeg * (Math.PI / 180);
     });
 
     resetPaint();
 
     const _localPos = new THREE.Vector3();
     const _worldPos = new THREE.Vector3();
+    const _omegaWorld = new THREE.Vector3();
+    const _pivot = new THREE.Vector3();
+    const _radiusVec = new THREE.Vector3();
+    const _vWall = new THREE.Vector3();
 
     function splatBarrel(px, py, energy) {
         let painted = false;
@@ -501,27 +542,22 @@
 
     // ─── Main Physics Step ────────────────────────────────────────────────────────
     function stepPhysics() {
-        const rpm      = parseFloat(rpmSlider.value);
-        const rampTime = parseFloat(rampSlider.value);
-        const altRevs  = parseFloat(altSlider.value);
-        const offset   = parseFloat(offsetSlider.value);
-        const tilt     = parseFloat(tiltSlider.value);
-
-        document.getElementById('rpmVal').innerText    = rpm;
-        document.getElementById('rampVal').innerText   = rampTime.toFixed(1);
-        document.getElementById('altVal').innerText    = altRevs.toFixed(1);
-        document.getElementById('offsetVal').innerText = offset.toFixed(1);
-        document.getElementById('tiltVal').innerText   = tilt;
+        const rpm      = parseFloat(document.getElementById('rpmVal').value) || 0;
+        const rampTime = parseFloat(document.getElementById('rampVal').value) || 0.1;
+        const altRevs  = parseFloat(document.getElementById('altVal').value) || 0;
+        const offset   = parseFloat(document.getElementById('offsetVal').value) || 0;
+        const tilt     = parseFloat(document.getElementById('tiltVal').value) || 0;
+        const rotMode  = document.getElementById('rotMode').value;
 
         offsetRig.position.y = offset;
         tiltRig.rotation.z   = tilt * (Math.PI / 180);
 
         const targetOmega = (rpm * 2 * Math.PI) / 60;
         let statusText  = 'CONSTANT SPIN';
-        let statusColor = '#16a34a'; // Default to green
+        let statusColor = '#16a34a';
 
-        if (altRevs > 0) {
-            const steadyTime = (altRevs * 2 * Math.PI) / targetOmega;
+        if (altRevs > 0 && targetOmega !== 0) {
+            const steadyTime = (altRevs * 2 * Math.PI) / Math.abs(targetOmega);
             const halfCycle  = rampTime + steadyTime + rampTime;
             const tMod       = simTime % (2 * halfCycle);
 
@@ -543,12 +579,30 @@
         dirEl.innerText    = statusText;
         dirEl.style.color  = statusColor;
 
-        tumbleAxis.rotation.x += omega * DT;
+        // Route the angular velocity to the selected axis
+        if (rotMode === 'lateral') {
+            tumbleAngle += omega * DT;
+        } else {
+            rollAngle += omega * DT;
+        }
+
+        tumbleAxis.rotation.x = tumbleAngle;
+        cylinderMesh.rotation.y = rollAngle;
         simTime += DT;
 
         cylinderMesh.updateMatrixWorld(true);
         const worldMat = cylinderMesh.matrixWorld;
         const invMat = new THREE.Matrix4().copy(worldMat).invert();
+
+        // Dynamically compute the world-space rotation vector for accurate collision physics
+        if (rotMode === 'lateral') {
+            _omegaWorld.set(omega, 0, 0); // Tumbling around Global X
+            _pivot.set(0, 0, 0);          // Pivot is the absolute center of the machine
+        } else {
+            // Spinning on its own axis. Extract local Y-axis direction into world space.
+            _omegaWorld.set(0, 1, 0).transformDirection(worldMat).normalize().multiplyScalar(omega);
+            cylinderMesh.getWorldPosition(_pivot);
+        }
 
         let posIdx = 0;
         let paintedBarrel = false, paintedTop = false, paintedBot = false;
@@ -591,9 +645,13 @@
                 p.y = _worldPos.y;
                 p.z = _worldPos.z;
 
-                const vWallX = 0;
-                const vWallY = -omega * p.z;
-                const vWallZ =  omega * p.y;
+                // Generalized 3D Kinematics: V = Omega x Radius
+                _radiusVec.set(p.x - _pivot.x, p.y - _pivot.y, p.z - _pivot.z);
+                _vWall.crossVectors(_omegaWorld, _radiusVec);
+
+                const vWallX = _vWall.x;
+                const vWallY = _vWall.y;
+                const vWallZ = _vWall.z;
 
                 const vRel = Math.sqrt(
                     Math.pow(p.vx - vWallX, 2) +
